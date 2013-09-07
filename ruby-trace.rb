@@ -147,26 +147,55 @@ module RubyTrace
 
     def save_as_html(root)
       require 'fileutils'
-      root = File.expand_path(root)
+      require 'pathname'
+      require 'json'
+
+      root = Pathname.new(File.expand_path(root))
+      zepto = root + 'zepto.js'
+      FileUtils.cp(File.expand_path('../zepto.js', __FILE__), root)
 
       @files.each do |_, file|
-        destination_path = File.join(root, file.path) << '.html'
-        FileUtils.mkdir_p(File.dirname(destination_path))
+        destination_path = Pathname.new(File.join(root, file.path) << '.html')
+        destination_path.dirname.mkpath
+
         content = File.read(file.path)
+        content_lines = content.split("\n")
+        lineno_indent = content_lines.size.to_s.length
+
         File.open(destination_path, 'w') do |out|
-          out.puts '<html><body><pre>'
-          content.split("\n").each.with_index do |content_line, index|
+          out.puts "<html><body><pre>"
+          content_lines.each.with_index do |content_line, index|
+            out.write "#{(index+1).to_s.rjust(lineno_indent)}: "
             if line = file.lines[index+1]
               if line.method_definition
                 out.puts "<span style='font-weight:bold;font-style:italic;'>#{content_line}</span>"
               else
-                out.puts "<span style='font-weight:bold;'>#{content_line}</span>"
+                links = line.calls.map do |call|
+                  method_line = call.method.line
+                  method_html_file = Pathname.new(File.join(root, method_line.file.path) << '.html')
+                  href = "#{method_html_file.relative_path_from(destination_path.dirname)}##{method_line.lineno}"
+                  "<a href='#{href}'>#{call.method.mod}##{call.method.name}</a>"
+                end
+                out.puts "<div class='calls' style='display:inline;'><span id='#{line.lineno}' style='font-weight:bold;'>#{content_line}</span> <span style='display:none;'>#{links.join(' ')}</span></div>"
               end
             else
               out.puts content_line
             end
           end
-          out.puts '</pre></body></html>'
+          out.puts <<-EOS
+</pre>
+<script src='#{zepto.relative_path_from(destination_path)}'></script>
+<script>
+  $(document).on('mouseenter', 'div.calls', function (event) {
+    $(this).children().last().show();
+  });
+  $(document).on('mouseleave', 'div.calls', function (event) {
+    $(this).children().last().hide();
+  });
+</script>
+</body>
+</html>
+          EOS
         end
       end
     end

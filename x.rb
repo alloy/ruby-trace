@@ -4,8 +4,7 @@ class X
   end
 
   def y
-    @y.call1(self)
-    @y.call2(self)
+    @y.call1(self); @y.call2(self)
     nil
   end
 
