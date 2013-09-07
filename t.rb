@@ -14,3 +14,4 @@ end
 #pp trace.files
 
 trace.pretty_print
+trace.save_as_html('html')

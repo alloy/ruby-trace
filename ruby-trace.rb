@@ -1,5 +1,5 @@
 module RubyTrace
-  class File
+  class FileNode
     attr_reader :path, :lines
 
     def initialize(path)
@@ -68,9 +68,9 @@ module RubyTrace
     end
 
     def file_for_path(path)
-      path = ::File.expand_path(path)
+      path = File.expand_path(path)
       return if path == __FILE__
-      @files[path] ||= File.new(path)
+      @files[path] ||= FileNode.new(path)
     end
 
     def line_for_path_and_lineno(path, lineno)
@@ -141,6 +141,32 @@ module RubyTrace
               puts "  - [#{call.index}] #{call.method.mod}##{call.method.name}(#{call.arguments}) => #{call.return_value.inspect} (#{call.method.line.file.path}:#{call.method.line.lineno})"
             end
           end
+        end
+      end
+    end
+
+    def save_as_html(root)
+      require 'fileutils'
+      root = File.expand_path(root)
+
+      @files.each do |_, file|
+        destination_path = File.join(root, file.path) << '.html'
+        FileUtils.mkdir_p(File.dirname(destination_path))
+        content = File.read(file.path)
+        File.open(destination_path, 'w') do |out|
+          out.puts '<html><body><pre>'
+          content.split("\n").each.with_index do |content_line, index|
+            if line = file.lines[index+1]
+              if line.method_definition
+                out.puts "<span style='font-weight:bold;font-style:italic;'>#{content_line}</span>"
+              else
+                out.puts "<span style='font-weight:bold;'>#{content_line}</span>"
+              end
+            else
+              out.puts content_line
+            end
+          end
+          out.puts '</pre></body></html>'
         end
       end
     end
