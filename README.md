@@ -25,7 +25,7 @@ tracer.save_as_html('traces')
 
 ## Example HTML
 
-Example output can be found [here](http://alloy.github.io/ruby-trace), which was generated from
+Example output can be found [here](http://alloy.github.io/ruby-trace/#134287), which was generated from
 [this](https://github.com/CocoaPods/CocoaPods/commit/efe30b868865af10d810f5b5c908cf634ce7d8c0)
 CocoaPods commit.
 
