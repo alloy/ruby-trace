@@ -28,7 +28,8 @@ module RubyTrace
     def method_definition_with_mod_and_name(mod, name)
       if @method_definition
         if @method_definition.line != self || @method_definition.mod != mod || @method_definition.name != name
-          raise 'inconsistency!'
+          #raise 'inconsistency!'
+          puts 'inconsistency!'
         end
       else
         @method_definition = Method.new(self, mod, name)
@@ -113,17 +114,24 @@ module RubyTrace
             stack << call
           end
         when :return
-          call = stack.pop
-          if call.nil? || call.method.name != tp.method_id || call.method.mod != tp.defined_class
-            raise 'inconsistency!'
+          #call = stack.pop
+          #raise "inconsistency!" if call.nil?
+          #raise "inconsistency!" if call.method.name != tp.method_id
+          #raise "inconsistency!" if call.method.mod != tp.defined_class
+          call = stack.last
+          if call && call.method.name == tp.method_id && call.method.mod == tp.defined_class
+            call.return_value = tp.return_value
+            stack.pop
+          else
+            puts "INCONSISTENCY???????!!!!!!"
           end
-          call.return_value = tp.return_value
         end
       end
       trace.enable
       yield
       unless stack.empty?
-        raise 'inconsistency!'
+        #raise 'inconsistency!'
+        puts 'inconsistency!'
       end
     ensure
       trace.disable
@@ -146,15 +154,21 @@ module RubyTrace
     end
 
     def save_as_html(root)
+      STDOUT.sync = true
+      puts "Generating trace html:"
+
       require 'fileutils'
       require 'pathname'
       require 'json'
 
       root = Pathname.new(File.expand_path(root))
+      root.mkpath
+
       zepto = root + 'zepto.js'
       FileUtils.cp(File.expand_path('../zepto.js', __FILE__), root)
 
       @files.each do |_, file|
+        print "#{file.path}: "
         destination_path = Pathname.new(File.join(root, file.path) << '.html')
         destination_path.dirname.mkpath
 
@@ -165,7 +179,7 @@ module RubyTrace
         File.open(destination_path, 'w') do |out|
           out.puts "<html><body><pre>"
           content_lines.each.with_index do |content_line, index|
-            out.write "#{(index+1).to_s.rjust(lineno_indent)}: "
+            out.write "<div id='#{index+1}' style='display:inline;'>#{(index+1).to_s.rjust(lineno_indent)}: "
             if line = file.lines[index+1]
               if line.method_definition
                 links = line.method_definition.callers.map do |call|
@@ -174,7 +188,7 @@ module RubyTrace
                   href = "#{method_html_file.relative_path_from(destination_path.dirname)}##{method_line.lineno}"
                   "<a href='#{href}'>#{method_line.file.path}##{method_line.lineno}</a>"
                 end
-                out.puts "<div class='calls' style='display:inline;'><span style='font-weight:bold;font-style:italic;'>#{content_line}</span> <span style='display:none;'>#{links.join(' ')}</span></div>"
+                out.write "<div class='calls' style='display:inline;'><span style='font-weight:bold;font-style:italic;'>#{content_line}</span> <span style='display:none;'>#{links.join(' ')}</span></div>"
               else
                 links = line.calls.map do |call|
                   method_line = call.method.line
@@ -182,15 +196,17 @@ module RubyTrace
                   href = "#{method_html_file.relative_path_from(destination_path.dirname)}##{method_line.lineno}"
                   "<a href='#{href}'>#{call.method.mod}##{call.method.name}</a>"
                 end
-                out.puts "<div class='calls' style='display:inline;'><span style='font-weight:bold;'>#{content_line}</span> <span style='display:none;'>#{links.join(' ')}</span></div>"
+                out.write "<div class='calls' style='display:inline;'><span style='font-weight:bold;'>#{content_line}</span> <span style='display:none;'>#{links.join(' ')}</span></div>"
               end
             else
-              out.puts content_line
+              out.write content_line
             end
+            out.puts "</div>"
+            print '.'
           end
           out.puts <<-EOS
 </pre>
-<script src='#{zepto.relative_path_from(destination_path)}'></script>
+<script src='#{zepto.relative_path_from(destination_path.dirname)}'></script>
 <script>
   $(document).on('mouseenter', 'div.calls', function (event) {
     $(this).children().last().show();
@@ -202,6 +218,7 @@ module RubyTrace
 </body>
 </html>
           EOS
+          print "\n"
         end
       end
     end
