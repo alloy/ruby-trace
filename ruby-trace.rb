@@ -7,7 +7,11 @@
 #
 # * Collecting call return values is not working right yet.
 # * Collecting call arguments works fine, but isn't needed yet and needs memory usage optimization.
+#
+# ### Reporting
+#
 # * Show call arguments and returns values in report.
+# * Add way to filter what's included, by path, class, etc.
 #
 # ### HTML
 #
@@ -189,8 +193,8 @@ module RubyTrace
       history = @calls.map do |call|
         # Collect from and to lines.
         [
-          File.join(root, call.from_line.file.path) << ".html##{call.from_line.lineno}",
-          File.join(root, call.method.line.file.path) << ".html##{call.method.line.lineno}"
+          { :filename => call.from_line.file.path, :href => File.join(root, call.from_line.file.path) << ".html##{call.from_line.lineno}" },
+          { :filename => call.method.line.file.path, :href => File.join(root, call.method.line.file.path) << ".html##{call.method.line.lineno}" },
         ]
       end.flatten
       File.open(root + 'index.html', 'w') do |out|
@@ -208,9 +212,9 @@ var history = #{history.to_json};
 </head>
 <body>
 <div class="transport_bar">
-<a id="back" href="#">◀</a> <span id="history_index">1</span> <a id="next" href="#">▶</a>
+<a id="back" href="#">◀</a> <span id="history_index">1</span> <a id="next" href="#">▶</a> <span id="filename">#{history.first[:filename]}</span>
 </div>
-<iframe id="code" src="#{history.first}">
+<iframe id="code" src="#{history.first[:href]}">
 </iframe>
 <script src='zepto.js'></script>
 <script>
@@ -223,7 +227,8 @@ var history = #{history.to_json};
       history_index = history.length-1;
     }
     $('#history_index').text(history_index+1);
-    $('#code').attr('src', history[history_index]);
+    $('#filename').text(history[history_index]['filename']);
+    $('#code').attr('src', history[history_index]['href']);
   };
   $('#back').on('click', function() { change_history_index(-1); return false; });
   $('#next').on('click', function() { change_history_index(+1); return false; });
