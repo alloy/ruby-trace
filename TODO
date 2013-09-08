@@ -1,2 +1,19 @@
-* rewrite in C
-* get mod and method name from caller
+* Rewrite prototype for real, including tests.
+
+### Trace code
+
+* Rewrite (at least) hot paths in a C extension.
+* Get sender mod+name of call and use that to link to callers instead of path. This can only be done in C.
+
+* Collecting call return values is not working right yet.
+* Collecting call arguments works fine, but isn't needed yet and needs memory usage optimization.
+
+### Reporting
+
+* Show call arguments and returns values in report.
+* Add way to filter what's included, by path, class, etc.
+
+### HTML
+
+* Fix div.line getting taller when calls are being shown (on hover).
+* Make call history work relative, i.e. without full expanded hardcoded paths.
