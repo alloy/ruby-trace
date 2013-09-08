@@ -12,7 +12,7 @@
 # ### HTML
 #
 # * Fix div.line getting taller when calls are being shown (on hover).
-#
+# * Make call history work relative, i.e. without full expanded hardcoded paths.
 
 module RubyTrace
   class FileNode
@@ -77,11 +77,11 @@ module RubyTrace
   end
 
   class Trace
-    attr_reader :files
+    attr_reader :files, :calls
 
     def initialize
       @files = {}
-      @call_index = 0
+      @calls = []
     end
 
     def file_for_path(path)
@@ -114,6 +114,14 @@ module RubyTrace
       end
     end
 
+    def add_call(method, from_line, arguments)
+      #call = method.add_caller(from_line, @calls.size, arguments_from_call_trace_point(tp))
+      call = method.add_caller(from_line, @calls.size, nil)
+      from_line.add_call(call)
+      @calls << call
+      call
+    end
+
     def trace
       #stack = []
       #trace = TracePoint.new(:call, :return) do |tp|
@@ -124,10 +132,8 @@ module RubyTrace
           if from_line = line_from_call_trace_point(tp)
             to_line = line_for_path_and_lineno(tp.path, tp.lineno)
             method = to_line.method_definition_with_mod_and_name(tp.defined_class, tp.method_id)
-            #call = method.add_caller(from_line, @call_index, arguments_from_call_trace_point(tp))
-            call = method.add_caller(from_line, @call_index, nil)
-            from_line.add_call(call)
-            @call_index += 1
+            #call = add_call(method, from_line, arguments_from_call_trace_point(tp))
+            call = add_call(method, from_line, nil)
             #stack << call
           end
         #when :return
@@ -175,8 +181,58 @@ module RubyTrace
       root = Pathname.new(File.expand_path(root))
       root.mkpath
 
+      # Copy assets
       zepto = root + 'zepto.js'
       FileUtils.cp(File.expand_path('../zepto.js', __FILE__), root)
+
+      # Generate call history HTML
+      history = @calls.map do |call|
+        # Collect from and to lines.
+        [
+          File.join(root, call.from_line.file.path) << ".html##{call.from_line.lineno}",
+          File.join(root, call.method.line.file.path) << ".html##{call.method.line.lineno}"
+        ]
+      end.flatten
+      File.open(root + 'index.html', 'w') do |out|
+        out.puts <<-EOS
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+iframe { width: 100%; height: 600px; }
+</style>
+<script type="text/javascript">
+var history = #{history.to_json};
+</script>
+</head>
+<body>
+<div class="transport_bar">
+<a id="back" href="#">◀</a> <span id="history_index">1</span> <a id="next" href="#">▶</a>
+</div>
+<iframe id="code" src="#{history.first}">
+</iframe>
+<script src='zepto.js'></script>
+<script>
+  var history_index = 0;
+  var change_history_index = function(delta) {
+    history_index = history_index + delta;
+    if (history_index < 0) {
+      history_index = 0;
+    } else if (history_index >= history.length) {
+      history_index = history.length-1;
+    }
+    $('#history_index').text(history_index+1);
+    $('#code').attr('src', history[history_index]);
+  };
+  $('#back').on('click', function() { change_history_index(-1); return false; });
+  $('#next').on('click', function() { change_history_index(+1); return false; });
+</script>
+</body>
+</html>
+      EOS
+      end
+      history = nil # save memory, quite premature
 
       @files.each do |_, file|
         print "#{file.path}: "
@@ -189,8 +245,10 @@ module RubyTrace
 
         File.open(destination_path, 'w') do |out|
           out.puts <<-EOS
+<!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <style type="text/css">
 .highlight { background-color: rgb(255, 255, 204); }
 pre { display: inline; }
@@ -233,17 +291,18 @@ div.line a { font-size: 12px; }
 <script src='#{zepto.relative_path_from(destination_path.dirname)}'></script>
 <script>
   var update_highlight = function() {
+    console.log('hash change');
     $('div.highlight').removeClass('highlight');
-    var hash = document.location.hash;
+    var hash = window.location.hash;
     if (hash.length > 0) $(hash).addClass('highlight');
   };
-  $(document).on('hashchange', update_highlight);
+  $(window).on('hashchange', update_highlight);
   update_highlight();
 
-  $(document).on('mouseenter', 'div.calls', function() {
+  $(window).on('mouseenter', 'div.calls', function() {
     $(this).children().last().show();
   });
-  $(document).on('mouseleave', 'div.calls', function() {
+  $(window).on('mouseleave', 'div.calls', function() {
     $(this).children().last().hide();
   });
 </script>
