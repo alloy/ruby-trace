@@ -168,7 +168,13 @@ module RubyTrace
             out.write "#{(index+1).to_s.rjust(lineno_indent)}: "
             if line = file.lines[index+1]
               if line.method_definition
-                out.puts "<span style='font-weight:bold;font-style:italic;'>#{content_line}</span>"
+                links = line.method_definition.callers.map do |call|
+                  method_line = call.from_line
+                  method_html_file = Pathname.new(File.join(root, method_line.file.path) << '.html')
+                  href = "#{method_html_file.relative_path_from(destination_path.dirname)}##{method_line.lineno}"
+                  "<a href='#{href}'>#{method_line.file.path}##{method_line.lineno}</a>"
+                end
+                out.puts "<div class='calls' style='display:inline;'><span style='font-weight:bold;font-style:italic;'>#{content_line}</span> <span style='display:none;'>#{links.join(' ')}</span></div>"
               else
                 links = line.calls.map do |call|
                   method_line = call.method.line
@@ -176,7 +182,7 @@ module RubyTrace
                   href = "#{method_html_file.relative_path_from(destination_path.dirname)}##{method_line.lineno}"
                   "<a href='#{href}'>#{call.method.mod}##{call.method.name}</a>"
                 end
-                out.puts "<div class='calls' style='display:inline;'><span id='#{line.lineno}' style='font-weight:bold;'>#{content_line}</span> <span style='display:none;'>#{links.join(' ')}</span></div>"
+                out.puts "<div class='calls' style='display:inline;'><span style='font-weight:bold;'>#{content_line}</span> <span style='display:none;'>#{links.join(' ')}</span></div>"
               end
             else
               out.puts content_line
