@@ -187,7 +187,7 @@ module RubyTrace
 iframe { width: 100%; height: 600px; }
 </style>
 <script type="text/javascript">
-var history = #{history.to_json};
+var history = #{history.to_json.gsub('},{', "},\n{")};
 </script>
 </head>
 <body>
