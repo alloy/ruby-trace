@@ -255,7 +255,7 @@ div.line a { font-size: 12px; }
                   method_html_file = Pathname.new(File.join(root, method_line.file.path) << '.html')
                   href = "#{method_html_file.relative_path_from(destination_path.dirname)}##{method_line.lineno}"
                   "<a href='#{href}'>#{method_line.file.path}:#{method_line.lineno}</a>"
-                end
+                end.uniq.sort
                 out.write "<div class='calls'><span class='method_definition'>#{content_line}</span> <span style='display:none;'>#{links.join(' ')}</span></div>"
               else
                 links = line.calls.map do |call|
@@ -263,7 +263,7 @@ div.line a { font-size: 12px; }
                   method_html_file = Pathname.new(File.join(root, method_line.file.path) << '.html')
                   href = "#{method_html_file.relative_path_from(destination_path.dirname)}##{method_line.lineno}"
                   "<a href='#{href}'>#{call.method.mod}##{call.method.name}</a>"
-                end
+                end.uniq.sort
                 out.write "<div class='calls'><span class='method_call'>#{content_line}</span> <span style='display:none;'>#{links.join(' ')}</span></div>"
               end
             else
