@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+.highlight { background-color: rgb(255, 255, 204); }
+pre { display: inline; }
+div.calls { display: inline; }
+span.method_definition { font-weight: bold; }
+span.method_call { font-weight: bold; }
+div.line a { font-size: 12px; }
+</style>
+</head>
+<body>
+<div class='line' id='1'><pre>  1: </pre><pre>module I18n</pre></div>
+<div class='line' id='2'><pre>  2: </pre><pre>  class Config</pre></div>
+<div class='line' id='3'><pre>  3: </pre><pre>    # The only configuration value that is not global and scoped to thread is :locale.</pre></div>
+<div class='line' id='4'><pre>  4: </pre><pre>    # It defaults to the default_locale.</pre></div>
+<div class='line' id='5'><pre>  5: </pre><pre>    def locale</pre></div>
+<div class='line' id='6'><pre>  6: </pre><pre>      @locale ||= default_locale</pre></div>
+<div class='line' id='7'><pre>  7: </pre><pre>    end</pre></div>
+<div class='line' id='8'><pre>  8: </pre><pre></pre></div>
+<div class='line' id='9'><pre>  9: </pre><pre>    # Sets the current locale pseudo-globally, i.e. in the Thread.current hash.</pre></div>
+<div class='line' id='10'><pre> 10: </pre><pre>    def locale=(locale)</pre></div>
+<div class='line' id='11'><pre> 11: </pre><pre>      @locale = locale.to_sym rescue nil</pre></div>
+<div class='line' id='12'><pre> 12: </pre><pre>    end</pre></div>
+<div class='line' id='13'><pre> 13: </pre><pre></pre></div>
+<div class='line' id='14'><pre> 14: </pre><pre>    # Returns the current backend. Defaults to +Backend::Simple+.</pre></div>
+<div class='line' id='15'><pre> 15: </pre><pre>    def backend</pre></div>
+<div class='line' id='16'><pre> 16: </pre><pre>      @@backend ||= Backend::Simple.new</pre></div>
+<div class='line' id='17'><pre> 17: </pre><pre>    end</pre></div>
+<div class='line' id='18'><pre> 18: </pre><pre></pre></div>
+<div class='line' id='19'><pre> 19: </pre><pre>    # Sets the current backend. Used to set a custom backend.</pre></div>
+<div class='line' id='20'><pre> 20: </pre><pre>    def backend=(backend)</pre></div>
+<div class='line' id='21'><pre> 21: </pre><pre>      @@backend = backend</pre></div>
+<div class='line' id='22'><pre> 22: </pre><pre>    end</pre></div>
+<div class='line' id='23'><pre> 23: </pre><pre></pre></div>
+<div class='line' id='24'><pre> 24: </pre><pre>    # Returns the current default locale. Defaults to :'en'</pre></div>
+<div class='line' id='25'><pre> 25: </pre><pre>    def default_locale</pre></div>
+<div class='line' id='26'><pre> 26: </pre><pre>      @@default_locale ||= :en</pre></div>
+<div class='line' id='27'><pre> 27: </pre><pre>    end</pre></div>
+<div class='line' id='28'><pre> 28: </pre><pre></pre></div>
+<div class='line' id='29'><pre> 29: </pre><pre>    # Sets the current default locale. Used to set a custom default locale.</pre></div>
+<div class='line' id='30'><pre> 30: </pre><pre>    def default_locale=(locale)</pre></div>
+<div class='line' id='31'><pre> 31: </pre><pre>      @@default_locale = locale.to_sym rescue nil</pre></div>
+<div class='line' id='32'><pre> 32: </pre><pre>    end</pre></div>
+<div class='line' id='33'><pre> 33: </pre><pre></pre></div>
+<div class='line' id='34'><pre> 34: </pre><pre>    # Returns an array of locales for which translations are available.</pre></div>
+<div class='line' id='35'><pre> 35: </pre><pre>    # Unless you explicitely set these through I18n.available_locales=</pre></div>
+<div class='line' id='36'><pre> 36: </pre><pre>    # the call will be delegated to the backend.</pre></div>
+<div class='line' id='37'><pre> 37: </pre><pre>    def available_locales</pre></div>
+<div class='line' id='38'><pre> 38: </pre><pre>      @@available_locales ||= nil</pre></div>
+<div class='line' id='39'><pre> 39: </pre><pre>      @@available_locales || backend.available_locales</pre></div>
+<div class='line' id='40'><pre> 40: </pre><pre>    end</pre></div>
+<div class='line' id='41'><pre> 41: </pre><pre></pre></div>
+<div class='line' id='42'><pre> 42: </pre><pre>    # Sets the available locales.</pre></div>
+<div class='line' id='43'><pre> 43: </pre><pre>    def available_locales=(locales)</pre></div>
+<div class='line' id='44'><pre> 44: </pre><pre>      @@available_locales = Array(locales).map { |locale| locale.to_sym }</pre></div>
+<div class='line' id='45'><pre> 45: </pre><pre>      @@available_locales = nil if @@available_locales.empty?</pre></div>
+<div class='line' id='46'><pre> 46: </pre><pre>    end</pre></div>
+<div class='line' id='47'><pre> 47: </pre><pre></pre></div>
+<div class='line' id='48'><pre> 48: </pre><pre>    # Returns the current default scope separator. Defaults to '.'</pre></div>
+<div class='line' id='49'><pre> 49: </pre><pre>    def default_separator</pre></div>
+<div class='line' id='50'><pre> 50: </pre><pre>      @@default_separator ||= '.'</pre></div>
+<div class='line' id='51'><pre> 51: </pre><pre>    end</pre></div>
+<div class='line' id='52'><pre> 52: </pre><pre></pre></div>
+<div class='line' id='53'><pre> 53: </pre><pre>    # Sets the current default scope separator.</pre></div>
+<div class='line' id='54'><pre> 54: </pre><pre>    def default_separator=(separator)</pre></div>
+<div class='line' id='55'><pre> 55: </pre><pre>      @@default_separator = separator</pre></div>
+<div class='line' id='56'><pre> 56: </pre><pre>    end</pre></div>
+<div class='line' id='57'><pre> 57: </pre><pre></pre></div>
+<div class='line' id='58'><pre> 58: </pre><pre>    # Return the current exception handler. Defaults to :default_exception_handler.</pre></div>
+<div class='line' id='59'><pre> 59: </pre><pre>    def exception_handler</pre></div>
+<div class='line' id='60'><pre> 60: </pre><pre>      @@exception_handler ||= ExceptionHandler.new</pre></div>
+<div class='line' id='61'><pre> 61: </pre><pre>    end</pre></div>
+<div class='line' id='62'><pre> 62: </pre><pre></pre></div>
+<div class='line' id='63'><pre> 63: </pre><pre>    # Sets the exception handler.</pre></div>
+<div class='line' id='64'><pre> 64: </pre><pre>    def exception_handler=(exception_handler)</pre></div>
+<div class='line' id='65'><pre> 65: </pre><pre>      @@exception_handler = exception_handler</pre></div>
+<div class='line' id='66'><pre> 66: </pre><pre>    end</pre></div>
+<div class='line' id='67'><pre> 67: </pre><pre></pre></div>
+<div class='line' id='68'><pre> 68: </pre><pre>    # Returns the current handler for situations when interpolation argument</pre></div>
+<div class='line' id='69'><pre> 69: </pre><pre>    # is missing. MissingInterpolationArgument will be raised by default.</pre></div>
+<div class='line' id='70'><pre> 70: </pre><pre>    def missing_interpolation_argument_handler</pre></div>
+<div class='line' id='71'><pre> 71: </pre><pre>      @@missing_interpolation_argument_handler ||= lambda do |missing_key, provided_hash, string|</pre></div>
+<div class='line' id='72'><pre> 72: </pre><pre>        raise MissingInterpolationArgument.new(missing_key, provided_hash, string)</pre></div>
+<div class='line' id='73'><pre> 73: </pre><pre>      end</pre></div>
+<div class='line' id='74'><pre> 74: </pre><pre>    end</pre></div>
+<div class='line' id='75'><pre> 75: </pre><pre></pre></div>
+<div class='line' id='76'><pre> 76: </pre><pre>    # Sets the missing interpolation argument handler. It can be any</pre></div>
+<div class='line' id='77'><pre> 77: </pre><pre>    # object that responds to #call. The arguments that will be passed to #call</pre></div>
+<div class='line' id='78'><pre> 78: </pre><pre>    # are the same as for MissingInterpolationArgument initializer. Use +Proc.new+</pre></div>
+<div class='line' id='79'><pre> 79: </pre><pre>    # if you don't care about arity.</pre></div>
+<div class='line' id='80'><pre> 80: </pre><pre>    #</pre></div>
+<div class='line' id='81'><pre> 81: </pre><pre>    # == Example:</pre></div>
+<div class='line' id='82'><pre> 82: </pre><pre>    # You can supress raising an exception and return string instead:</pre></div>
+<div class='line' id='83'><pre> 83: </pre><pre>    #</pre></div>
+<div class='line' id='84'><pre> 84: </pre><pre>    #   I18n.config.missing_interpolation_argument_handler = Proc.new do |key|</pre></div>
+<div class='line' id='85'><pre> 85: </pre><pre>    #     "#{key} is missing"</pre></div>
+<div class='line' id='86'><pre> 86: </pre><pre>    #   end</pre></div>
+<div class='line' id='87'><pre> 87: </pre><pre>    def missing_interpolation_argument_handler=(exception_handler)</pre></div>
+<div class='line' id='88'><pre> 88: </pre><pre>      @@missing_interpolation_argument_handler = exception_handler</pre></div>
+<div class='line' id='89'><pre> 89: </pre><pre>    end</pre></div>
+<div class='line' id='90'><pre> 90: </pre><pre></pre></div>
+<div class='line' id='91'><pre> 91: </pre><pre>    # Allow clients to register paths providing translation data sources. The</pre></div>
+<div class='line' id='92'><pre> 92: </pre><pre>    # backend defines acceptable sources.</pre></div>
+<div class='line' id='93'><pre> 93: </pre><pre>    #</pre></div>
+<div class='line' id='94'><pre> 94: </pre><pre>    # E.g. the provided SimpleBackend accepts a list of paths to translation</pre></div>
+<div class='line' id='95'><pre> 95: </pre><pre>    # files which are either named *.rb and contain plain Ruby Hashes or are</pre></div>
+<div class='line' id='96'><pre> 96: </pre><pre>    # named *.yml and contain YAML data. So for the SimpleBackend clients may</pre></div>
+<div class='line' id='97'><pre> 97: </pre><pre>    # register translation files like this:</pre></div>
+<div class='line' id='98'><pre> 98: </pre><pre>    #   I18n.load_path << 'path/to/locale/en.yml'</pre></div>
+<div class='line' id='99'><pre> 99: </pre><div class='calls'><span class='method_definition'><pre>    def load_path</pre></span> <span style='display:none;'><a href='../i18n.rb.html#31'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/i18n-0.6.5/lib/i18n.rb:31</a></span></div></div>
+<div class='line' id='100'><pre>100: </pre><pre>      @@load_path ||= []</pre></div>
+<div class='line' id='101'><pre>101: </pre><pre>    end</pre></div>
+<div class='line' id='102'><pre>102: </pre><pre></pre></div>
+<div class='line' id='103'><pre>103: </pre><pre>    # Sets the load path instance. Custom implementations are expected to</pre></div>
+<div class='line' id='104'><pre>104: </pre><pre>    # behave like a Ruby Array.</pre></div>
+<div class='line' id='105'><pre>105: </pre><pre>    def load_path=(load_path)</pre></div>
+<div class='line' id='106'><pre>106: </pre><pre>      @@load_path = load_path</pre></div>
+<div class='line' id='107'><pre>107: </pre><pre>    end</pre></div>
+<div class='line' id='108'><pre>108: </pre><pre>  end</pre></div>
+<div class='line' id='109'><pre>109: </pre><pre>end</pre></div>
+<script src='../../../../../../../../../../../../../zepto.js'></script>
+<script>
+  var update_highlight = function() {
+    console.log('hash change');
+    $('div.highlight').removeClass('highlight');
+    var hash = window.location.hash;
+    if (hash.length > 0) $(hash).addClass('highlight');
+  };
+  $(window).on('hashchange', update_highlight);
+  update_highlight();
+
+  $(window).on('mouseenter', 'div.calls', function() {
+    $(this).children().last().show();
+  });
+  $(window).on('mouseleave', 'div.calls', function() {
+    $(this).children().last().hide();
+  });
+</script>
+</body>
+</html>

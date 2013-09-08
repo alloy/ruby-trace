@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+.highlight { background-color: rgb(255, 255, 204); }
+pre { display: inline; }
+div.calls { display: inline; }
+span.method_definition { font-weight: bold; }
+span.method_call { font-weight: bold; }
+div.line a { font-size: 12px; }
+</style>
+</head>
+<body>
+<div class='line' id='1'><pre>1: </pre><pre>begin</pre></div>
+<div class='line' id='2'><pre>2: </pre><pre>  require 'i18n'</pre></div>
+<div class='line' id='3'><pre>3: </pre><pre>  require 'active_support/lazy_load_hooks'</pre></div>
+<div class='line' id='4'><pre>4: </pre><pre>rescue LoadError => e</pre></div>
+<div class='line' id='5'><pre>5: </pre><pre>  $stderr.puts "The i18n gem is not available. Please add it to your Gemfile and run bundle install"</pre></div>
+<div class='line' id='6'><pre>6: </pre><pre>  raise e</pre></div>
+<div class='line' id='7'><pre>7: </pre><pre>end</pre></div>
+<div class='line' id='8'><pre>8: </pre><pre></pre></div>
+<div class='line' id='9'><pre>9: </pre><div class='calls'><span class='method_call'><pre>I18n.load_path << "#{File.dirname(__FILE__)}/locale/en.yml"</pre></span> <span style='display:none;'><a href='../../../i18n-0.6.5/lib/i18n.rb.html#30'>#<Module:0x007fd91abbc0d8>#load_path</a></span></div></div>
+<script src='../../../../../../../../../../../../../zepto.js'></script>
+<script>
+  var update_highlight = function() {
+    console.log('hash change');
+    $('div.highlight').removeClass('highlight');
+    var hash = window.location.hash;
+    if (hash.length > 0) $(hash).addClass('highlight');
+  };
+  $(window).on('hashchange', update_highlight);
+  update_highlight();
+
+  $(window).on('mouseenter', 'div.calls', function() {
+    $(this).children().last().show();
+  });
+  $(window).on('mouseleave', 'div.calls', function() {
+    $(this).children().last().hide();
+  });
+</script>
+</body>
+</html>

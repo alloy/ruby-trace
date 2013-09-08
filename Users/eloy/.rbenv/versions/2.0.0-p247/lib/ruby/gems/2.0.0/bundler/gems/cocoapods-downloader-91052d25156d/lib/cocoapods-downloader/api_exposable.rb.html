@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+.highlight { background-color: rgb(255, 255, 204); }
+pre { display: inline; }
+div.calls { display: inline; }
+span.method_definition { font-weight: bold; }
+span.method_call { font-weight: bold; }
+div.line a { font-size: 12px; }
+</style>
+</head>
+<body>
+<div class='line' id='1'><pre> 1: </pre><pre>module Pod</pre></div>
+<div class='line' id='2'><pre> 2: </pre><pre>  module Downloader</pre></div>
+<div class='line' id='3'><pre> 3: </pre><pre>    module APIExposable</pre></div>
+<div class='line' id='4'><pre> 4: </pre><pre></pre></div>
+<div class='line' id='5'><pre> 5: </pre><div class='calls'><span class='method_definition'><pre>      def expose_api(mod = nil, &block)</pre></span> <span style='display:none;'><a href='base.rb.html#13'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/cocoapods-downloader-91052d25156d/lib/cocoapods-downloader/base.rb:13</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/lib/cocoapods/downloader.rb.html#7'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/downloader.rb:7</a></span></div></div>
+<div class='line' id='6'><pre> 6: </pre><pre>        if mod.nil?</pre></div>
+<div class='line' id='7'><pre> 7: </pre><pre>          if block.nil?</pre></div>
+<div class='line' id='8'><pre> 8: </pre><pre>            raise "Either a module or a block that's used to create a module is required."</pre></div>
+<div class='line' id='9'><pre> 9: </pre><pre>          else</pre></div>
+<div class='line' id='10'><pre>10: </pre><pre>            mod = Module.new(&block)</pre></div>
+<div class='line' id='11'><pre>11: </pre><pre>          end</pre></div>
+<div class='line' id='12'><pre>12: </pre><pre>        elsif mod && block</pre></div>
+<div class='line' id='13'><pre>13: </pre><pre>          raise "Only a module *or* is required, not both."</pre></div>
+<div class='line' id='14'><pre>14: </pre><pre>        end</pre></div>
+<div class='line' id='15'><pre>15: </pre><pre>        include mod</pre></div>
+<div class='line' id='16'><pre>16: </pre><pre>      end</pre></div>
+<div class='line' id='17'><pre>17: </pre><pre></pre></div>
+<div class='line' id='18'><pre>18: </pre><pre>      alias_method :override_api, :expose_api</pre></div>
+<div class='line' id='19'><pre>19: </pre><pre>    end</pre></div>
+<div class='line' id='20'><pre>20: </pre><pre>  end</pre></div>
+<div class='line' id='21'><pre>21: </pre><pre>end</pre></div>
+<script src='../../../../../../../../../../../../../../zepto.js'></script>
+<script>
+  var update_highlight = function() {
+    console.log('hash change');
+    $('div.highlight').removeClass('highlight');
+    var hash = window.location.hash;
+    if (hash.length > 0) $(hash).addClass('highlight');
+  };
+  $(window).on('hashchange', update_highlight);
+  update_highlight();
+
+  $(window).on('mouseenter', 'div.calls', function() {
+    $(this).children().last().show();
+  });
+  $(window).on('mouseleave', 'div.calls', function() {
+    $(this).children().last().hide();
+  });
+</script>
+</body>
+</html>

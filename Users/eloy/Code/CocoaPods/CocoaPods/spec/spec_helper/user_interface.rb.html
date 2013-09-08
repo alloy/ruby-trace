@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+.highlight { background-color: rgb(255, 255, 204); }
+pre { display: inline; }
+div.calls { display: inline; }
+span.method_definition { font-weight: bold; }
+span.method_call { font-weight: bold; }
+div.line a { font-size: 12px; }
+</style>
+</head>
+<body>
+<div class='line' id='1'><pre> 1: </pre><pre>module Pod</pre></div>
+<div class='line' id='2'><pre> 2: </pre><pre></pre></div>
+<div class='line' id='3'><pre> 3: </pre><pre>  # Disable the wrapping so the output is deterministic in the tests.</pre></div>
+<div class='line' id='4'><pre> 4: </pre><pre>  #</pre></div>
+<div class='line' id='5'><pre> 5: </pre><pre>  UI.disable_wrap = true</pre></div>
+<div class='line' id='6'><pre> 6: </pre><pre></pre></div>
+<div class='line' id='7'><pre> 7: </pre><pre>  # Redirects the messages to an internal store.</pre></div>
+<div class='line' id='8'><pre> 8: </pre><pre>  #</pre></div>
+<div class='line' id='9'><pre> 9: </pre><pre>  module UI</pre></div>
+<div class='line' id='10'><pre>10: </pre><pre>    @output = ''</pre></div>
+<div class='line' id='11'><pre>11: </pre><pre>    @warnings = ''</pre></div>
+<div class='line' id='12'><pre>12: </pre><pre></pre></div>
+<div class='line' id='13'><pre>13: </pre><pre>    class << self</pre></div>
+<div class='line' id='14'><pre>14: </pre><pre>      attr_accessor :output</pre></div>
+<div class='line' id='15'><pre>15: </pre><pre>      attr_accessor :warnings</pre></div>
+<div class='line' id='16'><pre>16: </pre><pre></pre></div>
+<div class='line' id='17'><pre>17: </pre><div class='calls'><span class='method_definition'><pre>      def puts(message = '')</pre></span> <span style='display:none;'><a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a> <a href='../../lib/cocoapods/user_interface.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:47</a></span></div></div>
+<div class='line' id='18'><pre>18: </pre><pre>        @output << "#{message}\n"</pre></div>
+<div class='line' id='19'><pre>19: </pre><pre>      end</pre></div>
+<div class='line' id='20'><pre>20: </pre><pre></pre></div>
+<div class='line' id='21'><pre>21: </pre><div class='calls'><span class='method_definition'><pre>      def warn(message = '', actions = [])</pre></span> <span style='display:none;'><a href='../../lib/cocoapods/user_interface.rb.html#299'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:299</a> <a href='../../lib/cocoapods/user_interface.rb.html#299'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:299</a> <a href='../../lib/cocoapods/user_interface.rb.html#299'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:299</a> <a href='../../lib/cocoapods/user_interface.rb.html#299'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:299</a> <a href='../../lib/cocoapods/user_interface.rb.html#299'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:299</a> <a href='../../lib/cocoapods/user_interface.rb.html#299'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/user_interface.rb:299</a> <a href='../../lib/cocoapods/hooks/library_representation.rb.html#30'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/hooks/library_representation.rb:30</a></span></div></div>
+<div class='line' id='22'><pre>22: </pre><pre>        @warnings << "#{message}\n"</pre></div>
+<div class='line' id='23'><pre>23: </pre><pre>      end</pre></div>
+<div class='line' id='24'><pre>24: </pre><pre></pre></div>
+<div class='line' id='25'><pre>25: </pre><pre>      def print(message)</pre></div>
+<div class='line' id='26'><pre>26: </pre><pre>        @output << message</pre></div>
+<div class='line' id='27'><pre>27: </pre><pre>      end</pre></div>
+<div class='line' id='28'><pre>28: </pre><pre>    end</pre></div>
+<div class='line' id='29'><pre>29: </pre><pre>  end</pre></div>
+<div class='line' id='30'><pre>30: </pre><pre>end</pre></div>
+<script src='../../../../../../../zepto.js'></script>
+<script>
+  var update_highlight = function() {
+    console.log('hash change');
+    $('div.highlight').removeClass('highlight');
+    var hash = window.location.hash;
+    if (hash.length > 0) $(hash).addClass('highlight');
+  };
+  $(window).on('hashchange', update_highlight);
+  update_highlight();
+
+  $(window).on('mouseenter', 'div.calls', function() {
+    $(this).children().last().show();
+  });
+  $(window).on('mouseleave', 'div.calls', function() {
+    $(this).children().last().hide();
+  });
+</script>
+</body>
+</html>

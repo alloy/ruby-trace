@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+.highlight { background-color: rgb(255, 255, 204); }
+pre { display: inline; }
+div.calls { display: inline; }
+span.method_definition { font-weight: bold; }
+span.method_call { font-weight: bold; }
+div.line a { font-size: 12px; }
+</style>
+</head>
+<body>
+<div class='line' id='1'><pre> 1: </pre><pre>##</pre></div>
+<div class='line' id='2'><pre> 2: </pre><pre># The YAML module is an alias of Psych, the YAML engine for ruby.</pre></div>
+<div class='line' id='3'><pre> 3: </pre><pre></pre></div>
+<div class='line' id='4'><pre> 4: </pre><pre>begin</pre></div>
+<div class='line' id='5'><pre> 5: </pre><pre>  require 'psych'</pre></div>
+<div class='line' id='6'><pre> 6: </pre><pre>rescue LoadError</pre></div>
+<div class='line' id='7'><pre> 7: </pre><pre>  warn "#{caller[0]}:"</pre></div>
+<div class='line' id='8'><pre> 8: </pre><pre>  warn "It seems your ruby installation is missing psych (for YAML output)."</pre></div>
+<div class='line' id='9'><pre> 9: </pre><pre>  warn "To eliminate this warning, please install libyaml and reinstall your ruby."</pre></div>
+<div class='line' id='10'><pre>10: </pre><pre>  raise</pre></div>
+<div class='line' id='11'><pre>11: </pre><pre>end</pre></div>
+<div class='line' id='12'><pre>12: </pre><pre></pre></div>
+<div class='line' id='13'><pre>13: </pre><pre>YAML = Psych</pre></div>
+<div class='line' id='14'><pre>14: </pre><pre></pre></div>
+<div class='line' id='15'><pre>15: </pre><pre>module Psych # :nodoc:</pre></div>
+<div class='line' id='16'><pre>16: </pre><pre>  # For compatibility, deprecated</pre></div>
+<div class='line' id='17'><pre>17: </pre><pre>  class EngineManager # :nodoc:</pre></div>
+<div class='line' id='18'><pre>18: </pre><pre>    attr_reader :yamler # :nodoc:</pre></div>
+<div class='line' id='19'><pre>19: </pre><pre></pre></div>
+<div class='line' id='20'><pre>20: </pre><div class='calls'><span class='method_definition'><pre>    def initialize # :nodoc:</pre></span> <span style='display:none;'><a href='yaml.rb.html#46'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/yaml.rb:46</a></span></div></div>
+<div class='line' id='21'><pre>21: </pre><pre>      @yamler = 'psych'</pre></div>
+<div class='line' id='22'><pre>22: </pre><pre>    end</pre></div>
+<div class='line' id='23'><pre>23: </pre><pre></pre></div>
+<div class='line' id='24'><pre>24: </pre><pre>    def syck? # :nodoc:</pre></div>
+<div class='line' id='25'><pre>25: </pre><pre>      false</pre></div>
+<div class='line' id='26'><pre>26: </pre><pre>    end</pre></div>
+<div class='line' id='27'><pre>27: </pre><pre></pre></div>
+<div class='line' id='28'><pre>28: </pre><pre>    # Psych is always used and this method has no effect.</pre></div>
+<div class='line' id='29'><pre>29: </pre><pre>    #</pre></div>
+<div class='line' id='30'><pre>30: </pre><pre>    # This method is still present for compatibility.</pre></div>
+<div class='line' id='31'><pre>31: </pre><pre>    #</pre></div>
+<div class='line' id='32'><pre>32: </pre><pre>    # You may still use the Syck engine by installing</pre></div>
+<div class='line' id='33'><pre>33: </pre><pre>    # the 'syck' gem and using the Syck constant.</pre></div>
+<div class='line' id='34'><pre>34: </pre><pre>    def yamler= engine # :nodoc:</pre></div>
+<div class='line' id='35'><pre>35: </pre><pre>      case engine</pre></div>
+<div class='line' id='36'><pre>36: </pre><pre>      when 'syck' then warn "syck has been removed, psych is used instead"</pre></div>
+<div class='line' id='37'><pre>37: </pre><pre>      when 'psych' then @yamler = 'psych'</pre></div>
+<div class='line' id='38'><pre>38: </pre><pre>      else</pre></div>
+<div class='line' id='39'><pre>39: </pre><pre>        raise(ArgumentError, "bad engine")</pre></div>
+<div class='line' id='40'><pre>40: </pre><pre>      end</pre></div>
+<div class='line' id='41'><pre>41: </pre><pre></pre></div>
+<div class='line' id='42'><pre>42: </pre><pre>      engine</pre></div>
+<div class='line' id='43'><pre>43: </pre><pre>    end</pre></div>
+<div class='line' id='44'><pre>44: </pre><pre>  end</pre></div>
+<div class='line' id='45'><pre>45: </pre><pre></pre></div>
+<div class='line' id='46'><pre>46: </pre><div class='calls'><span class='method_call'><pre>  ENGINE = EngineManager.new # :nodoc:</pre></span> <span style='display:none;'><a href='yaml.rb.html#20'>Psych::EngineManager#initialize</a></span></div></div>
+<div class='line' id='47'><pre>47: </pre><pre>end</pre></div>
+<div class='line' id='48'><pre>48: </pre><pre></pre></div>
+<div class='line' id='49'><pre>49: </pre><pre># YAML Ain't Markup Language</pre></div>
+<div class='line' id='50'><pre>50: </pre><pre>#</pre></div>
+<div class='line' id='51'><pre>51: </pre><pre># This module provides a Ruby interface for data serialization in YAML format.</pre></div>
+<div class='line' id='52'><pre>52: </pre><pre>#</pre></div>
+<div class='line' id='53'><pre>53: </pre><pre># The underlying implementation is the libyaml wrapper Psych.</pre></div>
+<div class='line' id='54'><pre>54: </pre><pre>#</pre></div>
+<div class='line' id='55'><pre>55: </pre><pre># == Usage</pre></div>
+<div class='line' id='56'><pre>56: </pre><pre>#</pre></div>
+<div class='line' id='57'><pre>57: </pre><pre># Working with YAML can be very simple, for example:</pre></div>
+<div class='line' id='58'><pre>58: </pre><pre>#</pre></div>
+<div class='line' id='59'><pre>59: </pre><pre>#     require 'yaml' # STEP ONE, REQUIRE YAML!</pre></div>
+<div class='line' id='60'><pre>60: </pre><pre>#     # Parse a YAML string</pre></div>
+<div class='line' id='61'><pre>61: </pre><pre>#     YAML.load("--- foo") #=> "foo"</pre></div>
+<div class='line' id='62'><pre>62: </pre><pre>#</pre></div>
+<div class='line' id='63'><pre>63: </pre><pre>#     # Emit some YAML</pre></div>
+<div class='line' id='64'><pre>64: </pre><pre>#     YAML.dump("foo")     # => "--- foo\n...\n"</pre></div>
+<div class='line' id='65'><pre>65: </pre><pre>#     { :a => 'b'}.to_yaml  # => "---\n:a: b\n"</pre></div>
+<div class='line' id='66'><pre>66: </pre><pre>#</pre></div>
+<div class='line' id='67'><pre>67: </pre><pre># == Security</pre></div>
+<div class='line' id='68'><pre>68: </pre><pre>#</pre></div>
+<div class='line' id='69'><pre>69: </pre><pre># Do not use YAML to load untrusted data. Doing so is unsafe and could allow</pre></div>
+<div class='line' id='70'><pre>70: </pre><pre># malicious input to execute arbitrary code inside your application. Please see</pre></div>
+<div class='line' id='71'><pre>71: </pre><pre># doc/security.rdoc for more information.</pre></div>
+<div class='line' id='72'><pre>72: </pre><pre>#</pre></div>
+<div class='line' id='73'><pre>73: </pre><pre># == History</pre></div>
+<div class='line' id='74'><pre>74: </pre><pre>#</pre></div>
+<div class='line' id='75'><pre>75: </pre><pre># Syck was the original for YAML implementation in Ruby's standard library</pre></div>
+<div class='line' id='76'><pre>76: </pre><pre># developed by why the lucky stiff.</pre></div>
+<div class='line' id='77'><pre>77: </pre><pre>#</pre></div>
+<div class='line' id='78'><pre>78: </pre><pre># You can still use Syck, if you prefer, for parsing and emitting YAML, but you</pre></div>
+<div class='line' id='79'><pre>79: </pre><pre># must install the 'syck' gem now in order to use it.</pre></div>
+<div class='line' id='80'><pre>80: </pre><pre>#</pre></div>
+<div class='line' id='81'><pre>81: </pre><pre># In older Ruby versions, ie. <= 1.9, Syck is still provided, however it was</pre></div>
+<div class='line' id='82'><pre>82: </pre><pre># completely removed with the release of Ruby 2.0.0.</pre></div>
+<div class='line' id='83'><pre>83: </pre><pre>#</pre></div>
+<div class='line' id='84'><pre>84: </pre><pre># == More info</pre></div>
+<div class='line' id='85'><pre>85: </pre><pre>#</pre></div>
+<div class='line' id='86'><pre>86: </pre><pre># For more advanced details on the implementation see Psych, and also check out</pre></div>
+<div class='line' id='87'><pre>87: </pre><pre># http://yaml.org for spec details and other helpful information.</pre></div>
+<div class='line' id='88'><pre>88: </pre><pre>module YAML</pre></div>
+<div class='line' id='89'><pre>89: </pre><pre>end</pre></div>
+<script src='../../../../../../../../zepto.js'></script>
+<script>
+  var update_highlight = function() {
+    console.log('hash change');
+    $('div.highlight').removeClass('highlight');
+    var hash = window.location.hash;
+    if (hash.length > 0) $(hash).addClass('highlight');
+  };
+  $(window).on('hashchange', update_highlight);
+  update_highlight();
+
+  $(window).on('mouseenter', 'div.calls', function() {
+    $(this).children().last().show();
+  });
+  $(window).on('mouseleave', 'div.calls', function() {
+    $(this).children().last().hide();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+.highlight { background-color: rgb(255, 255, 204); }
+pre { display: inline; }
+div.calls { display: inline; }
+span.method_definition { font-weight: bold; }
+span.method_call { font-weight: bold; }
+div.line a { font-size: 12px; }
+</style>
+</head>
+<body>
+<div class='line' id='1'><pre> 1: </pre><pre>module Bacon</pre></div>
+<div class='line' id='2'><pre> 2: </pre><pre></pre></div>
+<div class='line' id='3'><pre> 3: </pre><pre>  class Context</pre></div>
+<div class='line' id='4'><pre> 4: </pre><pre></pre></div>
+<div class='line' id='5'><pre> 5: </pre><pre>    # Add support for disabled specs</pre></div>
+<div class='line' id='6'><pre> 6: </pre><pre>    #</pre></div>
+<div class='line' id='7'><pre> 7: </pre><pre>    def xit(description, &block)</pre></div>
+<div class='line' id='8'><pre> 8: </pre><pre>      Counter[:disabled] += 1</pre></div>
+<div class='line' id='9'><pre> 9: </pre><pre>      Bacon.handle_requirement(description, true) {[]}</pre></div>
+<div class='line' id='10'><pre>10: </pre><pre>    end</pre></div>
+<div class='line' id='11'><pre>11: </pre><pre></pre></div>
+<div class='line' id='12'><pre>12: </pre><pre>    # Add support for running only focused specs</pre></div>
+<div class='line' id='13'><pre>13: </pre><pre>    #</pre></div>
+<div class='line' id='14'><pre>14: </pre><pre>    # @note The implementation is a hack because bacon evaluates Context#it</pre></div>
+<div class='line' id='15'><pre>15: </pre><pre>    #       immediately. Therefore this method is intended to be **temporary**.</pre></div>
+<div class='line' id='16'><pre>16: </pre><pre>    #</pre></div>
+<div class='line' id='17'><pre>17: </pre><pre>    # @example</pre></div>
+<div class='line' id='18'><pre>18: </pre><pre>    #</pre></div>
+<div class='line' id='19'><pre>19: </pre><pre>    # module BaconFocusedMode; end</pre></div>
+<div class='line' id='20'><pre>20: </pre><pre>    #</pre></div>
+<div class='line' id='21'><pre>21: </pre><pre>    # describe "A Context" do</pre></div>
+<div class='line' id='22'><pre>22: </pre><pre>    #   it "will *not* runt" do; end</pre></div>
+<div class='line' id='23'><pre>23: </pre><pre>    #   fit "will runt" do; end</pre></div>
+<div class='line' id='24'><pre>24: </pre><pre>    # end</pre></div>
+<div class='line' id='25'><pre>25: </pre><pre>    #</pre></div>
+<div class='line' id='26'><pre>26: </pre><pre>    #</pre></div>
+<div class='line' id='27'><pre>27: </pre><pre>    def fit(description, &block)</pre></div>
+<div class='line' id='28'><pre>28: </pre><pre>      origina_it(description, &block)</pre></div>
+<div class='line' id='29'><pre>29: </pre><pre>    end</pre></div>
+<div class='line' id='30'><pre>30: </pre><pre></pre></div>
+<div class='line' id='31'><pre>31: </pre><pre>    # Add support for focused specs</pre></div>
+<div class='line' id='32'><pre>32: </pre><pre>    #</pre></div>
+<div class='line' id='33'><pre>33: </pre><pre>    alias :origina_it :it</pre></div>
+<div class='line' id='34'><pre>34: </pre><div class='calls'><span class='method_definition'><pre>    def it(description, &block)</pre></span> <span style='display:none;'><a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb.html#28'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:28</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb.html#32'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:32</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb.html#38'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:38</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb.html#42'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:42</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb.html#46'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:46</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb.html#53'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:53</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb.html#65'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:65</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb.html#69'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:69</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb.html#73'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:73</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb.html#17'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb:17</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb.html#21'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb:21</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb.html#26'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb:26</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb.html#31'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb:31</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb.html#36'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb:36</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb.html#40'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb:40</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb.html#18'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:18</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb.html#22'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:22</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb.html#27'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:27</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb.html#31'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:31</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb.html#35'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:35</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb.html#39'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:39</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb.html#45'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:45</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb.html#55'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:55</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb.html#59'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:59</a> <a href='../../../../../../../../../../../../Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb.html#63'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:63</a></span></div></div>
+<div class='line' id='35'><pre>35: </pre><pre>      unless defined?(::BaconFocusedMode)</pre></div>
+<div class='line' id='36'><pre>36: </pre><div class='calls'><span class='method_call'><pre>        origina_it(description, &block)</pre></span> <span style='display:none;'><a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a> <a href='../../../../../gems/mocha-on-bacon-0.2.2/lib/mocha-on-bacon.rb.html#53'>Bacon::Context#it</a></span></div></div>
+<div class='line' id='37'><pre>37: </pre><pre>      end</pre></div>
+<div class='line' id='38'><pre>38: </pre><pre>    end</pre></div>
+<div class='line' id='39'><pre>39: </pre><pre>  end</pre></div>
+<div class='line' id='40'><pre>40: </pre><pre></pre></div>
+<div class='line' id='41'><pre>41: </pre><pre>end</pre></div>
+<script src='../../../../../../../../../../../../../../zepto.js'></script>
+<script>
+  var update_highlight = function() {
+    console.log('hash change');
+    $('div.highlight').removeClass('highlight');
+    var hash = window.location.hash;
+    if (hash.length > 0) $(hash).addClass('highlight');
+  };
+  $(window).on('hashchange', update_highlight);
+  update_highlight();
+
+  $(window).on('mouseenter', 'div.calls', function() {
+    $(this).children().last().show();
+  });
+  $(window).on('mouseleave', 'div.calls', function() {
+    $(this).children().last().hide();
+  });
+</script>
+</body>
+</html>

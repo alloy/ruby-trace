@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+.highlight { background-color: rgb(255, 255, 204); }
+pre { display: inline; }
+div.calls { display: inline; }
+span.method_definition { font-weight: bold; }
+span.method_call { font-weight: bold; }
+div.line a { font-size: 12px; }
+</style>
+</head>
+<body>
+<div class='line' id='1'><pre>  1: </pre><pre>module Pod</pre></div>
+<div class='line' id='2'><pre>  2: </pre><pre></pre></div>
+<div class='line' id='3'><pre>  3: </pre><pre>  # The Installer is responsible of taking a Podfile and transform it in the</pre></div>
+<div class='line' id='4'><pre>  4: </pre><pre>  # Pods libraries. It also integrates the user project so the Pods</pre></div>
+<div class='line' id='5'><pre>  5: </pre><pre>  # libraries can be used out of the box.</pre></div>
+<div class='line' id='6'><pre>  6: </pre><pre>  #</pre></div>
+<div class='line' id='7'><pre>  7: </pre><pre>  # The Installer is capable of doing incremental updates to an existing Pod</pre></div>
+<div class='line' id='8'><pre>  8: </pre><pre>  # installation.</pre></div>
+<div class='line' id='9'><pre>  9: </pre><pre>  #</pre></div>
+<div class='line' id='10'><pre> 10: </pre><pre>  # The Installer gets the information that it needs mainly from 3 files:</pre></div>
+<div class='line' id='11'><pre> 11: </pre><pre>  #</pre></div>
+<div class='line' id='12'><pre> 12: </pre><pre>  #   - Podfile: The specification written by the user that contains</pre></div>
+<div class='line' id='13'><pre> 13: </pre><pre>  #     information about targets and Pods.</pre></div>
+<div class='line' id='14'><pre> 14: </pre><pre>  #   - Podfile.lock: Contains information about the pods that were previously</pre></div>
+<div class='line' id='15'><pre> 15: </pre><pre>  #     installed and in concert with the Podfile provides information about</pre></div>
+<div class='line' id='16'><pre> 16: </pre><pre>  #     which specific version of a Pod should be installed. This file is</pre></div>
+<div class='line' id='17'><pre> 17: </pre><pre>  #     ignored in update mode.</pre></div>
+<div class='line' id='18'><pre> 18: </pre><pre>  #   - Manifest.lock: A file contained in the Pods folder that keeps track of</pre></div>
+<div class='line' id='19'><pre> 19: </pre><pre>  #     the pods installed in the local machine. This files is used once the</pre></div>
+<div class='line' id='20'><pre> 20: </pre><pre>  #     exact versions of the Pods has been computed to detect if that version</pre></div>
+<div class='line' id='21'><pre> 21: </pre><pre>  #     is already installed. This file is not intended to be kept under source</pre></div>
+<div class='line' id='22'><pre> 22: </pre><pre>  #     control and is a copy of the Podfile.lock.</pre></div>
+<div class='line' id='23'><pre> 23: </pre><pre>  #</pre></div>
+<div class='line' id='24'><pre> 24: </pre><pre>  # The Installer is designed to work in environments where the Podfile folder</pre></div>
+<div class='line' id='25'><pre> 25: </pre><pre>  # is under source control and environments where it is not. The rest of the</pre></div>
+<div class='line' id='26'><pre> 26: </pre><pre>  # files, like the user project and the workspace are assumed to be under</pre></div>
+<div class='line' id='27'><pre> 27: </pre><pre>  # source control.</pre></div>
+<div class='line' id='28'><pre> 28: </pre><pre>  #</pre></div>
+<div class='line' id='29'><pre> 29: </pre><pre>  class Installer</pre></div>
+<div class='line' id='30'><pre> 30: </pre><pre></pre></div>
+<div class='line' id='31'><pre> 31: </pre><pre>    autoload :Analyzer,                 'cocoapods/installer/analyzer'</pre></div>
+<div class='line' id='32'><pre> 32: </pre><pre>    autoload :FileReferencesInstaller,  'cocoapods/installer/file_references_installer'</pre></div>
+<div class='line' id='33'><pre> 33: </pre><pre>    autoload :PodSourceInstaller,       'cocoapods/installer/pod_source_installer'</pre></div>
+<div class='line' id='34'><pre> 34: </pre><pre>    autoload :TargetInstaller,          'cocoapods/installer/target_installer'</pre></div>
+<div class='line' id='35'><pre> 35: </pre><pre>    autoload :AggregateTargetInstaller, 'cocoapods/installer/target_installer/aggregate_target_installer'</pre></div>
+<div class='line' id='36'><pre> 36: </pre><pre>    autoload :PodTargetInstaller,       'cocoapods/installer/target_installer/pod_target_installer'</pre></div>
+<div class='line' id='37'><pre> 37: </pre><pre>    autoload :UserProjectIntegrator,    'cocoapods/installer/user_project_integrator'</pre></div>
+<div class='line' id='38'><pre> 38: </pre><pre></pre></div>
+<div class='line' id='39'><pre> 39: </pre><pre>    include Config::Mixin</pre></div>
+<div class='line' id='40'><pre> 40: </pre><pre></pre></div>
+<div class='line' id='41'><pre> 41: </pre><pre>    # @return [Sandbox] The sandbox where the Pods should be installed.</pre></div>
+<div class='line' id='42'><pre> 42: </pre><pre>    #</pre></div>
+<div class='line' id='43'><pre> 43: </pre><pre>    attr_reader :sandbox</pre></div>
+<div class='line' id='44'><pre> 44: </pre><pre></pre></div>
+<div class='line' id='45'><pre> 45: </pre><pre>    # @return [Podfile] The Podfile specification that contains the information</pre></div>
+<div class='line' id='46'><pre> 46: </pre><pre>    #         of the Pods that should be installed.</pre></div>
+<div class='line' id='47'><pre> 47: </pre><pre>    #</pre></div>
+<div class='line' id='48'><pre> 48: </pre><pre>    attr_reader :podfile</pre></div>
+<div class='line' id='49'><pre> 49: </pre><pre></pre></div>
+<div class='line' id='50'><pre> 50: </pre><pre>    # @return [Lockfile] The Lockfile that stores the information about the</pre></div>
+<div class='line' id='51'><pre> 51: </pre><pre>    #         Pods previously installed on any machine.</pre></div>
+<div class='line' id='52'><pre> 52: </pre><pre>    #</pre></div>
+<div class='line' id='53'><pre> 53: </pre><pre>    attr_reader :lockfile</pre></div>
+<div class='line' id='54'><pre> 54: </pre><pre></pre></div>
+<div class='line' id='55'><pre> 55: </pre><pre>    # @param  [Sandbox]  sandbox     @see sandbox</pre></div>
+<div class='line' id='56'><pre> 56: </pre><pre>    # @param  [Podfile]  podfile     @see podfile</pre></div>
+<div class='line' id='57'><pre> 57: </pre><pre>    # @param  [Lockfile] lockfile    @see lockfile</pre></div>
+<div class='line' id='58'><pre> 58: </pre><pre>    #</pre></div>
+<div class='line' id='59'><pre> 59: </pre><div class='calls'><span class='method_definition'><pre>    def initialize(sandbox, podfile, lockfile = nil)</pre></span> <span style='display:none;'><a href='../../spec/unit/hooks/installer_representation_spec.rb.html#17'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:17</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#17'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:17</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#17'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:17</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#17'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:17</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#17'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:17</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#17'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:17</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#17'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:17</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#17'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:17</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#17'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:17</a></span></div></div>
+<div class='line' id='60'><pre> 60: </pre><pre>      @sandbox  = sandbox</pre></div>
+<div class='line' id='61'><pre> 61: </pre><pre>      @podfile  = podfile</pre></div>
+<div class='line' id='62'><pre> 62: </pre><pre>      @lockfile = lockfile</pre></div>
+<div class='line' id='63'><pre> 63: </pre><pre>    end</pre></div>
+<div class='line' id='64'><pre> 64: </pre><pre></pre></div>
+<div class='line' id='65'><pre> 65: </pre><pre>    # @return [Bool] Whether the installer is in update mode. In update mode</pre></div>
+<div class='line' id='66'><pre> 66: </pre><pre>    #         the contents of the Lockfile are not taken into account for</pre></div>
+<div class='line' id='67'><pre> 67: </pre><pre>    #         deciding what Pods to install.</pre></div>
+<div class='line' id='68'><pre> 68: </pre><pre>    #</pre></div>
+<div class='line' id='69'><pre> 69: </pre><pre>    attr_accessor :update_mode</pre></div>
+<div class='line' id='70'><pre> 70: </pre><pre></pre></div>
+<div class='line' id='71'><pre> 71: </pre><pre>    # Installs the Pods.</pre></div>
+<div class='line' id='72'><pre> 72: </pre><pre>    #</pre></div>
+<div class='line' id='73'><pre> 73: </pre><pre>    # The installation process of is mostly linear with few minor complications</pre></div>
+<div class='line' id='74'><pre> 74: </pre><pre>    # to keep in mind:</pre></div>
+<div class='line' id='75'><pre> 75: </pre><pre>    #</pre></div>
+<div class='line' id='76'><pre> 76: </pre><pre>    # - The stored podspecs need to be cleaned before the resolution step</pre></div>
+<div class='line' id='77'><pre> 77: </pre><pre>    #   otherwise the sandbox might return an old podspec and not download</pre></div>
+<div class='line' id='78'><pre> 78: </pre><pre>    #   the new one from an external source.</pre></div>
+<div class='line' id='79'><pre> 79: </pre><pre>    # - The resolver might trigger the download of Pods from external sources</pre></div>
+<div class='line' id='80'><pre> 80: </pre><pre>    #   necessary to retrieve their podspec (unless it is instructed not to</pre></div>
+<div class='line' id='81'><pre> 81: </pre><pre>    #   do it).</pre></div>
+<div class='line' id='82'><pre> 82: </pre><pre>    #</pre></div>
+<div class='line' id='83'><pre> 83: </pre><pre>    # @return [void]</pre></div>
+<div class='line' id='84'><pre> 84: </pre><pre>    #</pre></div>
+<div class='line' id='85'><pre> 85: </pre><pre>    def install!</pre></div>
+<div class='line' id='86'><pre> 86: </pre><pre>      resolve_dependencies</pre></div>
+<div class='line' id='87'><pre> 87: </pre><pre>      download_dependencies</pre></div>
+<div class='line' id='88'><pre> 88: </pre><pre>      generate_pods_project</pre></div>
+<div class='line' id='89'><pre> 89: </pre><pre>      integrate_user_project if config.integrate_targets?</pre></div>
+<div class='line' id='90'><pre> 90: </pre><pre>    end</pre></div>
+<div class='line' id='91'><pre> 91: </pre><pre></pre></div>
+<div class='line' id='92'><pre> 92: </pre><pre>    def resolve_dependencies</pre></div>
+<div class='line' id='93'><pre> 93: </pre><pre>      UI.section "Analyzing dependencies" do</pre></div>
+<div class='line' id='94'><pre> 94: </pre><pre>        analyze</pre></div>
+<div class='line' id='95'><pre> 95: </pre><pre>        prepare_for_legacy_compatibility</pre></div>
+<div class='line' id='96'><pre> 96: </pre><pre>        clean_sandbox</pre></div>
+<div class='line' id='97'><pre> 97: </pre><pre>      end</pre></div>
+<div class='line' id='98'><pre> 98: </pre><pre>    end</pre></div>
+<div class='line' id='99'><pre> 99: </pre><pre></pre></div>
+<div class='line' id='100'><pre>100: </pre><pre>    def download_dependencies</pre></div>
+<div class='line' id='101'><pre>101: </pre><pre>      UI.section "Downloading dependencies" do</pre></div>
+<div class='line' id='102'><pre>102: </pre><pre>        create_file_accessors</pre></div>
+<div class='line' id='103'><pre>103: </pre><pre>        install_pod_sources</pre></div>
+<div class='line' id='104'><pre>104: </pre><pre>        run_pre_install_hooks</pre></div>
+<div class='line' id='105'><pre>105: </pre><pre>        clean_pod_sources</pre></div>
+<div class='line' id='106'><pre>106: </pre><pre>      end</pre></div>
+<div class='line' id='107'><pre>107: </pre><pre>    end</pre></div>
+<div class='line' id='108'><pre>108: </pre><pre></pre></div>
+<div class='line' id='109'><pre>109: </pre><pre>    def generate_pods_project</pre></div>
+<div class='line' id='110'><pre>110: </pre><pre>      UI.section "Generating Pods project" do</pre></div>
+<div class='line' id='111'><pre>111: </pre><pre>        prepare_pods_project</pre></div>
+<div class='line' id='112'><pre>112: </pre><pre>        install_file_references</pre></div>
+<div class='line' id='113'><pre>113: </pre><pre>        install_libraries</pre></div>
+<div class='line' id='114'><pre>114: </pre><pre>        set_target_dependencies</pre></div>
+<div class='line' id='115'><pre>115: </pre><pre>        link_aggregate_target</pre></div>
+<div class='line' id='116'><pre>116: </pre><pre>        run_post_install_hooks</pre></div>
+<div class='line' id='117'><pre>117: </pre><pre>        write_pod_project</pre></div>
+<div class='line' id='118'><pre>118: </pre><pre>        write_lockfiles</pre></div>
+<div class='line' id='119'><pre>119: </pre><pre>      end</pre></div>
+<div class='line' id='120'><pre>120: </pre><pre>    end</pre></div>
+<div class='line' id='121'><pre>121: </pre><pre></pre></div>
+<div class='line' id='122'><pre>122: </pre><pre>    #-------------------------------------------------------------------------#</pre></div>
+<div class='line' id='123'><pre>123: </pre><pre></pre></div>
+<div class='line' id='124'><pre>124: </pre><pre>    public</pre></div>
+<div class='line' id='125'><pre>125: </pre><pre></pre></div>
+<div class='line' id='126'><pre>126: </pre><pre>    # @!group Installation results</pre></div>
+<div class='line' id='127'><pre>127: </pre><pre></pre></div>
+<div class='line' id='128'><pre>128: </pre><pre>    # @return [Analyzer] the analyzer which provides the information about what</pre></div>
+<div class='line' id='129'><pre>129: </pre><pre>    #         needs to be installed.</pre></div>
+<div class='line' id='130'><pre>130: </pre><pre>    #</pre></div>
+<div class='line' id='131'><pre>131: </pre><pre>    attr_reader :analysis_result</pre></div>
+<div class='line' id='132'><pre>132: </pre><pre></pre></div>
+<div class='line' id='133'><pre>133: </pre><pre>    # @return [Pod::Project] the `Pods/Pods.xcodeproj` project.</pre></div>
+<div class='line' id='134'><pre>134: </pre><pre>    #</pre></div>
+<div class='line' id='135'><pre>135: </pre><pre>    attr_reader :pods_project</pre></div>
+<div class='line' id='136'><pre>136: </pre><pre></pre></div>
+<div class='line' id='137'><pre>137: </pre><pre>    # @return [Array<String>] The Pods that should be installed.</pre></div>
+<div class='line' id='138'><pre>138: </pre><pre>    #</pre></div>
+<div class='line' id='139'><pre>139: </pre><pre>    attr_reader :names_of_pods_to_install</pre></div>
+<div class='line' id='140'><pre>140: </pre><pre></pre></div>
+<div class='line' id='141'><pre>141: </pre><pre>    # @return [Array<AggregateTarget>] The Podfile targets containing library</pre></div>
+<div class='line' id='142'><pre>142: </pre><pre>    #         dependencies.</pre></div>
+<div class='line' id='143'><pre>143: </pre><pre>    #</pre></div>
+<div class='line' id='144'><pre>144: </pre><pre>    attr_reader :aggregate_targets</pre></div>
+<div class='line' id='145'><pre>145: </pre><pre></pre></div>
+<div class='line' id='146'><pre>146: </pre><pre>    # @return [Array<Specification>] The specifications that where installed.</pre></div>
+<div class='line' id='147'><pre>147: </pre><pre>    #</pre></div>
+<div class='line' id='148'><pre>148: </pre><pre>    attr_accessor :installed_specs</pre></div>
+<div class='line' id='149'><pre>149: </pre><pre></pre></div>
+<div class='line' id='150'><pre>150: </pre><pre>    #-------------------------------------------------------------------------#</pre></div>
+<div class='line' id='151'><pre>151: </pre><pre></pre></div>
+<div class='line' id='152'><pre>152: </pre><pre>    private</pre></div>
+<div class='line' id='153'><pre>153: </pre><pre></pre></div>
+<div class='line' id='154'><pre>154: </pre><pre>    # @!group Installation steps</pre></div>
+<div class='line' id='155'><pre>155: </pre><pre></pre></div>
+<div class='line' id='156'><pre>156: </pre><pre>    # @return [void]</pre></div>
+<div class='line' id='157'><pre>157: </pre><pre>    #</pre></div>
+<div class='line' id='158'><pre>158: </pre><pre>    # @note   The warning about the version of the Lockfile doesn't uses the</pre></div>
+<div class='line' id='159'><pre>159: </pre><pre>    #         `UI.warn` method because it prints the output only at the end</pre></div>
+<div class='line' id='160'><pre>160: </pre><pre>    #         of the installation. At that time CocoaPods could have crashed.</pre></div>
+<div class='line' id='161'><pre>161: </pre><pre>    #</pre></div>
+<div class='line' id='162'><pre>162: </pre><div class='calls'><span class='method_definition'><pre>    def analyze</pre></span> <span style='display:none;'><a href='../../spec/unit/hooks/installer_representation_spec.rb.html#18'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:18</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#18'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:18</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#18'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:18</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#18'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:18</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#18'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:18</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#18'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:18</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#18'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:18</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#18'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:18</a> <a href='../../spec/unit/hooks/installer_representation_spec.rb.html#18'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:18</a></span></div></div>
+<div class='line' id='163'><pre>163: </pre><pre>      if lockfile && lockfile.cocoapods_version > Version.new(VERSION)</pre></div>
+<div class='line' id='164'><pre>164: </pre><pre>        STDERR.puts '[!] The version of CocoaPods used to generate the lockfile is '\</pre></div>
+<div class='line' id='165'><pre>165: </pre><pre>          'higher that the one of the current executable. Incompatibility ' \</pre></div>
+<div class='line' id='166'><pre>166: </pre><pre>          'issues might arise.'.yellow</pre></div>
+<div class='line' id='167'><pre>167: </pre><pre>      end</pre></div>
+<div class='line' id='168'><pre>168: </pre><pre></pre></div>
+<div class='line' id='169'><pre>169: </pre><div class='calls'><span class='method_call'><pre>      analyzer = Analyzer.new(sandbox, podfile, lockfile)</pre></span> <span style='display:none;'><a href='installer/analyzer.rb.html#31'>Pod::Installer::Analyzer#initialize</a> <a href='installer/analyzer.rb.html#31'>Pod::Installer::Analyzer#initialize</a> <a href='installer/analyzer.rb.html#31'>Pod::Installer::Analyzer#initialize</a> <a href='installer/analyzer.rb.html#31'>Pod::Installer::Analyzer#initialize</a> <a href='installer/analyzer.rb.html#31'>Pod::Installer::Analyzer#initialize</a> <a href='installer/analyzer.rb.html#31'>Pod::Installer::Analyzer#initialize</a> <a href='installer/analyzer.rb.html#31'>Pod::Installer::Analyzer#initialize</a> <a href='installer/analyzer.rb.html#31'>Pod::Installer::Analyzer#initialize</a> <a href='installer/analyzer.rb.html#31'>Pod::Installer::Analyzer#initialize</a></span></div></div>
+<div class='line' id='170'><pre>170: </pre><pre>      analyzer.update_mode = update_mode</pre></div>
+<div class='line' id='171'><pre>171: </pre><div class='calls'><span class='method_call'><pre>      @analysis_result = analyzer.analyze</pre></span> <span style='display:none;'><a href='installer/analyzer.rb.html#48'>Pod::Installer::Analyzer#analyze</a> <a href='installer/analyzer.rb.html#48'>Pod::Installer::Analyzer#analyze</a> <a href='installer/analyzer.rb.html#48'>Pod::Installer::Analyzer#analyze</a> <a href='installer/analyzer.rb.html#48'>Pod::Installer::Analyzer#analyze</a> <a href='installer/analyzer.rb.html#48'>Pod::Installer::Analyzer#analyze</a> <a href='installer/analyzer.rb.html#48'>Pod::Installer::Analyzer#analyze</a> <a href='installer/analyzer.rb.html#48'>Pod::Installer::Analyzer#analyze</a> <a href='installer/analyzer.rb.html#48'>Pod::Installer::Analyzer#analyze</a> <a href='installer/analyzer.rb.html#48'>Pod::Installer::Analyzer#analyze</a></span></div></div>
+<div class='line' id='172'><pre>172: </pre><pre>      @aggregate_targets = analyzer.result.targets</pre></div>
+<div class='line' id='173'><pre>173: </pre><pre>    end</pre></div>
+<div class='line' id='174'><pre>174: </pre><pre></pre></div>
+<div class='line' id='175'><pre>175: </pre><pre>    # Prepares the Pods folder in order to be compatible with the most recent</pre></div>
+<div class='line' id='176'><pre>176: </pre><pre>    # version of CocoaPods.</pre></div>
+<div class='line' id='177'><pre>177: </pre><pre>    #</pre></div>
+<div class='line' id='178'><pre>178: </pre><pre>    # @return [void]</pre></div>
+<div class='line' id='179'><pre>179: </pre><pre>    #</pre></div>
+<div class='line' id='180'><pre>180: </pre><pre>    def prepare_for_legacy_compatibility</pre></div>
+<div class='line' id='181'><pre>181: </pre><pre>      # move_target_support_files_if_needed</pre></div>
+<div class='line' id='182'><pre>182: </pre><pre>      # move_Local_Podspecs_to_Podspecs_if_needed</pre></div>
+<div class='line' id='183'><pre>183: </pre><pre>      # move_pods_to_sources_folder_if_needed</pre></div>
+<div class='line' id='184'><pre>184: </pre><pre>    end</pre></div>
+<div class='line' id='185'><pre>185: </pre><pre></pre></div>
+<div class='line' id='186'><pre>186: </pre><pre>    # @return [void] In this step we clean all the folders that will be</pre></div>
+<div class='line' id='187'><pre>187: </pre><pre>    #         regenerated from scratch and any file which might not be</pre></div>
+<div class='line' id='188'><pre>188: </pre><pre>    #         overwritten.</pre></div>
+<div class='line' id='189'><pre>189: </pre><pre>    #</pre></div>
+<div class='line' id='190'><pre>190: </pre><pre>    # @todo   [#247] Clean the headers of only the pods to install.</pre></div>
+<div class='line' id='191'><pre>191: </pre><pre>    #</pre></div>
+<div class='line' id='192'><pre>192: </pre><pre>    def clean_sandbox</pre></div>
+<div class='line' id='193'><pre>193: </pre><pre>      sandbox.public_headers.implode!</pre></div>
+<div class='line' id='194'><pre>194: </pre><pre>      pod_targets.each do |pod_target|</pre></div>
+<div class='line' id='195'><pre>195: </pre><pre>        pod_target.build_headers.implode!</pre></div>
+<div class='line' id='196'><pre>196: </pre><pre>      end</pre></div>
+<div class='line' id='197'><pre>197: </pre><pre></pre></div>
+<div class='line' id='198'><pre>198: </pre><pre>      unless sandbox_state.deleted.empty?</pre></div>
+<div class='line' id='199'><pre>199: </pre><pre>        title_options = { :verbose_prefix => "-> ".red }</pre></div>
+<div class='line' id='200'><pre>200: </pre><pre>        sandbox_state.deleted.each do |pod_name|</pre></div>
+<div class='line' id='201'><pre>201: </pre><pre>          UI.titled_section("Removing #{pod_name}".red, title_options) do</pre></div>
+<div class='line' id='202'><pre>202: </pre><pre>            sandbox.clean_pod(pod_name)</pre></div>
+<div class='line' id='203'><pre>203: </pre><pre>          end</pre></div>
+<div class='line' id='204'><pre>204: </pre><pre>        end</pre></div>
+<div class='line' id='205'><pre>205: </pre><pre>      end</pre></div>
+<div class='line' id='206'><pre>206: </pre><pre>    end</pre></div>
+<div class='line' id='207'><pre>207: </pre><pre></pre></div>
+<div class='line' id='208'><pre>208: </pre><pre>    # TODO: the file accessor should be initialized by the sandbox as they</pre></div>
+<div class='line' id='209'><pre>209: </pre><pre>    #       created by the Pod source installer as well.</pre></div>
+<div class='line' id='210'><pre>210: </pre><pre>    #</pre></div>
+<div class='line' id='211'><pre>211: </pre><pre>    def create_file_accessors</pre></div>
+<div class='line' id='212'><pre>212: </pre><pre>      aggregate_targets.each do |target|</pre></div>
+<div class='line' id='213'><pre>213: </pre><pre>        target.pod_targets.each do |pod_target|</pre></div>
+<div class='line' id='214'><pre>214: </pre><pre>          pod_root = sandbox.pod_dir(pod_target.root_spec.name)</pre></div>
+<div class='line' id='215'><pre>215: </pre><pre>          path_list = Sandbox::PathList.new(pod_root)</pre></div>
+<div class='line' id='216'><pre>216: </pre><pre>          file_accessors = pod_target.specs.map do |spec|</pre></div>
+<div class='line' id='217'><pre>217: </pre><pre>            Sandbox::FileAccessor.new(path_list, spec.consumer(pod_target.platform))</pre></div>
+<div class='line' id='218'><pre>218: </pre><pre>          end</pre></div>
+<div class='line' id='219'><pre>219: </pre><pre>          pod_target.file_accessors ||= []</pre></div>
+<div class='line' id='220'><pre>220: </pre><pre>          pod_target.file_accessors.concat(file_accessors)</pre></div>
+<div class='line' id='221'><pre>221: </pre><pre>        end</pre></div>
+<div class='line' id='222'><pre>222: </pre><pre>      end</pre></div>
+<div class='line' id='223'><pre>223: </pre><pre>    end</pre></div>
+<div class='line' id='224'><pre>224: </pre><pre></pre></div>
+<div class='line' id='225'><pre>225: </pre><pre>    # Downloads, installs the documentation and cleans the sources of the Pods</pre></div>
+<div class='line' id='226'><pre>226: </pre><pre>    # which need to be installed.</pre></div>
+<div class='line' id='227'><pre>227: </pre><pre>    #</pre></div>
+<div class='line' id='228'><pre>228: </pre><pre>    # @return [void]</pre></div>
+<div class='line' id='229'><pre>229: </pre><pre>    #</pre></div>
+<div class='line' id='230'><pre>230: </pre><pre>    def install_pod_sources</pre></div>
+<div class='line' id='231'><pre>231: </pre><pre>      @installed_specs = []</pre></div>
+<div class='line' id='232'><pre>232: </pre><pre>      pods_to_install = sandbox_state.added | sandbox_state.changed</pre></div>
+<div class='line' id='233'><pre>233: </pre><pre>      title_options = { :verbose_prefix => "-> ".green }</pre></div>
+<div class='line' id='234'><pre>234: </pre><pre>      root_specs.sort_by(&:name).each do |spec|</pre></div>
+<div class='line' id='235'><pre>235: </pre><pre>        if pods_to_install.include?(spec.name)</pre></div>
+<div class='line' id='236'><pre>236: </pre><pre>          UI.titled_section("Installing #{spec}".green, title_options) do</pre></div>
+<div class='line' id='237'><pre>237: </pre><pre>            install_source_of_pod(spec.name)</pre></div>
+<div class='line' id='238'><pre>238: </pre><pre>          end</pre></div>
+<div class='line' id='239'><pre>239: </pre><pre>        else</pre></div>
+<div class='line' id='240'><pre>240: </pre><pre>          UI.titled_section("Using #{spec}", title_options)</pre></div>
+<div class='line' id='241'><pre>241: </pre><pre>        end</pre></div>
+<div class='line' id='242'><pre>242: </pre><pre>      end</pre></div>
+<div class='line' id='243'><pre>243: </pre><pre>    end</pre></div>
+<div class='line' id='244'><pre>244: </pre><pre></pre></div>
+<div class='line' id='245'><pre>245: </pre><pre>    # Install the Pods. If the resolver indicated that a Pod should be</pre></div>
+<div class='line' id='246'><pre>246: </pre><pre>    # installed and it exits, it is removed an then reinstalled. In any case if</pre></div>
+<div class='line' id='247'><pre>247: </pre><pre>    # the Pod doesn't exits it is installed.</pre></div>
+<div class='line' id='248'><pre>248: </pre><pre>    #</pre></div>
+<div class='line' id='249'><pre>249: </pre><pre>    # @return [void]</pre></div>
+<div class='line' id='250'><pre>250: </pre><pre>    #</pre></div>
+<div class='line' id='251'><pre>251: </pre><pre>    def install_source_of_pod(pod_name)</pre></div>
+<div class='line' id='252'><pre>252: </pre><pre>      specs_by_platform = {}</pre></div>
+<div class='line' id='253'><pre>253: </pre><pre>      pod_targets.each do |pod_target|</pre></div>
+<div class='line' id='254'><pre>254: </pre><pre>        if pod_target.root_spec.name == pod_name</pre></div>
+<div class='line' id='255'><pre>255: </pre><pre>          specs_by_platform[pod_target.platform] ||= []</pre></div>
+<div class='line' id='256'><pre>256: </pre><pre>          specs_by_platform[pod_target.platform].concat(pod_target.specs)</pre></div>
+<div class='line' id='257'><pre>257: </pre><pre>        end</pre></div>
+<div class='line' id='258'><pre>258: </pre><pre>      end</pre></div>
+<div class='line' id='259'><pre>259: </pre><pre></pre></div>
+<div class='line' id='260'><pre>260: </pre><pre>      @pod_installers ||= []</pre></div>
+<div class='line' id='261'><pre>261: </pre><pre>      pod_installer = PodSourceInstaller.new(sandbox, specs_by_platform)</pre></div>
+<div class='line' id='262'><pre>262: </pre><pre>      pod_installer.aggressive_cache = config.aggressive_cache?</pre></div>
+<div class='line' id='263'><pre>263: </pre><pre>      pod_installer.install!</pre></div>
+<div class='line' id='264'><pre>264: </pre><pre>      @pod_installers << pod_installer</pre></div>
+<div class='line' id='265'><pre>265: </pre><pre>      @installed_specs.concat(specs_by_platform.values.flatten.uniq)</pre></div>
+<div class='line' id='266'><pre>266: </pre><pre>    end</pre></div>
+<div class='line' id='267'><pre>267: </pre><pre></pre></div>
+<div class='line' id='268'><pre>268: </pre><pre>    # Cleans the sources of the Pods if the config instructs to do so.</pre></div>
+<div class='line' id='269'><pre>269: </pre><pre>    #</pre></div>
+<div class='line' id='270'><pre>270: </pre><pre>    # @todo Why the @pod_installers might be empty?</pre></div>
+<div class='line' id='271'><pre>271: </pre><pre>    #</pre></div>
+<div class='line' id='272'><pre>272: </pre><pre>    def clean_pod_sources</pre></div>
+<div class='line' id='273'><pre>273: </pre><pre>      return unless config.clean?</pre></div>
+<div class='line' id='274'><pre>274: </pre><pre>      return unless @pod_installers</pre></div>
+<div class='line' id='275'><pre>275: </pre><pre>      @pod_installers.each do |pod_installer|</pre></div>
+<div class='line' id='276'><pre>276: </pre><pre>        pod_installer.clean!</pre></div>
+<div class='line' id='277'><pre>277: </pre><pre>      end</pre></div>
+<div class='line' id='278'><pre>278: </pre><pre>    end</pre></div>
+<div class='line' id='279'><pre>279: </pre><pre></pre></div>
+<div class='line' id='280'><pre>280: </pre><pre>    # Creates the Pods project from scratch if it doesn't exists.</pre></div>
+<div class='line' id='281'><pre>281: </pre><pre>    #</pre></div>
+<div class='line' id='282'><pre>282: </pre><pre>    # @return [void]</pre></div>
+<div class='line' id='283'><pre>283: </pre><pre>    #</pre></div>
+<div class='line' id='284'><pre>284: </pre><pre>    # @todo   Clean and modify the project if it exists.</pre></div>
+<div class='line' id='285'><pre>285: </pre><pre>    #</pre></div>
+<div class='line' id='286'><pre>286: </pre><pre>    def prepare_pods_project</pre></div>
+<div class='line' id='287'><pre>287: </pre><pre>      UI.message "- Creating Pods project" do</pre></div>
+<div class='line' id='288'><pre>288: </pre><pre>        @pods_project = Pod::Project.new(sandbox.project_path)</pre></div>
+<div class='line' id='289'><pre>289: </pre><pre></pre></div>
+<div class='line' id='290'><pre>290: </pre><pre>        analysis_result.all_user_build_configurations.each do |name, type|</pre></div>
+<div class='line' id='291'><pre>291: </pre><pre>          @pods_project.add_build_configuration(name, type)</pre></div>
+<div class='line' id='292'><pre>292: </pre><pre>        end</pre></div>
+<div class='line' id='293'><pre>293: </pre><pre></pre></div>
+<div class='line' id='294'><pre>294: </pre><pre>        pod_names = pod_targets.map(&:pod_name).uniq</pre></div>
+<div class='line' id='295'><pre>295: </pre><pre>        pod_names.each do |pod_name|</pre></div>
+<div class='line' id='296'><pre>296: </pre><pre>          path = sandbox.pod_dir(pod_name)</pre></div>
+<div class='line' id='297'><pre>297: </pre><pre>          local = sandbox.local?(pod_name)</pre></div>
+<div class='line' id='298'><pre>298: </pre><pre>          @pods_project.add_pod_group(pod_name, path, local)</pre></div>
+<div class='line' id='299'><pre>299: </pre><pre>        end</pre></div>
+<div class='line' id='300'><pre>300: </pre><pre></pre></div>
+<div class='line' id='301'><pre>301: </pre><pre>        if config.podfile_path</pre></div>
+<div class='line' id='302'><pre>302: </pre><pre>          @pods_project.add_podfile(config.podfile_path)</pre></div>
+<div class='line' id='303'><pre>303: </pre><pre>        end</pre></div>
+<div class='line' id='304'><pre>304: </pre><pre></pre></div>
+<div class='line' id='305'><pre>305: </pre><pre>        sandbox.project = @pods_project</pre></div>
+<div class='line' id='306'><pre>306: </pre><pre>        platforms = aggregate_targets.map(&:platform)</pre></div>
+<div class='line' id='307'><pre>307: </pre><pre>        osx_deployment_target = platforms.select { |p| p.name == :osx }.map(&:deployment_target).min</pre></div>
+<div class='line' id='308'><pre>308: </pre><pre>        ios_deployment_target = platforms.select { |p| p.name == :ios }.map(&:deployment_target).min</pre></div>
+<div class='line' id='309'><pre>309: </pre><pre>        @pods_project.build_configurations.each do |build_configuration|</pre></div>
+<div class='line' id='310'><pre>310: </pre><pre>          build_configuration.build_settings['MACOSX_DEPLOYMENT_TARGET'] = osx_deployment_target.to_s if osx_deployment_target</pre></div>
+<div class='line' id='311'><pre>311: </pre><pre>          build_configuration.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = ios_deployment_target.to_s if ios_deployment_target</pre></div>
+<div class='line' id='312'><pre>312: </pre><pre>          build_configuration.build_settings['STRIP_INSTALLED_PRODUCT'] = 'NO'</pre></div>
+<div class='line' id='313'><pre>313: </pre><pre>        end</pre></div>
+<div class='line' id='314'><pre>314: </pre><pre>      end</pre></div>
+<div class='line' id='315'><pre>315: </pre><pre>    end</pre></div>
+<div class='line' id='316'><pre>316: </pre><pre></pre></div>
+<div class='line' id='317'><pre>317: </pre><pre></pre></div>
+<div class='line' id='318'><pre>318: </pre><pre>    # Installs the file references in the Pods project. This is done once per</pre></div>
+<div class='line' id='319'><pre>319: </pre><pre>    # Pod as the same file reference might be shared by multiple aggregate</pre></div>
+<div class='line' id='320'><pre>320: </pre><pre>    # targets.</pre></div>
+<div class='line' id='321'><pre>321: </pre><pre>    #</pre></div>
+<div class='line' id='322'><pre>322: </pre><pre>    # @return [void]</pre></div>
+<div class='line' id='323'><pre>323: </pre><pre>    #</pre></div>
+<div class='line' id='324'><pre>324: </pre><pre>    def install_file_references</pre></div>
+<div class='line' id='325'><pre>325: </pre><pre>      installer = FileReferencesInstaller.new(sandbox, pod_targets, pods_project)</pre></div>
+<div class='line' id='326'><pre>326: </pre><pre>      installer.install!</pre></div>
+<div class='line' id='327'><pre>327: </pre><pre>    end</pre></div>
+<div class='line' id='328'><pre>328: </pre><pre></pre></div>
+<div class='line' id='329'><pre>329: </pre><pre>    # Installs the aggregate targets of the Pods projects and generates their</pre></div>
+<div class='line' id='330'><pre>330: </pre><pre>    # support files.</pre></div>
+<div class='line' id='331'><pre>331: </pre><pre>    #</pre></div>
+<div class='line' id='332'><pre>332: </pre><pre>    # @return [void]</pre></div>
+<div class='line' id='333'><pre>333: </pre><pre>    #</pre></div>
+<div class='line' id='334'><pre>334: </pre><pre>    def install_libraries</pre></div>
+<div class='line' id='335'><pre>335: </pre><pre>      UI.message"- Installing libraries" do</pre></div>
+<div class='line' id='336'><pre>336: </pre><pre>        pod_targets.sort_by(&:name).each do |pod_target|</pre></div>
+<div class='line' id='337'><pre>337: </pre><pre>          next if pod_target.target_definition.empty?</pre></div>
+<div class='line' id='338'><pre>338: </pre><pre>          target_installer = PodTargetInstaller.new(sandbox, pod_target)</pre></div>
+<div class='line' id='339'><pre>339: </pre><pre>          target_installer.install!</pre></div>
+<div class='line' id='340'><pre>340: </pre><pre>        end</pre></div>
+<div class='line' id='341'><pre>341: </pre><pre></pre></div>
+<div class='line' id='342'><pre>342: </pre><pre>        aggregate_targets.sort_by(&:name).each do |target|</pre></div>
+<div class='line' id='343'><pre>343: </pre><pre>          next if target.target_definition.empty?</pre></div>
+<div class='line' id='344'><pre>344: </pre><pre>          target_installer = AggregateTargetInstaller.new(sandbox, target)</pre></div>
+<div class='line' id='345'><pre>345: </pre><pre>          target_installer.install!</pre></div>
+<div class='line' id='346'><pre>346: </pre><pre>        end</pre></div>
+<div class='line' id='347'><pre>347: </pre><pre></pre></div>
+<div class='line' id='348'><pre>348: </pre><pre>        # TODO</pre></div>
+<div class='line' id='349'><pre>349: </pre><pre>        # Move and add specs</pre></div>
+<div class='line' id='350'><pre>350: </pre><pre>        pod_targets.sort_by(&:name).each do |pod_target|</pre></div>
+<div class='line' id='351'><pre>351: </pre><pre>          pod_target.file_accessors.each do |file_accessor|</pre></div>
+<div class='line' id='352'><pre>352: </pre><pre>            file_accessor.spec_consumer.frameworks.each do |framework|</pre></div>
+<div class='line' id='353'><pre>353: </pre><pre>              ref = pods_project.add_system_framework(framework, pod_target.target)</pre></div>
+<div class='line' id='354'><pre>354: </pre><pre>            end</pre></div>
+<div class='line' id='355'><pre>355: </pre><pre>          end</pre></div>
+<div class='line' id='356'><pre>356: </pre><pre>        end</pre></div>
+<div class='line' id='357'><pre>357: </pre><pre>      end</pre></div>
+<div class='line' id='358'><pre>358: </pre><pre>    end</pre></div>
+<div class='line' id='359'><pre>359: </pre><pre></pre></div>
+<div class='line' id='360'><pre>360: </pre><pre>    def set_target_dependencies</pre></div>
+<div class='line' id='361'><pre>361: </pre><pre>      aggregate_targets.each do |aggregate_target|</pre></div>
+<div class='line' id='362'><pre>362: </pre><pre>        aggregate_target.pod_targets.each do |pod_target|</pre></div>
+<div class='line' id='363'><pre>363: </pre><pre>          aggregate_target.target.add_dependency(pod_target.target)</pre></div>
+<div class='line' id='364'><pre>364: </pre><pre>          pod_target.dependencies.each do |dep|</pre></div>
+<div class='line' id='365'><pre>365: </pre><pre></pre></div>
+<div class='line' id='366'><pre>366: </pre><pre>            unless dep == pod_target.pod_name</pre></div>
+<div class='line' id='367'><pre>367: </pre><pre>              pod_dependency_target = aggregate_target.pod_targets.find { |target| target.pod_name == dep }</pre></div>
+<div class='line' id='368'><pre>368: </pre><pre>              # TODO remove me</pre></div>
+<div class='line' id='369'><pre>369: </pre><pre>              unless pod_dependency_target</pre></div>
+<div class='line' id='370'><pre>370: </pre><pre>                puts "[BUG] DEP: #{dep}"</pre></div>
+<div class='line' id='371'><pre>371: </pre><pre>              end</pre></div>
+<div class='line' id='372'><pre>372: </pre><pre>              pod_target.target.add_dependency(pod_dependency_target.target)</pre></div>
+<div class='line' id='373'><pre>373: </pre><pre>            end</pre></div>
+<div class='line' id='374'><pre>374: </pre><pre>          end</pre></div>
+<div class='line' id='375'><pre>375: </pre><pre>        end</pre></div>
+<div class='line' id='376'><pre>376: </pre><pre>      end</pre></div>
+<div class='line' id='377'><pre>377: </pre><pre>    end</pre></div>
+<div class='line' id='378'><pre>378: </pre><pre></pre></div>
+<div class='line' id='379'><pre>379: </pre><pre>    # Links the aggregate targets with all the dependent libraries.</pre></div>
+<div class='line' id='380'><pre>380: </pre><pre>    #</pre></div>
+<div class='line' id='381'><pre>381: </pre><pre>    # @note   This is run in the integration step to ensure that targets</pre></div>
+<div class='line' id='382'><pre>382: </pre><pre>    #         have been created for all per spec libraries.</pre></div>
+<div class='line' id='383'><pre>383: </pre><pre>    #</pre></div>
+<div class='line' id='384'><pre>384: </pre><pre>    def link_aggregate_target</pre></div>
+<div class='line' id='385'><pre>385: </pre><pre>      aggregate_targets.each do |aggregate_target|</pre></div>
+<div class='line' id='386'><pre>386: </pre><pre>        native_target = aggregate_target.target</pre></div>
+<div class='line' id='387'><pre>387: </pre><pre>        aggregate_target.pod_targets.each do |pod_target|</pre></div>
+<div class='line' id='388'><pre>388: </pre><pre>          product = pod_target.target.product_reference</pre></div>
+<div class='line' id='389'><pre>389: </pre><pre>          native_target.frameworks_build_phase.add_file_reference(product)</pre></div>
+<div class='line' id='390'><pre>390: </pre><pre>        end</pre></div>
+<div class='line' id='391'><pre>391: </pre><pre>      end</pre></div>
+<div class='line' id='392'><pre>392: </pre><pre>    end</pre></div>
+<div class='line' id='393'><pre>393: </pre><pre></pre></div>
+<div class='line' id='394'><pre>394: </pre><pre>    # Writes the Pods project to the disk.</pre></div>
+<div class='line' id='395'><pre>395: </pre><pre>    #</pre></div>
+<div class='line' id='396'><pre>396: </pre><pre>    # @return [void]</pre></div>
+<div class='line' id='397'><pre>397: </pre><pre>    #</pre></div>
+<div class='line' id='398'><pre>398: </pre><pre>    def write_pod_project</pre></div>
+<div class='line' id='399'><pre>399: </pre><pre>      UI.message "- Writing Xcode project file to #{UI.path sandbox.project_path}" do</pre></div>
+<div class='line' id='400'><pre>400: </pre><pre>        pods_project.pods.remove_from_project if pods_project.pods.empty?</pre></div>
+<div class='line' id='401'><pre>401: </pre><pre>        pods_project.development_pods.remove_from_project if pods_project.development_pods.empty?</pre></div>
+<div class='line' id='402'><pre>402: </pre><pre>        pods_project.main_group.recursively_sort_by_type</pre></div>
+<div class='line' id='403'><pre>403: </pre><pre>        pods_project.save</pre></div>
+<div class='line' id='404'><pre>404: </pre><pre>      end</pre></div>
+<div class='line' id='405'><pre>405: </pre><pre>    end</pre></div>
+<div class='line' id='406'><pre>406: </pre><pre></pre></div>
+<div class='line' id='407'><pre>407: </pre><pre>    # Writes the Podfile and the lock files.</pre></div>
+<div class='line' id='408'><pre>408: </pre><pre>    #</pre></div>
+<div class='line' id='409'><pre>409: </pre><pre>    # @todo   Pass the checkout options to the Lockfile.</pre></div>
+<div class='line' id='410'><pre>410: </pre><pre>    #</pre></div>
+<div class='line' id='411'><pre>411: </pre><pre>    # @return [void]</pre></div>
+<div class='line' id='412'><pre>412: </pre><pre>    #</pre></div>
+<div class='line' id='413'><pre>413: </pre><pre>    def write_lockfiles</pre></div>
+<div class='line' id='414'><pre>414: </pre><pre>      # checkout_options = sandbox.checkout_options</pre></div>
+<div class='line' id='415'><pre>415: </pre><pre>      @lockfile = Lockfile.generate(podfile, analysis_result.specifications)</pre></div>
+<div class='line' id='416'><pre>416: </pre><pre></pre></div>
+<div class='line' id='417'><pre>417: </pre><pre>      UI.message "- Writing Lockfile in #{UI.path config.lockfile_path}" do</pre></div>
+<div class='line' id='418'><pre>418: </pre><pre>        @lockfile.write_to_disk(config.lockfile_path)</pre></div>
+<div class='line' id='419'><pre>419: </pre><pre>      end</pre></div>
+<div class='line' id='420'><pre>420: </pre><pre></pre></div>
+<div class='line' id='421'><pre>421: </pre><pre>      UI.message "- Writing Manifest in #{UI.path sandbox.manifest_path}" do</pre></div>
+<div class='line' id='422'><pre>422: </pre><pre>        @lockfile.write_to_disk(sandbox.manifest_path)</pre></div>
+<div class='line' id='423'><pre>423: </pre><pre>      end</pre></div>
+<div class='line' id='424'><pre>424: </pre><pre>    end</pre></div>
+<div class='line' id='425'><pre>425: </pre><pre></pre></div>
+<div class='line' id='426'><pre>426: </pre><pre>    # Integrates the user projects adding the dependencies on the CocoaPods</pre></div>
+<div class='line' id='427'><pre>427: </pre><pre>    # libraries, setting them up to use the xcconfigs and performing other</pre></div>
+<div class='line' id='428'><pre>428: </pre><pre>    # actions. This step is also responsible of creating the workspace if</pre></div>
+<div class='line' id='429'><pre>429: </pre><pre>    # needed.</pre></div>
+<div class='line' id='430'><pre>430: </pre><pre>    #</pre></div>
+<div class='line' id='431'><pre>431: </pre><pre>    # @return [void]</pre></div>
+<div class='line' id='432'><pre>432: </pre><pre>    #</pre></div>
+<div class='line' id='433'><pre>433: </pre><pre>    # @todo   [#397] The libraries should be cleaned and the re-added on every</pre></div>
+<div class='line' id='434'><pre>434: </pre><pre>    #         installation. Maybe a clean_user_project phase should be added.</pre></div>
+<div class='line' id='435'><pre>435: </pre><pre>    #         In any case it appears to be a good idea store target definition</pre></div>
+<div class='line' id='436'><pre>436: </pre><pre>    #         information in the lockfile.</pre></div>
+<div class='line' id='437'><pre>437: </pre><pre>    #</pre></div>
+<div class='line' id='438'><pre>438: </pre><pre>    def integrate_user_project</pre></div>
+<div class='line' id='439'><pre>439: </pre><pre>      UI.section "Integrating client #{'project'.pluralize(aggregate_targets.map(&:user_project_path).uniq.count) }" do</pre></div>
+<div class='line' id='440'><pre>440: </pre><pre>        installation_root = config.installation_root</pre></div>
+<div class='line' id='441'><pre>441: </pre><pre>        integrator = UserProjectIntegrator.new(podfile, sandbox, installation_root, aggregate_targets)</pre></div>
+<div class='line' id='442'><pre>442: </pre><pre>        integrator.integrate!</pre></div>
+<div class='line' id='443'><pre>443: </pre><pre>      end</pre></div>
+<div class='line' id='444'><pre>444: </pre><pre>    end</pre></div>
+<div class='line' id='445'><pre>445: </pre><pre></pre></div>
+<div class='line' id='446'><pre>446: </pre><pre>    #-------------------------------------------------------------------------#</pre></div>
+<div class='line' id='447'><pre>447: </pre><pre></pre></div>
+<div class='line' id='448'><pre>448: </pre><pre>    private</pre></div>
+<div class='line' id='449'><pre>449: </pre><pre></pre></div>
+<div class='line' id='450'><pre>450: </pre><pre>    # @!group Hooks</pre></div>
+<div class='line' id='451'><pre>451: </pre><pre></pre></div>
+<div class='line' id='452'><pre>452: </pre><pre>    # Runs the pre install hooks of the installed specs and of the Podfile.</pre></div>
+<div class='line' id='453'><pre>453: </pre><pre>    #</pre></div>
+<div class='line' id='454'><pre>454: </pre><pre>    # @return [void]</pre></div>
+<div class='line' id='455'><pre>455: </pre><pre>    #</pre></div>
+<div class='line' id='456'><pre>456: </pre><pre>    def run_pre_install_hooks</pre></div>
+<div class='line' id='457'><pre>457: </pre><pre>      UI.message "- Running pre install hooks" do</pre></div>
+<div class='line' id='458'><pre>458: </pre><pre>        analysis_result.specifications.each do |spec|</pre></div>
+<div class='line' id='459'><pre>459: </pre><pre>          executed = false</pre></div>
+<div class='line' id='460'><pre>460: </pre><pre>          libraries_using_spec(spec).each do |lib|</pre></div>
+<div class='line' id='461'><pre>461: </pre><pre>            lib_representation = library_rep(lib)</pre></div>
+<div class='line' id='462'><pre>462: </pre><pre>            executed ||= run_spec_pre_install_hook(spec, lib_representation)</pre></div>
+<div class='line' id='463'><pre>463: </pre><pre>          end</pre></div>
+<div class='line' id='464'><pre>464: </pre><pre>          UI.message "- #{spec.name}" if executed</pre></div>
+<div class='line' id='465'><pre>465: </pre><pre>        end</pre></div>
+<div class='line' id='466'><pre>466: </pre><pre></pre></div>
+<div class='line' id='467'><pre>467: </pre><pre>        executed = run_podfile_pre_install_hook</pre></div>
+<div class='line' id='468'><pre>468: </pre><pre>        UI.message "- Podfile" if executed</pre></div>
+<div class='line' id='469'><pre>469: </pre><pre>      end</pre></div>
+<div class='line' id='470'><pre>470: </pre><pre>    end</pre></div>
+<div class='line' id='471'><pre>471: </pre><pre></pre></div>
+<div class='line' id='472'><pre>472: </pre><pre>    # Runs the pre install hook of the given specification with the given</pre></div>
+<div class='line' id='473'><pre>473: </pre><pre>    # library representation.</pre></div>
+<div class='line' id='474'><pre>474: </pre><pre>    #</pre></div>
+<div class='line' id='475'><pre>475: </pre><pre>    # @param  [Specification] spec</pre></div>
+<div class='line' id='476'><pre>476: </pre><pre>    #         The spec for which the pre install hook should be run.</pre></div>
+<div class='line' id='477'><pre>477: </pre><pre>    #</pre></div>
+<div class='line' id='478'><pre>478: </pre><pre>    # @param  [Hooks::LibraryRepresentation] lib_representation</pre></div>
+<div class='line' id='479'><pre>479: </pre><pre>    #         The library representation to be passed as an argument to the</pre></div>
+<div class='line' id='480'><pre>480: </pre><pre>    #         hook.</pre></div>
+<div class='line' id='481'><pre>481: </pre><pre>    #</pre></div>
+<div class='line' id='482'><pre>482: </pre><pre>    # @raise  Raises an informative if the hooks raises.</pre></div>
+<div class='line' id='483'><pre>483: </pre><pre>    #</pre></div>
+<div class='line' id='484'><pre>484: </pre><pre>    # @return [Bool] Whether the hook was run.</pre></div>
+<div class='line' id='485'><pre>485: </pre><pre>    #</pre></div>
+<div class='line' id='486'><pre>486: </pre><pre>    def run_spec_pre_install_hook(spec, lib_representation)</pre></div>
+<div class='line' id='487'><pre>487: </pre><pre>      spec.pre_install!(pod_rep(spec.root.name), lib_representation)</pre></div>
+<div class='line' id='488'><pre>488: </pre><pre>    rescue => e</pre></div>
+<div class='line' id='489'><pre>489: </pre><pre>      raise Informative, "An error occurred while processing the pre-install " \</pre></div>
+<div class='line' id='490'><pre>490: </pre><pre>        "hook of #{spec}." \</pre></div>
+<div class='line' id='491'><pre>491: </pre><pre>        "\n\n#{e.message}\n\n#{e.backtrace * "\n"}"</pre></div>
+<div class='line' id='492'><pre>492: </pre><pre>    end</pre></div>
+<div class='line' id='493'><pre>493: </pre><pre></pre></div>
+<div class='line' id='494'><pre>494: </pre><pre>    # Runs the pre install hook of the Podfile</pre></div>
+<div class='line' id='495'><pre>495: </pre><pre>    #</pre></div>
+<div class='line' id='496'><pre>496: </pre><pre>    # @raise  Raises an informative if the hooks raises.</pre></div>
+<div class='line' id='497'><pre>497: </pre><pre>    #</pre></div>
+<div class='line' id='498'><pre>498: </pre><pre>    # @return [Bool] Whether the hook was run.</pre></div>
+<div class='line' id='499'><pre>499: </pre><pre>    #</pre></div>
+<div class='line' id='500'><pre>500: </pre><pre>    def run_podfile_pre_install_hook</pre></div>
+<div class='line' id='501'><pre>501: </pre><pre>      podfile.pre_install!(installer_rep)</pre></div>
+<div class='line' id='502'><pre>502: </pre><pre>    rescue => e</pre></div>
+<div class='line' id='503'><pre>503: </pre><pre>      raise Informative, "An error occurred while processing the pre-install " \</pre></div>
+<div class='line' id='504'><pre>504: </pre><pre>        "hook of the Podfile." \</pre></div>
+<div class='line' id='505'><pre>505: </pre><pre>        "\n\n#{e.message}\n\n#{e.backtrace * "\n"}"</pre></div>
+<div class='line' id='506'><pre>506: </pre><pre>    end</pre></div>
+<div class='line' id='507'><pre>507: </pre><pre></pre></div>
+<div class='line' id='508'><pre>508: </pre><pre>    # Runs the post install hooks of the installed specs and of the Podfile.</pre></div>
+<div class='line' id='509'><pre>509: </pre><pre>    #</pre></div>
+<div class='line' id='510'><pre>510: </pre><pre>    # @note   Post install hooks run _before_ saving of project, so that they</pre></div>
+<div class='line' id='511'><pre>511: </pre><pre>    #         can alter it before it is written to the disk.</pre></div>
+<div class='line' id='512'><pre>512: </pre><pre>    #</pre></div>
+<div class='line' id='513'><pre>513: </pre><pre>    # @return [void]</pre></div>
+<div class='line' id='514'><pre>514: </pre><pre>    #</pre></div>
+<div class='line' id='515'><pre>515: </pre><pre>    def run_post_install_hooks</pre></div>
+<div class='line' id='516'><pre>516: </pre><pre>      UI.message "- Running post install hooks" do</pre></div>
+<div class='line' id='517'><pre>517: </pre><pre>        analysis_result.specifications.each do |spec|</pre></div>
+<div class='line' id='518'><pre>518: </pre><pre>          executed = false</pre></div>
+<div class='line' id='519'><pre>519: </pre><pre>          libraries_using_spec(spec).each do |lib|</pre></div>
+<div class='line' id='520'><pre>520: </pre><pre>            lib_representation = library_rep(lib)</pre></div>
+<div class='line' id='521'><pre>521: </pre><pre>            executed ||= run_spec_post_install_hook(spec, lib_representation)</pre></div>
+<div class='line' id='522'><pre>522: </pre><pre>          end</pre></div>
+<div class='line' id='523'><pre>523: </pre><pre>          UI.message "- #{spec.name}" if executed</pre></div>
+<div class='line' id='524'><pre>524: </pre><pre>        end</pre></div>
+<div class='line' id='525'><pre>525: </pre><pre>        executed = run_podfile_post_install_hook</pre></div>
+<div class='line' id='526'><pre>526: </pre><pre>        UI.message "- Podfile" if executed</pre></div>
+<div class='line' id='527'><pre>527: </pre><pre>      end</pre></div>
+<div class='line' id='528'><pre>528: </pre><pre>    end</pre></div>
+<div class='line' id='529'><pre>529: </pre><pre></pre></div>
+<div class='line' id='530'><pre>530: </pre><pre></pre></div>
+<div class='line' id='531'><pre>531: </pre><pre>    # Runs the post install hook of the given specification with the given</pre></div>
+<div class='line' id='532'><pre>532: </pre><pre>    # library representation.</pre></div>
+<div class='line' id='533'><pre>533: </pre><pre>    #</pre></div>
+<div class='line' id='534'><pre>534: </pre><pre>    # @param  [Specification] spec</pre></div>
+<div class='line' id='535'><pre>535: </pre><pre>    #         The spec for which the post install hook should be run.</pre></div>
+<div class='line' id='536'><pre>536: </pre><pre>    #</pre></div>
+<div class='line' id='537'><pre>537: </pre><pre>    # @param  [Hooks::LibraryRepresentation] lib_representation</pre></div>
+<div class='line' id='538'><pre>538: </pre><pre>    #         The library representation to be passed as an argument to the</pre></div>
+<div class='line' id='539'><pre>539: </pre><pre>    #         hook.</pre></div>
+<div class='line' id='540'><pre>540: </pre><pre>    #</pre></div>
+<div class='line' id='541'><pre>541: </pre><pre>    # @raise  Raises an informative if the hooks raises.</pre></div>
+<div class='line' id='542'><pre>542: </pre><pre>    #</pre></div>
+<div class='line' id='543'><pre>543: </pre><pre>    # @return [Bool] Whether the hook was run.</pre></div>
+<div class='line' id='544'><pre>544: </pre><pre>    #</pre></div>
+<div class='line' id='545'><pre>545: </pre><pre>    def run_spec_post_install_hook(spec, lib_representation)</pre></div>
+<div class='line' id='546'><pre>546: </pre><pre>      spec.post_install!(lib_representation)</pre></div>
+<div class='line' id='547'><pre>547: </pre><pre>    rescue => e</pre></div>
+<div class='line' id='548'><pre>548: </pre><pre>      raise Informative, "An error occurred while processing the post-install " \</pre></div>
+<div class='line' id='549'><pre>549: </pre><pre>        "hook of #{spec}." \</pre></div>
+<div class='line' id='550'><pre>550: </pre><pre>        "\n\n#{e.message}\n\n#{e.backtrace * "\n"}"</pre></div>
+<div class='line' id='551'><pre>551: </pre><pre>    end</pre></div>
+<div class='line' id='552'><pre>552: </pre><pre></pre></div>
+<div class='line' id='553'><pre>553: </pre><pre>    # Runs the post install hook of the Podfile</pre></div>
+<div class='line' id='554'><pre>554: </pre><pre>    #</pre></div>
+<div class='line' id='555'><pre>555: </pre><pre>    # @raise  Raises an informative if the hooks raises.</pre></div>
+<div class='line' id='556'><pre>556: </pre><pre>    #</pre></div>
+<div class='line' id='557'><pre>557: </pre><pre>    # @return [Bool] Whether the hook was run.</pre></div>
+<div class='line' id='558'><pre>558: </pre><pre>    #</pre></div>
+<div class='line' id='559'><pre>559: </pre><pre>    def run_podfile_post_install_hook</pre></div>
+<div class='line' id='560'><pre>560: </pre><pre>      podfile.post_install!(installer_rep)</pre></div>
+<div class='line' id='561'><pre>561: </pre><pre>    rescue => e</pre></div>
+<div class='line' id='562'><pre>562: </pre><pre>      raise Informative, "An error occurred while processing the post-install " \</pre></div>
+<div class='line' id='563'><pre>563: </pre><pre>        "hook of the Podfile." \</pre></div>
+<div class='line' id='564'><pre>564: </pre><pre>        "\n\n#{e.message}\n\n#{e.backtrace * "\n"}"</pre></div>
+<div class='line' id='565'><pre>565: </pre><pre>    end</pre></div>
+<div class='line' id='566'><pre>566: </pre><pre></pre></div>
+<div class='line' id='567'><pre>567: </pre><pre>    #-------------------------------------------------------------------------#</pre></div>
+<div class='line' id='568'><pre>568: </pre><pre></pre></div>
+<div class='line' id='569'><pre>569: </pre><pre>    public</pre></div>
+<div class='line' id='570'><pre>570: </pre><pre></pre></div>
+<div class='line' id='571'><pre>571: </pre><pre>    # @!group Hooks Data</pre></div>
+<div class='line' id='572'><pre>572: </pre><pre></pre></div>
+<div class='line' id='573'><pre>573: </pre><pre>    # @return [InstallerRepresentation]</pre></div>
+<div class='line' id='574'><pre>574: </pre><pre>    #</pre></div>
+<div class='line' id='575'><pre>575: </pre><pre>    def installer_rep</pre></div>
+<div class='line' id='576'><pre>576: </pre><pre>      Hooks::InstallerRepresentation.new(self)</pre></div>
+<div class='line' id='577'><pre>577: </pre><pre>    end</pre></div>
+<div class='line' id='578'><pre>578: </pre><pre></pre></div>
+<div class='line' id='579'><pre>579: </pre><pre>    # @return [PodRepresentation] The hook representation of a Pod.</pre></div>
+<div class='line' id='580'><pre>580: </pre><pre>    #</pre></div>
+<div class='line' id='581'><pre>581: </pre><pre>    # @param  [String] pod</pre></div>
+<div class='line' id='582'><pre>582: </pre><pre>    #         The name of the pod.</pre></div>
+<div class='line' id='583'><pre>583: </pre><pre>    #</pre></div>
+<div class='line' id='584'><pre>584: </pre><pre>    # @return [PodRepresentation] The pod representation.</pre></div>
+<div class='line' id='585'><pre>585: </pre><pre>    #</pre></div>
+<div class='line' id='586'><pre>586: </pre><div class='calls'><span class='method_definition'><pre>    def pod_rep(pod)</pre></span> <span style='display:none;'><a href='installer.rb.html#607'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer.rb:607</a> <a href='installer.rb.html#607'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer.rb:607</a></span></div></div>
+<div class='line' id='587'><pre>587: </pre><div class='calls'><span class='method_call'><pre>      all_file_accessors = pod_targets.map(&:file_accessors).flatten.compact</pre></span> <span style='display:none;'><a href='installer.rb.html#626'>Pod::Installer#pod_targets</a> <a href='installer.rb.html#626'>Pod::Installer#pod_targets</a></span></div></div>
+<div class='line' id='588'><pre>588: </pre><pre>      file_accessors = all_file_accessors.select { |fa| fa.spec.root.name == pod }</pre></div>
+<div class='line' id='589'><pre>589: </pre><div class='calls'><span class='method_call'><pre>      Hooks::PodRepresentation.new(pod, file_accessors)</pre></span> <span style='display:none;'><a href='hooks/pod_representation.rb.html#57'>Pod::Hooks::PodRepresentation#initialize</a> <a href='hooks/pod_representation.rb.html#57'>Pod::Hooks::PodRepresentation#initialize</a></span></div></div>
+<div class='line' id='590'><pre>590: </pre><pre>    end</pre></div>
+<div class='line' id='591'><pre>591: </pre><pre></pre></div>
+<div class='line' id='592'><pre>592: </pre><pre>    # @return [LibraryRepresentation]</pre></div>
+<div class='line' id='593'><pre>593: </pre><pre>    #</pre></div>
+<div class='line' id='594'><pre>594: </pre><div class='calls'><span class='method_definition'><pre>    def library_rep(aggregate_target)</pre></span> <span style='display:none;'><a href='installer.rb.html#601'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer.rb:601</a> <a href='hooks/installer_representation.rb.html#63'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/hooks/installer_representation.rb:63</a></span></div></div>
+<div class='line' id='595'><pre>595: </pre><div class='calls'><span class='method_call'><pre>      Hooks::LibraryRepresentation.new(sandbox, aggregate_target)</pre></span> <span style='display:none;'><a href='hooks/library_representation.rb.html#83'>Pod::Hooks::LibraryRepresentation#initialize</a> <a href='hooks/library_representation.rb.html#83'>Pod::Hooks::LibraryRepresentation#initialize</a></span></div></div>
+<div class='line' id='596'><pre>596: </pre><pre>    end</pre></div>
+<div class='line' id='597'><pre>597: </pre><pre></pre></div>
+<div class='line' id='598'><pre>598: </pre><pre>    # @return [Array<LibraryRepresentation>]</pre></div>
+<div class='line' id='599'><pre>599: </pre><pre>    #</pre></div>
+<div class='line' id='600'><pre>600: </pre><div class='calls'><span class='method_definition'><pre>    def library_reps</pre></span> <span style='display:none;'><a href='hooks/installer_representation.rb.html#54'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/hooks/installer_representation.rb:54</a></span></div></div>
+<div class='line' id='601'><pre>601: </pre><div class='calls'><span class='method_call'><pre>      @library_reps ||= aggregate_targets.map { |lib| library_rep(lib) }</pre></span> <span style='display:none;'><a href='installer.rb.html#594'>Pod::Installer#library_rep</a></span></div></div>
+<div class='line' id='602'><pre>602: </pre><pre>    end</pre></div>
+<div class='line' id='603'><pre>603: </pre><pre></pre></div>
+<div class='line' id='604'><pre>604: </pre><pre>    # @return [Array<PodRepresentation>]</pre></div>
+<div class='line' id='605'><pre>605: </pre><pre>    #</pre></div>
+<div class='line' id='606'><pre>606: </pre><div class='calls'><span class='method_definition'><pre>    def pod_reps</pre></span> <span style='display:none;'><a href='hooks/installer_representation.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/hooks/installer_representation.rb:47</a> <a href='hooks/installer_representation.rb.html#47'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/hooks/installer_representation.rb:47</a></span></div></div>
+<div class='line' id='607'><pre>607: </pre><div class='calls'><span class='method_call'><pre>      root_specs.sort_by { |spec| spec.name }.map { |spec| pod_rep(spec.name) }</pre></span> <span style='display:none;'><a href='installer.rb.html#639'>Pod::Installer#root_specs</a> <a href='../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/root_attribute_accessors.rb.html#20'>Pod::Specification::DSL::RootAttributesAccessors#name</a> <a href='../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/root_attribute_accessors.rb.html#20'>Pod::Specification::DSL::RootAttributesAccessors#name</a> <a href='installer.rb.html#586'>Pod::Installer#pod_rep</a> <a href='installer.rb.html#639'>Pod::Installer#root_specs</a> <a href='../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/root_attribute_accessors.rb.html#20'>Pod::Specification::DSL::RootAttributesAccessors#name</a> <a href='../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/root_attribute_accessors.rb.html#20'>Pod::Specification::DSL::RootAttributesAccessors#name</a> <a href='installer.rb.html#586'>Pod::Installer#pod_rep</a></span></div></div>
+<div class='line' id='608'><pre>608: </pre><pre>    end</pre></div>
+<div class='line' id='609'><pre>609: </pre><pre></pre></div>
+<div class='line' id='610'><pre>610: </pre><pre>    # Returns the libraries which use the given specification.</pre></div>
+<div class='line' id='611'><pre>611: </pre><pre>    #</pre></div>
+<div class='line' id='612'><pre>612: </pre><pre>    # @param  [Specification] spec</pre></div>
+<div class='line' id='613'><pre>613: </pre><pre>    #         The specification for which the client libraries are needed.</pre></div>
+<div class='line' id='614'><pre>614: </pre><pre>    #</pre></div>
+<div class='line' id='615'><pre>615: </pre><pre>    # @return [Array<Library>] The library.</pre></div>
+<div class='line' id='616'><pre>616: </pre><pre>    #</pre></div>
+<div class='line' id='617'><pre>617: </pre><pre>    def libraries_using_spec(spec)</pre></div>
+<div class='line' id='618'><pre>618: </pre><pre>      aggregate_targets.select do |aggregate_target|</pre></div>
+<div class='line' id='619'><pre>619: </pre><pre>        aggregate_target.pod_targets.any? { |pod_target| pod_target.specs.include?(spec) }</pre></div>
+<div class='line' id='620'><pre>620: </pre><pre>      end</pre></div>
+<div class='line' id='621'><pre>621: </pre><pre>    end</pre></div>
+<div class='line' id='622'><pre>622: </pre><pre></pre></div>
+<div class='line' id='623'><pre>623: </pre><pre>    # @return [Array<Library>] The libraries generated by the installation</pre></div>
+<div class='line' id='624'><pre>624: </pre><pre>    #         process.</pre></div>
+<div class='line' id='625'><pre>625: </pre><pre>    #</pre></div>
+<div class='line' id='626'><pre>626: </pre><div class='calls'><span class='method_definition'><pre>    def pod_targets</pre></span> <span style='display:none;'><a href='installer.rb.html#587'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer.rb:587</a> <a href='installer.rb.html#587'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer.rb:587</a></span></div></div>
+<div class='line' id='627'><pre>627: </pre><pre>      aggregate_targets.map(&:pod_targets).flatten</pre></div>
+<div class='line' id='628'><pre>628: </pre><pre>    end</pre></div>
+<div class='line' id='629'><pre>629: </pre><pre></pre></div>
+<div class='line' id='630'><pre>630: </pre><pre>    #-------------------------------------------------------------------------#</pre></div>
+<div class='line' id='631'><pre>631: </pre><pre></pre></div>
+<div class='line' id='632'><pre>632: </pre><pre>    private</pre></div>
+<div class='line' id='633'><pre>633: </pre><pre></pre></div>
+<div class='line' id='634'><pre>634: </pre><pre>    # @!group Private helpers</pre></div>
+<div class='line' id='635'><pre>635: </pre><pre></pre></div>
+<div class='line' id='636'><pre>636: </pre><pre>    # @return [Array<Specification>] All the root specifications of the</pre></div>
+<div class='line' id='637'><pre>637: </pre><pre>    #         installation.</pre></div>
+<div class='line' id='638'><pre>638: </pre><pre>    #</pre></div>
+<div class='line' id='639'><pre>639: </pre><div class='calls'><span class='method_definition'><pre>    def root_specs</pre></span> <span style='display:none;'><a href='installer.rb.html#607'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer.rb:607</a> <a href='installer.rb.html#607'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer.rb:607</a></span></div></div>
+<div class='line' id='640'><pre>640: </pre><div class='calls'><span class='method_call'><pre>      analysis_result.specifications.map { |spec| spec.root }.uniq</pre></span> <span style='display:none;'><a href='../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification.rb.html#154'>Pod::Specification#root</a> <a href='../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification.rb.html#154'>Pod::Specification#root</a></span></div></div>
+<div class='line' id='641'><pre>641: </pre><pre>    end</pre></div>
+<div class='line' id='642'><pre>642: </pre><pre></pre></div>
+<div class='line' id='643'><pre>643: </pre><pre>    # @return [SpecsState] The state of the sandbox returned by the analyzer.</pre></div>
+<div class='line' id='644'><pre>644: </pre><pre>    #</pre></div>
+<div class='line' id='645'><pre>645: </pre><pre>    def sandbox_state</pre></div>
+<div class='line' id='646'><pre>646: </pre><pre>      analysis_result.sandbox_state</pre></div>
+<div class='line' id='647'><pre>647: </pre><pre>    end</pre></div>
+<div class='line' id='648'><pre>648: </pre><pre></pre></div>
+<div class='line' id='649'><pre>649: </pre><pre>    #-------------------------------------------------------------------------#</pre></div>
+<div class='line' id='650'><pre>650: </pre><pre></pre></div>
+<div class='line' id='651'><pre>651: </pre><pre>  end</pre></div>
+<div class='line' id='652'><pre>652: </pre><pre>end</pre></div>
+<script src='../../../../../../../zepto.js'></script>
+<script>
+  var update_highlight = function() {
+    console.log('hash change');
+    $('div.highlight').removeClass('highlight');
+    var hash = window.location.hash;
+    if (hash.length > 0) $(hash).addClass('highlight');
+  };
+  $(window).on('hashchange', update_highlight);
+  update_highlight();
+
+  $(window).on('mouseenter', 'div.calls', function() {
+    $(this).children().last().show();
+  });
+  $(window).on('mouseleave', 'div.calls', function() {
+    $(this).children().last().hide();
+  });
+</script>
+</body>
+</html>

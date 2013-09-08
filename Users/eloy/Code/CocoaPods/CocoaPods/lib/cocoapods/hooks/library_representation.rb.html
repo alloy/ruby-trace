@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+.highlight { background-color: rgb(255, 255, 204); }
+pre { display: inline; }
+div.calls { display: inline; }
+span.method_definition { font-weight: bold; }
+span.method_call { font-weight: bold; }
+div.line a { font-size: 12px; }
+</style>
+</head>
+<body>
+<div class='line' id='1'><pre> 1: </pre><pre>module Pod</pre></div>
+<div class='line' id='2'><pre> 2: </pre><pre>  module Hooks</pre></div>
+<div class='line' id='3'><pre> 3: </pre><pre>    class LibraryRepresentation</pre></div>
+<div class='line' id='4'><pre> 4: </pre><pre></pre></div>
+<div class='line' id='5'><pre> 5: </pre><pre>      # Stores the information of the target installer</pre></div>
+<div class='line' id='6'><pre> 6: </pre><pre></pre></div>
+<div class='line' id='7'><pre> 7: </pre><pre>      #-----------------------------------------------------------------------#</pre></div>
+<div class='line' id='8'><pre> 8: </pre><pre></pre></div>
+<div class='line' id='9'><pre> 9: </pre><pre>      # @return [String] The name of the Pods library.</pre></div>
+<div class='line' id='10'><pre>10: </pre><pre>      #</pre></div>
+<div class='line' id='11'><pre>11: </pre><div class='calls'><span class='method_definition'><pre>      def name</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#43'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:43</a> <a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#49'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:49</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#19'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:19</a></span></div></div>
+<div class='line' id='12'><pre>12: </pre><div class='calls'><span class='method_call'><pre>        library.name</pre></span> <span style='display:none;'><a href='../target.rb.html#22'>Pod::Target#name</a> <a href='../target.rb.html#22'>Pod::Target#name</a> <a href='../target.rb.html#22'>Pod::Target#name</a></span></div></div>
+<div class='line' id='13'><pre>13: </pre><pre>      end</pre></div>
+<div class='line' id='14'><pre>14: </pre><pre></pre></div>
+<div class='line' id='15'><pre>15: </pre><pre>      # @return [Array<Dependency>] The dependencies of this library.</pre></div>
+<div class='line' id='16'><pre>16: </pre><pre>      #</pre></div>
+<div class='line' id='17'><pre>17: </pre><div class='calls'><span class='method_definition'><pre>      def dependencies</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/library_representation_spec.rb.html#24'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:24</a></span></div></div>
+<div class='line' id='18'><pre>18: </pre><div class='calls'><span class='method_call'><pre>        target_definition.dependencies</pre></span> <span style='display:none;'><a href='library_representation.rb.html#50'>Pod::Hooks::LibraryRepresentation#target_definition</a> <a href='../../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/podfile/target_definition.rb.html#77'>Pod::Podfile::TargetDefinition#dependencies</a></span></div></div>
+<div class='line' id='19'><pre>19: </pre><pre>      end</pre></div>
+<div class='line' id='20'><pre>20: </pre><pre></pre></div>
+<div class='line' id='21'><pre>21: </pre><pre>      # @return [Pathname] The path of the Pods dir.</pre></div>
+<div class='line' id='22'><pre>22: </pre><pre>      #</pre></div>
+<div class='line' id='23'><pre>23: </pre><div class='calls'><span class='method_definition'><pre>      def sandbox_dir</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/library_representation_spec.rb.html#28'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:28</a></span></div></div>
+<div class='line' id='24'><pre>24: </pre><pre>        sandbox.root</pre></div>
+<div class='line' id='25'><pre>25: </pre><pre>      end</pre></div>
+<div class='line' id='26'><pre>26: </pre><pre></pre></div>
+<div class='line' id='27'><pre>27: </pre><pre>      # @return [Pathname] The path of the prefix_header</pre></div>
+<div class='line' id='28'><pre>28: </pre><pre>      #</pre></div>
+<div class='line' id='29'><pre>29: </pre><div class='calls'><span class='method_definition'><pre>      def prefix_header_path</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/library_representation_spec.rb.html#32'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:32</a></span></div></div>
+<div class='line' id='30'><pre>30: </pre><div class='calls'><span class='method_call'><pre>        UI.warn "LibraryRepresentation#prefix_header_path is deprecated. " \</pre></span> <span style='display:none;'><a href='../../../spec/spec_helper/user_interface.rb.html#21'>#<Class:Pod::UserInterface>#warn</a></span></div></div>
+<div class='line' id='31'><pre>31: </pre><pre>          "Use the specification `prefix_header_contents` attribute."</pre></div>
+<div class='line' id='32'><pre>32: </pre><div class='calls'><span class='method_call'><pre>        library.prefix_header_path</pre></span> <span style='display:none;'><a href='../target.rb.html#97'>Pod::Target#prefix_header_path</a></span></div></div>
+<div class='line' id='33'><pre>33: </pre><pre>      end</pre></div>
+<div class='line' id='34'><pre>34: </pre><pre>      alias :prefix_header_filename :prefix_header_path</pre></div>
+<div class='line' id='35'><pre>35: </pre><pre></pre></div>
+<div class='line' id='36'><pre>36: </pre><pre>      # @return [Pathname] The path of the script used to copy the resources.</pre></div>
+<div class='line' id='37'><pre>37: </pre><pre>      #</pre></div>
+<div class='line' id='38'><pre>38: </pre><div class='calls'><span class='method_definition'><pre>      def copy_resources_script_path</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/library_representation_spec.rb.html#36'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:36</a></span></div></div>
+<div class='line' id='39'><pre>39: </pre><div class='calls'><span class='method_call'><pre>        library.copy_resources_script_path</pre></span> <span style='display:none;'><a href='../target/aggregate_target.rb.html#82'>Pod::AggregateTarget#copy_resources_script_path</a></span></div></div>
+<div class='line' id='40'><pre>40: </pre><pre>      end</pre></div>
+<div class='line' id='41'><pre>41: </pre><pre></pre></div>
+<div class='line' id='42'><pre>42: </pre><pre>      # @return [Project] The Pods project of the sandbox.</pre></div>
+<div class='line' id='43'><pre>43: </pre><pre>      #</pre></div>
+<div class='line' id='44'><pre>44: </pre><div class='calls'><span class='method_definition'><pre>      def project</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/library_representation_spec.rb.html#42'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:42</a></span></div></div>
+<div class='line' id='45'><pre>45: </pre><pre>        sandbox.project</pre></div>
+<div class='line' id='46'><pre>46: </pre><pre>      end</pre></div>
+<div class='line' id='47'><pre>47: </pre><pre></pre></div>
+<div class='line' id='48'><pre>48: </pre><pre>      # @return [TargetDefinition] The target definition of the library.</pre></div>
+<div class='line' id='49'><pre>49: </pre><pre>      #</pre></div>
+<div class='line' id='50'><pre>50: </pre><div class='calls'><span class='method_definition'><pre>      def target_definition</pre></span> <span style='display:none;'><a href='library_representation.rb.html#18'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/hooks/library_representation.rb:18</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#46'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:46</a></span></div></div>
+<div class='line' id='51'><pre>51: </pre><pre>        library.target_definition</pre></div>
+<div class='line' id='52'><pre>52: </pre><pre>      end</pre></div>
+<div class='line' id='53'><pre>53: </pre><pre></pre></div>
+<div class='line' id='54'><pre>54: </pre><pre>      #-----------------------------------------------------------------------#</pre></div>
+<div class='line' id='55'><pre>55: </pre><pre></pre></div>
+<div class='line' id='56'><pre>56: </pre><pre>      public</pre></div>
+<div class='line' id='57'><pre>57: </pre><pre></pre></div>
+<div class='line' id='58'><pre>58: </pre><pre>      # @!group Unsafe Hooks API</pre></div>
+<div class='line' id='59'><pre>59: </pre><pre></pre></div>
+<div class='line' id='60'><pre>60: </pre><pre>      # @return [Sandbox] sandbox the sandbox where the support files should</pre></div>
+<div class='line' id='61'><pre>61: </pre><pre>      #         be generated.</pre></div>
+<div class='line' id='62'><pre>62: </pre><pre>      #</pre></div>
+<div class='line' id='63'><pre>63: </pre><pre>      attr_reader :sandbox</pre></div>
+<div class='line' id='64'><pre>64: </pre><pre></pre></div>
+<div class='line' id='65'><pre>65: </pre><pre>      # @return [Library] The library whose target needs to be generated.</pre></div>
+<div class='line' id='66'><pre>66: </pre><pre>      #</pre></div>
+<div class='line' id='67'><pre>67: </pre><pre>      attr_reader :library</pre></div>
+<div class='line' id='68'><pre>68: </pre><pre></pre></div>
+<div class='line' id='69'><pre>69: </pre><pre>      # @return [PBXNativeTarget] The target generated by the installation</pre></div>
+<div class='line' id='70'><pre>70: </pre><pre>      #         process.</pre></div>
+<div class='line' id='71'><pre>71: </pre><pre>      #</pre></div>
+<div class='line' id='72'><pre>72: </pre><div class='calls'><span class='method_definition'><pre>      def target</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/library_representation_spec.rb.html#66'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:66</a></span></div></div>
+<div class='line' id='73'><pre>73: </pre><pre>        library.target</pre></div>
+<div class='line' id='74'><pre>74: </pre><pre>      end</pre></div>
+<div class='line' id='75'><pre>75: </pre><pre></pre></div>
+<div class='line' id='76'><pre>76: </pre><pre>      #-----------------------------------------------------------------------#</pre></div>
+<div class='line' id='77'><pre>77: </pre><pre></pre></div>
+<div class='line' id='78'><pre>78: </pre><pre>      # @!group Private implementation</pre></div>
+<div class='line' id='79'><pre>79: </pre><pre></pre></div>
+<div class='line' id='80'><pre>80: </pre><pre>      # @param [Sandbox] sandbox @see sandbox</pre></div>
+<div class='line' id='81'><pre>81: </pre><pre>      # @param [Library] library @see library</pre></div>
+<div class='line' id='82'><pre>82: </pre><pre>      #</pre></div>
+<div class='line' id='83'><pre>83: </pre><div class='calls'><span class='method_definition'><pre>      def initialize(sandbox, library)</pre></span> <span style='display:none;'><a href='../installer.rb.html#595'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer.rb:595</a> <a href='../installer.rb.html#595'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer.rb:595</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a></span></div></div>
+<div class='line' id='84'><pre>84: </pre><pre>        @sandbox = sandbox</pre></div>
+<div class='line' id='85'><pre>85: </pre><pre>        @library = library</pre></div>
+<div class='line' id='86'><pre>86: </pre><pre>        raise "[BUG]" unless library.is_a?(AggregateTarget)</pre></div>
+<div class='line' id='87'><pre>87: </pre><pre>      end</pre></div>
+<div class='line' id='88'><pre>88: </pre><pre></pre></div>
+<div class='line' id='89'><pre>89: </pre><pre>      #-----------------------------------------------------------------------#</pre></div>
+<div class='line' id='90'><pre>90: </pre><pre></pre></div>
+<div class='line' id='91'><pre>91: </pre><pre>    end</pre></div>
+<div class='line' id='92'><pre>92: </pre><pre>  end</pre></div>
+<div class='line' id='93'><pre>93: </pre><pre>end</pre></div>
+<script src='../../../../../../../../zepto.js'></script>
+<script>
+  var update_highlight = function() {
+    console.log('hash change');
+    $('div.highlight').removeClass('highlight');
+    var hash = window.location.hash;
+    if (hash.length > 0) $(hash).addClass('highlight');
+  };
+  $(window).on('hashchange', update_highlight);
+  update_highlight();
+
+  $(window).on('mouseenter', 'div.calls', function() {
+    $(this).children().last().show();
+  });
+  $(window).on('mouseleave', 'div.calls', function() {
+    $(this).children().last().hide();
+  });
+</script>
+</body>
+</html>

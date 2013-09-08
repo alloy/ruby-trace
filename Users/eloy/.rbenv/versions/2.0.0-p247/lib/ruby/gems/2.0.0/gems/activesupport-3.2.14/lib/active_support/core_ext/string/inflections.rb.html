@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+.highlight { background-color: rgb(255, 255, 204); }
+pre { display: inline; }
+div.calls { display: inline; }
+span.method_definition { font-weight: bold; }
+span.method_call { font-weight: bold; }
+div.line a { font-size: 12px; }
+</style>
+</head>
+<body>
+<div class='line' id='1'><pre>  1: </pre><pre>require 'active_support/inflector/methods'</pre></div>
+<div class='line' id='2'><pre>  2: </pre><pre>require 'active_support/inflector/transliterate'</pre></div>
+<div class='line' id='3'><pre>  3: </pre><pre></pre></div>
+<div class='line' id='4'><pre>  4: </pre><pre># String inflections define new methods on the String class to transform names for different purposes.</pre></div>
+<div class='line' id='5'><pre>  5: </pre><pre># For instance, you can figure out the name of a table from the name of a class.</pre></div>
+<div class='line' id='6'><pre>  6: </pre><pre>#</pre></div>
+<div class='line' id='7'><pre>  7: </pre><pre>#   "ScaleScore".tableize # => "scale_scores"</pre></div>
+<div class='line' id='8'><pre>  8: </pre><pre>#</pre></div>
+<div class='line' id='9'><pre>  9: </pre><pre>class String</pre></div>
+<div class='line' id='10'><pre> 10: </pre><pre>  # Returns the plural form of the word in the string.</pre></div>
+<div class='line' id='11'><pre> 11: </pre><pre>  #</pre></div>
+<div class='line' id='12'><pre> 12: </pre><pre>  # If the optional parameter +count+ is specified,</pre></div>
+<div class='line' id='13'><pre> 13: </pre><pre>  # the singular form will be returned if <tt>count == 1</tt>.</pre></div>
+<div class='line' id='14'><pre> 14: </pre><pre>  # For any other value of +count+ the plural will be returned.</pre></div>
+<div class='line' id='15'><pre> 15: </pre><pre>  #</pre></div>
+<div class='line' id='16'><pre> 16: </pre><pre>  # ==== Examples</pre></div>
+<div class='line' id='17'><pre> 17: </pre><pre>  #   "post".pluralize             # => "posts"</pre></div>
+<div class='line' id='18'><pre> 18: </pre><pre>  #   "octopus".pluralize          # => "octopi"</pre></div>
+<div class='line' id='19'><pre> 19: </pre><pre>  #   "sheep".pluralize            # => "sheep"</pre></div>
+<div class='line' id='20'><pre> 20: </pre><pre>  #   "words".pluralize            # => "words"</pre></div>
+<div class='line' id='21'><pre> 21: </pre><pre>  #   "the blue mailman".pluralize # => "the blue mailmen"</pre></div>
+<div class='line' id='22'><pre> 22: </pre><pre>  #   "CamelOctopus".pluralize     # => "CamelOctopi"</pre></div>
+<div class='line' id='23'><pre> 23: </pre><pre>  #   "apple".pluralize(1)         # => "apple"</pre></div>
+<div class='line' id='24'><pre> 24: </pre><pre>  #   "apple".pluralize(2)         # => "apples"</pre></div>
+<div class='line' id='25'><pre> 25: </pre><pre>  def pluralize(count = nil)</pre></div>
+<div class='line' id='26'><pre> 26: </pre><pre>    if count == 1</pre></div>
+<div class='line' id='27'><pre> 27: </pre><pre>      self</pre></div>
+<div class='line' id='28'><pre> 28: </pre><pre>    else</pre></div>
+<div class='line' id='29'><pre> 29: </pre><pre>      ActiveSupport::Inflector.pluralize(self)</pre></div>
+<div class='line' id='30'><pre> 30: </pre><pre>    end</pre></div>
+<div class='line' id='31'><pre> 31: </pre><pre>  end</pre></div>
+<div class='line' id='32'><pre> 32: </pre><pre></pre></div>
+<div class='line' id='33'><pre> 33: </pre><pre>  # The reverse of +pluralize+, returns the singular form of a word in a string.</pre></div>
+<div class='line' id='34'><pre> 34: </pre><pre>  #</pre></div>
+<div class='line' id='35'><pre> 35: </pre><pre>  #   "posts".singularize            # => "post"</pre></div>
+<div class='line' id='36'><pre> 36: </pre><pre>  #   "octopi".singularize           # => "octopus"</pre></div>
+<div class='line' id='37'><pre> 37: </pre><pre>  #   "sheep".singularize            # => "sheep"</pre></div>
+<div class='line' id='38'><pre> 38: </pre><pre>  #   "word".singularize             # => "word"</pre></div>
+<div class='line' id='39'><pre> 39: </pre><pre>  #   "the blue mailmen".singularize # => "the blue mailman"</pre></div>
+<div class='line' id='40'><pre> 40: </pre><pre>  #   "CamelOctopi".singularize      # => "CamelOctopus"</pre></div>
+<div class='line' id='41'><pre> 41: </pre><div class='calls'><span class='method_definition'><pre>  def singularize</pre></span> <span style='display:none;'><a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a> <a href='../../../../../../bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb.html#178'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/dsl/attribute.rb:178</a></span></div></div>
+<div class='line' id='42'><pre> 42: </pre><div class='calls'><span class='method_call'><pre>    ActiveSupport::Inflector.singularize(self)</pre></span> <span style='display:none;'><a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a> <a href='../../inflector/methods.rb.html#36'>ActiveSupport::Inflector#singularize</a></span></div></div>
+<div class='line' id='43'><pre> 43: </pre><pre>  end</pre></div>
+<div class='line' id='44'><pre> 44: </pre><pre></pre></div>
+<div class='line' id='45'><pre> 45: </pre><pre>  # +constantize+ tries to find a declared constant with the name specified</pre></div>
+<div class='line' id='46'><pre> 46: </pre><pre>  # in the string. It raises a NameError when the name is not in CamelCase</pre></div>
+<div class='line' id='47'><pre> 47: </pre><pre>  # or is not initialized.  See ActiveSupport::Inflector.constantize</pre></div>
+<div class='line' id='48'><pre> 48: </pre><pre>  #</pre></div>
+<div class='line' id='49'><pre> 49: </pre><pre>  # Examples</pre></div>
+<div class='line' id='50'><pre> 50: </pre><pre>  #   "Module".constantize  # => Module</pre></div>
+<div class='line' id='51'><pre> 51: </pre><pre>  #   "Class".constantize   # => Class</pre></div>
+<div class='line' id='52'><pre> 52: </pre><pre>  #   "blargle".constantize # => NameError: wrong constant name blargle</pre></div>
+<div class='line' id='53'><pre> 53: </pre><pre>  def constantize</pre></div>
+<div class='line' id='54'><pre> 54: </pre><pre>    ActiveSupport::Inflector.constantize(self)</pre></div>
+<div class='line' id='55'><pre> 55: </pre><pre>  end</pre></div>
+<div class='line' id='56'><pre> 56: </pre><pre></pre></div>
+<div class='line' id='57'><pre> 57: </pre><pre>  # +safe_constantize+ tries to find a declared constant with the name specified</pre></div>
+<div class='line' id='58'><pre> 58: </pre><pre>  # in the string. It returns nil when the name is not in CamelCase</pre></div>
+<div class='line' id='59'><pre> 59: </pre><pre>  # or is not initialized.  See ActiveSupport::Inflector.safe_constantize</pre></div>
+<div class='line' id='60'><pre> 60: </pre><pre>  #</pre></div>
+<div class='line' id='61'><pre> 61: </pre><pre>  # Examples</pre></div>
+<div class='line' id='62'><pre> 62: </pre><pre>  #   "Module".safe_constantize  # => Module</pre></div>
+<div class='line' id='63'><pre> 63: </pre><pre>  #   "Class".safe_constantize   # => Class</pre></div>
+<div class='line' id='64'><pre> 64: </pre><pre>  #   "blargle".safe_constantize # => nil</pre></div>
+<div class='line' id='65'><pre> 65: </pre><pre>  def safe_constantize</pre></div>
+<div class='line' id='66'><pre> 66: </pre><pre>    ActiveSupport::Inflector.safe_constantize(self)</pre></div>
+<div class='line' id='67'><pre> 67: </pre><pre>  end</pre></div>
+<div class='line' id='68'><pre> 68: </pre><pre></pre></div>
+<div class='line' id='69'><pre> 69: </pre><pre>  # By default, +camelize+ converts strings to UpperCamelCase. If the argument to camelize</pre></div>
+<div class='line' id='70'><pre> 70: </pre><pre>  # is set to <tt>:lower</tt> then camelize produces lowerCamelCase.</pre></div>
+<div class='line' id='71'><pre> 71: </pre><pre>  #</pre></div>
+<div class='line' id='72'><pre> 72: </pre><pre>  # +camelize+ will also convert '/' to '::' which is useful for converting paths to namespaces.</pre></div>
+<div class='line' id='73'><pre> 73: </pre><pre>  #</pre></div>
+<div class='line' id='74'><pre> 74: </pre><pre>  #   "active_record".camelize                # => "ActiveRecord"</pre></div>
+<div class='line' id='75'><pre> 75: </pre><pre>  #   "active_record".camelize(:lower)        # => "activeRecord"</pre></div>
+<div class='line' id='76'><pre> 76: </pre><pre>  #   "active_record/errors".camelize         # => "ActiveRecord::Errors"</pre></div>
+<div class='line' id='77'><pre> 77: </pre><pre>  #   "active_record/errors".camelize(:lower) # => "activeRecord::Errors"</pre></div>
+<div class='line' id='78'><pre> 78: </pre><pre>  def camelize(first_letter = :upper)</pre></div>
+<div class='line' id='79'><pre> 79: </pre><pre>    case first_letter</pre></div>
+<div class='line' id='80'><pre> 80: </pre><pre>      when :upper then ActiveSupport::Inflector.camelize(self, true)</pre></div>
+<div class='line' id='81'><pre> 81: </pre><pre>      when :lower then ActiveSupport::Inflector.camelize(self, false)</pre></div>
+<div class='line' id='82'><pre> 82: </pre><pre>    end</pre></div>
+<div class='line' id='83'><pre> 83: </pre><pre>  end</pre></div>
+<div class='line' id='84'><pre> 84: </pre><pre>  alias_method :camelcase, :camelize</pre></div>
+<div class='line' id='85'><pre> 85: </pre><pre></pre></div>
+<div class='line' id='86'><pre> 86: </pre><pre>  # Capitalizes all the words and replaces some characters in the string to create</pre></div>
+<div class='line' id='87'><pre> 87: </pre><pre>  # a nicer looking title. +titleize+ is meant for creating pretty output. It is not</pre></div>
+<div class='line' id='88'><pre> 88: </pre><pre>  # used in the Rails internals.</pre></div>
+<div class='line' id='89'><pre> 89: </pre><pre>  #</pre></div>
+<div class='line' id='90'><pre> 90: </pre><pre>  # +titleize+ is also aliased as +titlecase+.</pre></div>
+<div class='line' id='91'><pre> 91: </pre><pre>  #</pre></div>
+<div class='line' id='92'><pre> 92: </pre><pre>  #   "man from the boondocks".titleize # => "Man From The Boondocks"</pre></div>
+<div class='line' id='93'><pre> 93: </pre><pre>  #   "x-men: the last stand".titleize  # => "X Men: The Last Stand"</pre></div>
+<div class='line' id='94'><pre> 94: </pre><pre>  def titleize</pre></div>
+<div class='line' id='95'><pre> 95: </pre><pre>    ActiveSupport::Inflector.titleize(self)</pre></div>
+<div class='line' id='96'><pre> 96: </pre><pre>  end</pre></div>
+<div class='line' id='97'><pre> 97: </pre><pre>  alias_method :titlecase, :titleize</pre></div>
+<div class='line' id='98'><pre> 98: </pre><pre></pre></div>
+<div class='line' id='99'><pre> 99: </pre><pre>  # The reverse of +camelize+. Makes an underscored, lowercase form from the expression in the string.</pre></div>
+<div class='line' id='100'><pre>100: </pre><pre>  #</pre></div>
+<div class='line' id='101'><pre>101: </pre><pre>  # +underscore+ will also change '::' to '/' to convert namespaces to paths.</pre></div>
+<div class='line' id='102'><pre>102: </pre><pre>  #</pre></div>
+<div class='line' id='103'><pre>103: </pre><pre>  #   "ActiveModel".underscore         # => "active_model"</pre></div>
+<div class='line' id='104'><pre>104: </pre><pre>  #   "ActiveModel::Errors".underscore # => "active_model/errors"</pre></div>
+<div class='line' id='105'><pre>105: </pre><pre>  def underscore</pre></div>
+<div class='line' id='106'><pre>106: </pre><pre>    ActiveSupport::Inflector.underscore(self)</pre></div>
+<div class='line' id='107'><pre>107: </pre><pre>  end</pre></div>
+<div class='line' id='108'><pre>108: </pre><pre></pre></div>
+<div class='line' id='109'><pre>109: </pre><pre>  # Replaces underscores with dashes in the string.</pre></div>
+<div class='line' id='110'><pre>110: </pre><pre>  #</pre></div>
+<div class='line' id='111'><pre>111: </pre><pre>  #   "puni_puni" # => "puni-puni"</pre></div>
+<div class='line' id='112'><pre>112: </pre><pre>  def dasherize</pre></div>
+<div class='line' id='113'><pre>113: </pre><pre>    ActiveSupport::Inflector.dasherize(self)</pre></div>
+<div class='line' id='114'><pre>114: </pre><pre>  end</pre></div>
+<div class='line' id='115'><pre>115: </pre><pre></pre></div>
+<div class='line' id='116'><pre>116: </pre><pre>  # Removes the module part from the constant expression in the string.</pre></div>
+<div class='line' id='117'><pre>117: </pre><pre>  #</pre></div>
+<div class='line' id='118'><pre>118: </pre><pre>  #   "ActiveRecord::CoreExtensions::String::Inflections".demodulize # => "Inflections"</pre></div>
+<div class='line' id='119'><pre>119: </pre><pre>  #   "Inflections".demodulize                                       # => "Inflections"</pre></div>
+<div class='line' id='120'><pre>120: </pre><pre>  #</pre></div>
+<div class='line' id='121'><pre>121: </pre><pre>  # See also +deconstantize+.</pre></div>
+<div class='line' id='122'><pre>122: </pre><pre>  def demodulize</pre></div>
+<div class='line' id='123'><pre>123: </pre><pre>    ActiveSupport::Inflector.demodulize(self)</pre></div>
+<div class='line' id='124'><pre>124: </pre><pre>  end</pre></div>
+<div class='line' id='125'><pre>125: </pre><pre></pre></div>
+<div class='line' id='126'><pre>126: </pre><pre>  # Removes the rightmost segment from the constant expression in the string.</pre></div>
+<div class='line' id='127'><pre>127: </pre><pre>  #</pre></div>
+<div class='line' id='128'><pre>128: </pre><pre>  #   "Net::HTTP".deconstantize   # => "Net"</pre></div>
+<div class='line' id='129'><pre>129: </pre><pre>  #   "::Net::HTTP".deconstantize # => "::Net"</pre></div>
+<div class='line' id='130'><pre>130: </pre><pre>  #   "String".deconstantize      # => ""</pre></div>
+<div class='line' id='131'><pre>131: </pre><pre>  #   "::String".deconstantize    # => ""</pre></div>
+<div class='line' id='132'><pre>132: </pre><pre>  #   "".deconstantize            # => ""</pre></div>
+<div class='line' id='133'><pre>133: </pre><pre>  #</pre></div>
+<div class='line' id='134'><pre>134: </pre><pre>  # See also +demodulize+.</pre></div>
+<div class='line' id='135'><pre>135: </pre><pre>  def deconstantize</pre></div>
+<div class='line' id='136'><pre>136: </pre><pre>    ActiveSupport::Inflector.deconstantize(self)</pre></div>
+<div class='line' id='137'><pre>137: </pre><pre>  end</pre></div>
+<div class='line' id='138'><pre>138: </pre><pre></pre></div>
+<div class='line' id='139'><pre>139: </pre><pre>  # Replaces special characters in a string so that it may be used as part of a 'pretty' URL.</pre></div>
+<div class='line' id='140'><pre>140: </pre><pre>  #</pre></div>
+<div class='line' id='141'><pre>141: </pre><pre>  # ==== Examples</pre></div>
+<div class='line' id='142'><pre>142: </pre><pre>  #</pre></div>
+<div class='line' id='143'><pre>143: </pre><pre>  #   class Person</pre></div>
+<div class='line' id='144'><pre>144: </pre><pre>  #     def to_param</pre></div>
+<div class='line' id='145'><pre>145: </pre><pre>  #       "#{id}-#{name.parameterize}"</pre></div>
+<div class='line' id='146'><pre>146: </pre><pre>  #     end</pre></div>
+<div class='line' id='147'><pre>147: </pre><pre>  #   end</pre></div>
+<div class='line' id='148'><pre>148: </pre><pre>  #</pre></div>
+<div class='line' id='149'><pre>149: </pre><pre>  #   @person = Person.find(1)</pre></div>
+<div class='line' id='150'><pre>150: </pre><pre>  #   # => #<Person id: 1, name: "Donald E. Knuth"></pre></div>
+<div class='line' id='151'><pre>151: </pre><pre>  #</pre></div>
+<div class='line' id='152'><pre>152: </pre><pre>  #   <%= link_to(@person.name, person_path) %></pre></div>
+<div class='line' id='153'><pre>153: </pre><pre>  #   # => <a href="/person/1-donald-e-knuth">Donald E. Knuth</a></pre></div>
+<div class='line' id='154'><pre>154: </pre><pre>  def parameterize(sep = '-')</pre></div>
+<div class='line' id='155'><pre>155: </pre><pre>    ActiveSupport::Inflector.parameterize(self, sep)</pre></div>
+<div class='line' id='156'><pre>156: </pre><pre>  end</pre></div>
+<div class='line' id='157'><pre>157: </pre><pre></pre></div>
+<div class='line' id='158'><pre>158: </pre><pre>  # Creates the name of a table like Rails does for models to table names. This method</pre></div>
+<div class='line' id='159'><pre>159: </pre><pre>  # uses the +pluralize+ method on the last word in the string.</pre></div>
+<div class='line' id='160'><pre>160: </pre><pre>  #</pre></div>
+<div class='line' id='161'><pre>161: </pre><pre>  #   "RawScaledScorer".tableize # => "raw_scaled_scorers"</pre></div>
+<div class='line' id='162'><pre>162: </pre><pre>  #   "egg_and_ham".tableize     # => "egg_and_hams"</pre></div>
+<div class='line' id='163'><pre>163: </pre><pre>  #   "fancyCategory".tableize   # => "fancy_categories"</pre></div>
+<div class='line' id='164'><pre>164: </pre><pre>  def tableize</pre></div>
+<div class='line' id='165'><pre>165: </pre><pre>    ActiveSupport::Inflector.tableize(self)</pre></div>
+<div class='line' id='166'><pre>166: </pre><pre>  end</pre></div>
+<div class='line' id='167'><pre>167: </pre><pre></pre></div>
+<div class='line' id='168'><pre>168: </pre><pre>  # Create a class name from a plural table name like Rails does for table names to models.</pre></div>
+<div class='line' id='169'><pre>169: </pre><pre>  # Note that this returns a string and not a class. (To convert to an actual class</pre></div>
+<div class='line' id='170'><pre>170: </pre><pre>  # follow +classify+ with +constantize+.)</pre></div>
+<div class='line' id='171'><pre>171: </pre><pre>  #</pre></div>
+<div class='line' id='172'><pre>172: </pre><pre>  #   "egg_and_hams".classify # => "EggAndHam"</pre></div>
+<div class='line' id='173'><pre>173: </pre><pre>  #   "posts".classify        # => "Post"</pre></div>
+<div class='line' id='174'><pre>174: </pre><pre>  #</pre></div>
+<div class='line' id='175'><pre>175: </pre><pre>  # Singular names are not handled correctly.</pre></div>
+<div class='line' id='176'><pre>176: </pre><pre>  #</pre></div>
+<div class='line' id='177'><pre>177: </pre><pre>  #   "business".classify # => "Busines"</pre></div>
+<div class='line' id='178'><pre>178: </pre><pre>  def classify</pre></div>
+<div class='line' id='179'><pre>179: </pre><pre>    ActiveSupport::Inflector.classify(self)</pre></div>
+<div class='line' id='180'><pre>180: </pre><pre>  end</pre></div>
+<div class='line' id='181'><pre>181: </pre><pre></pre></div>
+<div class='line' id='182'><pre>182: </pre><pre>  # Capitalizes the first word, turns underscores into spaces, and strips '_id'.</pre></div>
+<div class='line' id='183'><pre>183: </pre><pre>  # Like +titleize+, this is meant for creating pretty output.</pre></div>
+<div class='line' id='184'><pre>184: </pre><pre>  #</pre></div>
+<div class='line' id='185'><pre>185: </pre><pre>  #   "employee_salary" # => "Employee salary"</pre></div>
+<div class='line' id='186'><pre>186: </pre><pre>  #   "author_id"       # => "Author"</pre></div>
+<div class='line' id='187'><pre>187: </pre><pre>  def humanize</pre></div>
+<div class='line' id='188'><pre>188: </pre><pre>    ActiveSupport::Inflector.humanize(self)</pre></div>
+<div class='line' id='189'><pre>189: </pre><pre>  end</pre></div>
+<div class='line' id='190'><pre>190: </pre><pre></pre></div>
+<div class='line' id='191'><pre>191: </pre><pre>  # Creates a foreign key name from a class name.</pre></div>
+<div class='line' id='192'><pre>192: </pre><pre>  # +separate_class_name_and_id_with_underscore+ sets whether</pre></div>
+<div class='line' id='193'><pre>193: </pre><pre>  # the method should put '_' between the name and 'id'.</pre></div>
+<div class='line' id='194'><pre>194: </pre><pre>  #</pre></div>
+<div class='line' id='195'><pre>195: </pre><pre>  # Examples</pre></div>
+<div class='line' id='196'><pre>196: </pre><pre>  #   "Message".foreign_key        # => "message_id"</pre></div>
+<div class='line' id='197'><pre>197: </pre><pre>  #   "Message".foreign_key(false) # => "messageid"</pre></div>
+<div class='line' id='198'><pre>198: </pre><pre>  #   "Admin::Post".foreign_key    # => "post_id"</pre></div>
+<div class='line' id='199'><pre>199: </pre><pre>  def foreign_key(separate_class_name_and_id_with_underscore = true)</pre></div>
+<div class='line' id='200'><pre>200: </pre><pre>    ActiveSupport::Inflector.foreign_key(self, separate_class_name_and_id_with_underscore)</pre></div>
+<div class='line' id='201'><pre>201: </pre><pre>  end</pre></div>
+<div class='line' id='202'><pre>202: </pre><pre>end</pre></div>
+<script src='../../../../../../../../../../../../../../../zepto.js'></script>
+<script>
+  var update_highlight = function() {
+    console.log('hash change');
+    $('div.highlight').removeClass('highlight');
+    var hash = window.location.hash;
+    if (hash.length > 0) $(hash).addClass('highlight');
+  };
+  $(window).on('hashchange', update_highlight);
+  update_highlight();
+
+  $(window).on('mouseenter', 'div.calls', function() {
+    $(this).children().last().show();
+  });
+  $(window).on('mouseleave', 'div.calls', function() {
+    $(this).children().last().hide();
+  });
+</script>
+</body>
+</html>

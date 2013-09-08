@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+.highlight { background-color: rgb(255, 255, 204); }
+pre { display: inline; }
+div.calls { display: inline; }
+span.method_definition { font-weight: bold; }
+span.method_call { font-weight: bold; }
+div.line a { font-size: 12px; }
+</style>
+</head>
+<body>
+<div class='line' id='1'><pre> 1: </pre><pre>require 'cocoapods-downloader'</pre></div>
+<div class='line' id='2'><pre> 2: </pre><pre></pre></div>
+<div class='line' id='3'><pre> 3: </pre><pre>module Pod</pre></div>
+<div class='line' id='4'><pre> 4: </pre><pre>  module Downloader</pre></div>
+<div class='line' id='5'><pre> 5: </pre><pre>    class Base</pre></div>
+<div class='line' id='6'><pre> 6: </pre><pre></pre></div>
+<div class='line' id='7'><pre> 7: </pre><div class='calls'><span class='method_call'><pre>      override_api do</pre></span> <span style='display:none;'><a href='../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/cocoapods-downloader-91052d25156d/lib/cocoapods-downloader/api_exposable.rb.html#5'>Pod::Downloader::APIExposable#expose_api</a></span></div></div>
+<div class='line' id='8'><pre> 8: </pre><pre></pre></div>
+<div class='line' id='9'><pre> 9: </pre><pre>        def execute_command(executable, command, raise_on_failure = false)</pre></div>
+<div class='line' id='10'><pre>10: </pre><pre>          Executable.execute_command(executable, command, raise_on_failure)</pre></div>
+<div class='line' id='11'><pre>11: </pre><pre>        end</pre></div>
+<div class='line' id='12'><pre>12: </pre><pre></pre></div>
+<div class='line' id='13'><pre>13: </pre><pre>        # Indicates that an action will be performed. The action is passed as a</pre></div>
+<div class='line' id='14'><pre>14: </pre><pre>        # block.</pre></div>
+<div class='line' id='15'><pre>15: </pre><pre>        #</pre></div>
+<div class='line' id='16'><pre>16: </pre><pre>        # @param  [String] message</pre></div>
+<div class='line' id='17'><pre>17: </pre><pre>        #         The message associated with the action.</pre></div>
+<div class='line' id='18'><pre>18: </pre><pre>        #</pre></div>
+<div class='line' id='19'><pre>19: </pre><pre>        # @yield  The action, this block is always executed.</pre></div>
+<div class='line' id='20'><pre>20: </pre><pre>        #</pre></div>
+<div class='line' id='21'><pre>21: </pre><pre>        # @return [void]</pre></div>
+<div class='line' id='22'><pre>22: </pre><pre>        #</pre></div>
+<div class='line' id='23'><pre>23: </pre><pre>        def ui_action(message)</pre></div>
+<div class='line' id='24'><pre>24: </pre><pre>          UI.section(" > #{message}", '', 1) do</pre></div>
+<div class='line' id='25'><pre>25: </pre><pre>            yield</pre></div>
+<div class='line' id='26'><pre>26: </pre><pre>          end</pre></div>
+<div class='line' id='27'><pre>27: </pre><pre>        end</pre></div>
+<div class='line' id='28'><pre>28: </pre><pre></pre></div>
+<div class='line' id='29'><pre>29: </pre><pre>        # Indicates that a minor action will be performed. The action is passed</pre></div>
+<div class='line' id='30'><pre>30: </pre><pre>        # as a block.</pre></div>
+<div class='line' id='31'><pre>31: </pre><pre>        #</pre></div>
+<div class='line' id='32'><pre>32: </pre><pre>        # @param  [String] message</pre></div>
+<div class='line' id='33'><pre>33: </pre><pre>        #         The message associated with the action.</pre></div>
+<div class='line' id='34'><pre>34: </pre><pre>        #</pre></div>
+<div class='line' id='35'><pre>35: </pre><pre>        # @yield  The action, this block is always executed.</pre></div>
+<div class='line' id='36'><pre>36: </pre><pre>        #</pre></div>
+<div class='line' id='37'><pre>37: </pre><pre>        # @return [void]</pre></div>
+<div class='line' id='38'><pre>38: </pre><pre>        #</pre></div>
+<div class='line' id='39'><pre>39: </pre><pre>        def ui_sub_action(message)</pre></div>
+<div class='line' id='40'><pre>40: </pre><pre>          UI.section(" > #{message}", '', 2) do</pre></div>
+<div class='line' id='41'><pre>41: </pre><pre>            yield</pre></div>
+<div class='line' id='42'><pre>42: </pre><pre>          end</pre></div>
+<div class='line' id='43'><pre>43: </pre><pre>        end</pre></div>
+<div class='line' id='44'><pre>44: </pre><pre></pre></div>
+<div class='line' id='45'><pre>45: </pre><pre>        # Prints an UI message.</pre></div>
+<div class='line' id='46'><pre>46: </pre><pre>        #</pre></div>
+<div class='line' id='47'><pre>47: </pre><pre>        # @param  [String] message</pre></div>
+<div class='line' id='48'><pre>48: </pre><pre>        #         The message associated with the action.</pre></div>
+<div class='line' id='49'><pre>49: </pre><pre>        #</pre></div>
+<div class='line' id='50'><pre>50: </pre><pre>        # @return [void]</pre></div>
+<div class='line' id='51'><pre>51: </pre><pre>        #</pre></div>
+<div class='line' id='52'><pre>52: </pre><pre>        def ui_message(message)</pre></div>
+<div class='line' id='53'><pre>53: </pre><pre>          UI.puts message</pre></div>
+<div class='line' id='54'><pre>54: </pre><pre>        end</pre></div>
+<div class='line' id='55'><pre>55: </pre><pre></pre></div>
+<div class='line' id='56'><pre>56: </pre><pre>      end</pre></div>
+<div class='line' id='57'><pre>57: </pre><pre>    end</pre></div>
+<div class='line' id='58'><pre>58: </pre><pre>  end</pre></div>
+<div class='line' id='59'><pre>59: </pre><pre>end</pre></div>
+<script src='../../../../../../../zepto.js'></script>
+<script>
+  var update_highlight = function() {
+    console.log('hash change');
+    $('div.highlight').removeClass('highlight');
+    var hash = window.location.hash;
+    if (hash.length > 0) $(hash).addClass('highlight');
+  };
+  $(window).on('hashchange', update_highlight);
+  update_highlight();
+
+  $(window).on('mouseenter', 'div.calls', function() {
+    $(this).children().last().show();
+  });
+  $(window).on('mouseleave', 'div.calls', function() {
+    $(this).children().last().hide();
+  });
+</script>
+</body>
+</html>

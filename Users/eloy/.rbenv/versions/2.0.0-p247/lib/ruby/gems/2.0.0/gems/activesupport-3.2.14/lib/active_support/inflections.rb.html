@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+.highlight { background-color: rgb(255, 255, 204); }
+pre { display: inline; }
+div.calls { display: inline; }
+span.method_definition { font-weight: bold; }
+span.method_call { font-weight: bold; }
+div.line a { font-size: 12px; }
+</style>
+</head>
+<body>
+<div class='line' id='1'><pre> 1: </pre><pre>require 'active_support/inflector/inflections'</pre></div>
+<div class='line' id='2'><pre> 2: </pre><pre></pre></div>
+<div class='line' id='3'><pre> 3: </pre><pre>module ActiveSupport</pre></div>
+<div class='line' id='4'><pre> 4: </pre><div class='calls'><span class='method_call'><pre>  Inflector.inflections do |inflect|</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#166'>ActiveSupport::Inflector#inflections</a></span></div></div>
+<div class='line' id='5'><pre> 5: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/$/, 's')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='6'><pre> 6: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/s$/i, 's')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='7'><pre> 7: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/(ax|test)is$/i, '\1es')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='8'><pre> 8: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/(octop|vir)us$/i, '\1i')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='9'><pre> 9: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/(octop|vir)i$/i, '\1i')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='10'><pre>10: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/(alias|status)$/i, '\1es')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='11'><pre>11: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/(bu)s$/i, '\1ses')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='12'><pre>12: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/(buffal|tomat)o$/i, '\1oes')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='13'><pre>13: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/([ti])um$/i, '\1a')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='14'><pre>14: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/([ti])a$/i, '\1a')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='15'><pre>15: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/sis$/i, 'ses')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='16'><pre>16: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/(?:([^f])fe|([lr])f)$/i, '\1\2ves')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='17'><pre>17: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/(hive)$/i, '\1s')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='18'><pre>18: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/([^aeiouy]|qu)y$/i, '\1ies')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='19'><pre>19: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/(x|ch|ss|sh)$/i, '\1es')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='20'><pre>20: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/(matr|vert|ind)(?:ix|ex)$/i, '\1ices')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='21'><pre>21: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/(m|l)ouse$/i, '\1ice')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='22'><pre>22: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/(m|l)ice$/i, '\1ice')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='23'><pre>23: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/^(ox)$/i, '\1en')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='24'><pre>24: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/^(oxen)$/i, '\1')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='25'><pre>25: </pre><div class='calls'><span class='method_call'><pre>    inflect.plural(/(quiz)$/i, '\1zes')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#84'>ActiveSupport::Inflector::Inflections#plural</a></span></div></div>
+<div class='line' id='26'><pre>26: </pre><pre></pre></div>
+<div class='line' id='27'><pre>27: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/s$/i, '')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='28'><pre>28: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(n)ews$/i, '\1ews')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='29'><pre>29: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/([ti])a$/i, '\1um')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='30'><pre>30: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i, '\1\2sis')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='31'><pre>31: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(^analy)ses$/i, '\1sis')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='32'><pre>32: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/([^f])ves$/i, '\1fe')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='33'><pre>33: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(hive)s$/i, '\1')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='34'><pre>34: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(tive)s$/i, '\1')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='35'><pre>35: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/([lr])ves$/i, '\1f')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='36'><pre>36: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/([^aeiouy]|qu)ies$/i, '\1y')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='37'><pre>37: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(s)eries$/i, '\1eries')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='38'><pre>38: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(m)ovies$/i, '\1ovie')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='39'><pre>39: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(x|ch|ss|sh)es$/i, '\1')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='40'><pre>40: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(m|l)ice$/i, '\1ouse')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='41'><pre>41: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(bus)es$/i, '\1')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='42'><pre>42: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(o)es$/i, '\1')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='43'><pre>43: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(shoe)s$/i, '\1')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='44'><pre>44: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(cris|ax|test)es$/i, '\1is')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='45'><pre>45: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(octop|vir)i$/i, '\1us')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='46'><pre>46: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(alias|status)es$/i, '\1')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='47'><pre>47: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/^(ox)en/i, '\1')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='48'><pre>48: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(vert|ind)ices$/i, '\1ex')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='49'><pre>49: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(matr)ices$/i, '\1ix')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='50'><pre>50: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(quiz)zes$/i, '\1')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='51'><pre>51: </pre><div class='calls'><span class='method_call'><pre>    inflect.singular(/(database)s$/i, '\1')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#92'>ActiveSupport::Inflector::Inflections#singular</a></span></div></div>
+<div class='line' id='52'><pre>52: </pre><pre></pre></div>
+<div class='line' id='53'><pre>53: </pre><div class='calls'><span class='method_call'><pre>    inflect.irregular('person', 'people')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#104'>ActiveSupport::Inflector::Inflections#irregular</a></span></div></div>
+<div class='line' id='54'><pre>54: </pre><div class='calls'><span class='method_call'><pre>    inflect.irregular('man', 'men')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#104'>ActiveSupport::Inflector::Inflections#irregular</a></span></div></div>
+<div class='line' id='55'><pre>55: </pre><div class='calls'><span class='method_call'><pre>    inflect.irregular('child', 'children')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#104'>ActiveSupport::Inflector::Inflections#irregular</a></span></div></div>
+<div class='line' id='56'><pre>56: </pre><div class='calls'><span class='method_call'><pre>    inflect.irregular('sex', 'sexes')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#104'>ActiveSupport::Inflector::Inflections#irregular</a></span></div></div>
+<div class='line' id='57'><pre>57: </pre><div class='calls'><span class='method_call'><pre>    inflect.irregular('move', 'moves')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#104'>ActiveSupport::Inflector::Inflections#irregular</a></span></div></div>
+<div class='line' id='58'><pre>58: </pre><div class='calls'><span class='method_call'><pre>    inflect.irregular('cow', 'kine')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#104'>ActiveSupport::Inflector::Inflections#irregular</a></span></div></div>
+<div class='line' id='59'><pre>59: </pre><div class='calls'><span class='method_call'><pre>    inflect.irregular('zombie', 'zombies')</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#104'>ActiveSupport::Inflector::Inflections#irregular</a></span></div></div>
+<div class='line' id='60'><pre>60: </pre><pre></pre></div>
+<div class='line' id='61'><pre>61: </pre><div class='calls'><span class='method_call'><pre>    inflect.uncountable(%w(equipment information rice money species series fish sheep jeans))</pre></span> <span style='display:none;'><a href='inflector/inflections.rb.html#127'>ActiveSupport::Inflector::Inflections#uncountable</a></span></div></div>
+<div class='line' id='62'><pre>62: </pre><pre>  end</pre></div>
+<div class='line' id='63'><pre>63: </pre><pre>end</pre></div>
+<script src='../../../../../../../../../../../../../zepto.js'></script>
+<script>
+  var update_highlight = function() {
+    console.log('hash change');
+    $('div.highlight').removeClass('highlight');
+    var hash = window.location.hash;
+    if (hash.length > 0) $(hash).addClass('highlight');
+  };
+  $(window).on('hashchange', update_highlight);
+  update_highlight();
+
+  $(window).on('mouseenter', 'div.calls', function() {
+    $(this).children().last().show();
+  });
+  $(window).on('mouseleave', 'div.calls', function() {
+    $(this).children().last().hide();
+  });
+</script>
+</body>
+</html>

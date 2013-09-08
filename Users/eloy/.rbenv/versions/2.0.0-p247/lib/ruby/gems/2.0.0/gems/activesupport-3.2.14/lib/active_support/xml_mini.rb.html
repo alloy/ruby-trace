@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+.highlight { background-color: rgb(255, 255, 204); }
+pre { display: inline; }
+div.calls { display: inline; }
+span.method_definition { font-weight: bold; }
+span.method_call { font-weight: bold; }
+div.line a { font-size: 12px; }
+</style>
+</head>
+<body>
+<div class='line' id='1'><pre>  1: </pre><pre>require 'time'</pre></div>
+<div class='line' id='2'><pre>  2: </pre><pre>require 'active_support/base64'</pre></div>
+<div class='line' id='3'><pre>  3: </pre><pre>require 'active_support/core_ext/module/delegation'</pre></div>
+<div class='line' id='4'><pre>  4: </pre><pre>require 'active_support/core_ext/string/inflections'</pre></div>
+<div class='line' id='5'><pre>  5: </pre><pre></pre></div>
+<div class='line' id='6'><pre>  6: </pre><pre>module ActiveSupport</pre></div>
+<div class='line' id='7'><pre>  7: </pre><pre>  # = XmlMini</pre></div>
+<div class='line' id='8'><pre>  8: </pre><pre>  #</pre></div>
+<div class='line' id='9'><pre>  9: </pre><pre>  # To use the much faster libxml parser:</pre></div>
+<div class='line' id='10'><pre> 10: </pre><pre>  #   gem 'libxml-ruby', '=0.9.7'</pre></div>
+<div class='line' id='11'><pre> 11: </pre><pre>  #   XmlMini.backend = 'LibXML'</pre></div>
+<div class='line' id='12'><pre> 12: </pre><pre>  module XmlMini</pre></div>
+<div class='line' id='13'><pre> 13: </pre><pre>    extend self</pre></div>
+<div class='line' id='14'><pre> 14: </pre><pre></pre></div>
+<div class='line' id='15'><pre> 15: </pre><pre>    # This module decorates files deserialized using Hash.from_xml with</pre></div>
+<div class='line' id='16'><pre> 16: </pre><pre>    # the <tt>original_filename</tt> and <tt>content_type</tt> methods.</pre></div>
+<div class='line' id='17'><pre> 17: </pre><pre>    module FileLike #:nodoc:</pre></div>
+<div class='line' id='18'><pre> 18: </pre><pre>      attr_writer :original_filename, :content_type</pre></div>
+<div class='line' id='19'><pre> 19: </pre><pre></pre></div>
+<div class='line' id='20'><pre> 20: </pre><pre>      def original_filename</pre></div>
+<div class='line' id='21'><pre> 21: </pre><pre>        @original_filename || 'untitled'</pre></div>
+<div class='line' id='22'><pre> 22: </pre><pre>      end</pre></div>
+<div class='line' id='23'><pre> 23: </pre><pre></pre></div>
+<div class='line' id='24'><pre> 24: </pre><pre>      def content_type</pre></div>
+<div class='line' id='25'><pre> 25: </pre><pre>        @content_type || 'application/octet-stream'</pre></div>
+<div class='line' id='26'><pre> 26: </pre><pre>      end</pre></div>
+<div class='line' id='27'><pre> 27: </pre><pre>    end</pre></div>
+<div class='line' id='28'><pre> 28: </pre><pre></pre></div>
+<div class='line' id='29'><pre> 29: </pre><pre>    DEFAULT_ENCODINGS = {</pre></div>
+<div class='line' id='30'><pre> 30: </pre><pre>      "binary" => "base64"</pre></div>
+<div class='line' id='31'><pre> 31: </pre><pre>    } unless defined?(DEFAULT_ENCODINGS)</pre></div>
+<div class='line' id='32'><pre> 32: </pre><pre></pre></div>
+<div class='line' id='33'><pre> 33: </pre><pre>    TYPE_NAMES = {</pre></div>
+<div class='line' id='34'><pre> 34: </pre><pre>      "Symbol"     => "symbol",</pre></div>
+<div class='line' id='35'><pre> 35: </pre><pre>      "Fixnum"     => "integer",</pre></div>
+<div class='line' id='36'><pre> 36: </pre><pre>      "Bignum"     => "integer",</pre></div>
+<div class='line' id='37'><pre> 37: </pre><pre>      "BigDecimal" => "decimal",</pre></div>
+<div class='line' id='38'><pre> 38: </pre><pre>      "Float"      => "float",</pre></div>
+<div class='line' id='39'><pre> 39: </pre><pre>      "TrueClass"  => "boolean",</pre></div>
+<div class='line' id='40'><pre> 40: </pre><pre>      "FalseClass" => "boolean",</pre></div>
+<div class='line' id='41'><pre> 41: </pre><pre>      "Date"       => "date",</pre></div>
+<div class='line' id='42'><pre> 42: </pre><pre>      "DateTime"   => "datetime",</pre></div>
+<div class='line' id='43'><pre> 43: </pre><pre>      "Time"       => "datetime",</pre></div>
+<div class='line' id='44'><pre> 44: </pre><pre>      "Array"      => "array",</pre></div>
+<div class='line' id='45'><pre> 45: </pre><pre>      "Hash"       => "hash"</pre></div>
+<div class='line' id='46'><pre> 46: </pre><pre>    } unless defined?(TYPE_NAMES)</pre></div>
+<div class='line' id='47'><pre> 47: </pre><pre></pre></div>
+<div class='line' id='48'><pre> 48: </pre><pre>    FORMATTING = {</pre></div>
+<div class='line' id='49'><pre> 49: </pre><pre>      "symbol"   => Proc.new { |symbol| symbol.to_s },</pre></div>
+<div class='line' id='50'><pre> 50: </pre><pre>      "date"     => Proc.new { |date| date.to_s(:db) },</pre></div>
+<div class='line' id='51'><pre> 51: </pre><pre>      "datetime" => Proc.new { |time| time.xmlschema },</pre></div>
+<div class='line' id='52'><pre> 52: </pre><pre>      "binary"   => Proc.new { |binary| ::Base64.encode64(binary) },</pre></div>
+<div class='line' id='53'><pre> 53: </pre><pre>      "yaml"     => Proc.new { |yaml| yaml.to_yaml }</pre></div>
+<div class='line' id='54'><pre> 54: </pre><pre>    } unless defined?(FORMATTING)</pre></div>
+<div class='line' id='55'><pre> 55: </pre><pre></pre></div>
+<div class='line' id='56'><pre> 56: </pre><pre>    # TODO use regexp instead of Date.parse</pre></div>
+<div class='line' id='57'><pre> 57: </pre><pre>    unless defined?(PARSING)</pre></div>
+<div class='line' id='58'><pre> 58: </pre><pre>      PARSING = {</pre></div>
+<div class='line' id='59'><pre> 59: </pre><pre>        "symbol"       => Proc.new { |symbol|  symbol.to_sym },</pre></div>
+<div class='line' id='60'><pre> 60: </pre><pre>        "date"         => Proc.new { |date|    ::Date.parse(date) },</pre></div>
+<div class='line' id='61'><pre> 61: </pre><pre>        "datetime"     => Proc.new { |time|    Time.xmlschema(time).utc rescue ::DateTime.parse(time).utc },</pre></div>
+<div class='line' id='62'><pre> 62: </pre><pre>        "integer"      => Proc.new { |integer| integer.to_i },</pre></div>
+<div class='line' id='63'><pre> 63: </pre><pre>        "float"        => Proc.new { |float|   float.to_f },</pre></div>
+<div class='line' id='64'><pre> 64: </pre><pre>        "decimal"      => Proc.new { |number|  BigDecimal(number) },</pre></div>
+<div class='line' id='65'><pre> 65: </pre><pre>        "boolean"      => Proc.new { |boolean| %w(1 true).include?(boolean.strip) },</pre></div>
+<div class='line' id='66'><pre> 66: </pre><pre>        "string"       => Proc.new { |string|  string.to_s },</pre></div>
+<div class='line' id='67'><pre> 67: </pre><pre>        "yaml"         => Proc.new { |yaml|    YAML::load(yaml) rescue yaml },</pre></div>
+<div class='line' id='68'><pre> 68: </pre><pre>        "base64Binary" => Proc.new { |bin|     ::Base64.decode64(bin) },</pre></div>
+<div class='line' id='69'><pre> 69: </pre><pre>        "binary"       => Proc.new { |bin, entity| _parse_binary(bin, entity) },</pre></div>
+<div class='line' id='70'><pre> 70: </pre><pre>        "file"         => Proc.new { |file, entity| _parse_file(file, entity) }</pre></div>
+<div class='line' id='71'><pre> 71: </pre><pre>      }</pre></div>
+<div class='line' id='72'><pre> 72: </pre><pre></pre></div>
+<div class='line' id='73'><pre> 73: </pre><pre>      PARSING.update(</pre></div>
+<div class='line' id='74'><pre> 74: </pre><pre>        "double"   => PARSING["float"],</pre></div>
+<div class='line' id='75'><pre> 75: </pre><pre>        "dateTime" => PARSING["datetime"]</pre></div>
+<div class='line' id='76'><pre> 76: </pre><pre>      )</pre></div>
+<div class='line' id='77'><pre> 77: </pre><pre>    end</pre></div>
+<div class='line' id='78'><pre> 78: </pre><pre></pre></div>
+<div class='line' id='79'><pre> 79: </pre><pre>    attr_reader :backend</pre></div>
+<div class='line' id='80'><pre> 80: </pre><div class='calls'><span class='method_call'><pre>    delegate :parse, :to => :backend</pre></span> <span style='display:none;'><a href='core_ext/module/delegation.rb.html#104'>Module#delegate</a></span></div></div>
+<div class='line' id='81'><pre> 81: </pre><pre></pre></div>
+<div class='line' id='82'><pre> 82: </pre><div class='calls'><span class='method_definition'><pre>    def backend=(name)</pre></span> <span style='display:none;'><a href='xml_mini.rb.html#167'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/activesupport-3.2.14/lib/active_support/xml_mini.rb:167</a></span></div></div>
+<div class='line' id='83'><pre> 83: </pre><pre>      if name.is_a?(Module)</pre></div>
+<div class='line' id='84'><pre> 84: </pre><pre>        @backend = name</pre></div>
+<div class='line' id='85'><pre> 85: </pre><pre>      else</pre></div>
+<div class='line' id='86'><pre> 86: </pre><pre>        require "active_support/xml_mini/#{name.to_s.downcase}"</pre></div>
+<div class='line' id='87'><pre> 87: </pre><pre>        @backend = ActiveSupport.const_get("XmlMini_#{name}")</pre></div>
+<div class='line' id='88'><pre> 88: </pre><pre>      end</pre></div>
+<div class='line' id='89'><pre> 89: </pre><pre>    end</pre></div>
+<div class='line' id='90'><pre> 90: </pre><pre></pre></div>
+<div class='line' id='91'><pre> 91: </pre><pre>    def with_backend(name)</pre></div>
+<div class='line' id='92'><pre> 92: </pre><pre>      old_backend, self.backend = backend, name</pre></div>
+<div class='line' id='93'><pre> 93: </pre><pre>      yield</pre></div>
+<div class='line' id='94'><pre> 94: </pre><pre>    ensure</pre></div>
+<div class='line' id='95'><pre> 95: </pre><pre>      self.backend = old_backend</pre></div>
+<div class='line' id='96'><pre> 96: </pre><pre>    end</pre></div>
+<div class='line' id='97'><pre> 97: </pre><pre></pre></div>
+<div class='line' id='98'><pre> 98: </pre><pre>    def to_tag(key, value, options)</pre></div>
+<div class='line' id='99'><pre> 99: </pre><pre>      type_name = options.delete(:type)</pre></div>
+<div class='line' id='100'><pre>100: </pre><pre>      merged_options = options.merge(:root => key, :skip_instruct => true)</pre></div>
+<div class='line' id='101'><pre>101: </pre><pre></pre></div>
+<div class='line' id='102'><pre>102: </pre><pre>      if value.is_a?(::Method) || value.is_a?(::Proc)</pre></div>
+<div class='line' id='103'><pre>103: </pre><pre>        if value.arity == 1</pre></div>
+<div class='line' id='104'><pre>104: </pre><pre>          value.call(merged_options)</pre></div>
+<div class='line' id='105'><pre>105: </pre><pre>        else</pre></div>
+<div class='line' id='106'><pre>106: </pre><pre>          value.call(merged_options, key.to_s.singularize)</pre></div>
+<div class='line' id='107'><pre>107: </pre><pre>        end</pre></div>
+<div class='line' id='108'><pre>108: </pre><pre>      elsif value.respond_to?(:to_xml)</pre></div>
+<div class='line' id='109'><pre>109: </pre><pre>        value.to_xml(merged_options)</pre></div>
+<div class='line' id='110'><pre>110: </pre><pre>      else</pre></div>
+<div class='line' id='111'><pre>111: </pre><pre>        type_name ||= TYPE_NAMES[value.class.name]</pre></div>
+<div class='line' id='112'><pre>112: </pre><pre>        type_name ||= value.class.name if value && !value.respond_to?(:to_str)</pre></div>
+<div class='line' id='113'><pre>113: </pre><pre>        type_name   = type_name.to_s   if type_name</pre></div>
+<div class='line' id='114'><pre>114: </pre><pre></pre></div>
+<div class='line' id='115'><pre>115: </pre><pre>        key = rename_key(key.to_s, options)</pre></div>
+<div class='line' id='116'><pre>116: </pre><pre></pre></div>
+<div class='line' id='117'><pre>117: </pre><pre>        attributes = options[:skip_types] || type_name.nil? ? { } : { :type => type_name }</pre></div>
+<div class='line' id='118'><pre>118: </pre><pre>        attributes[:nil] = true if value.nil?</pre></div>
+<div class='line' id='119'><pre>119: </pre><pre></pre></div>
+<div class='line' id='120'><pre>120: </pre><pre>        encoding = options[:encoding] || DEFAULT_ENCODINGS[type_name]</pre></div>
+<div class='line' id='121'><pre>121: </pre><pre>        attributes[:encoding] = encoding if encoding</pre></div>
+<div class='line' id='122'><pre>122: </pre><pre></pre></div>
+<div class='line' id='123'><pre>123: </pre><pre>        formatted_value = FORMATTING[type_name] && !value.nil? ?</pre></div>
+<div class='line' id='124'><pre>124: </pre><pre>          FORMATTING[type_name].call(value) : value</pre></div>
+<div class='line' id='125'><pre>125: </pre><pre></pre></div>
+<div class='line' id='126'><pre>126: </pre><pre>        options[:builder].tag!(key, formatted_value, attributes)</pre></div>
+<div class='line' id='127'><pre>127: </pre><pre>      end</pre></div>
+<div class='line' id='128'><pre>128: </pre><pre>    end</pre></div>
+<div class='line' id='129'><pre>129: </pre><pre></pre></div>
+<div class='line' id='130'><pre>130: </pre><pre>    def rename_key(key, options = {})</pre></div>
+<div class='line' id='131'><pre>131: </pre><pre>      camelize  = options[:camelize]</pre></div>
+<div class='line' id='132'><pre>132: </pre><pre>      dasherize = !options.has_key?(:dasherize) || options[:dasherize]</pre></div>
+<div class='line' id='133'><pre>133: </pre><pre>      if camelize</pre></div>
+<div class='line' id='134'><pre>134: </pre><pre>        key = true == camelize ? key.camelize : key.camelize(camelize)</pre></div>
+<div class='line' id='135'><pre>135: </pre><pre>      end</pre></div>
+<div class='line' id='136'><pre>136: </pre><pre>      key = _dasherize(key) if dasherize</pre></div>
+<div class='line' id='137'><pre>137: </pre><pre>      key</pre></div>
+<div class='line' id='138'><pre>138: </pre><pre>    end</pre></div>
+<div class='line' id='139'><pre>139: </pre><pre></pre></div>
+<div class='line' id='140'><pre>140: </pre><pre>    protected</pre></div>
+<div class='line' id='141'><pre>141: </pre><pre></pre></div>
+<div class='line' id='142'><pre>142: </pre><pre>    def _dasherize(key)</pre></div>
+<div class='line' id='143'><pre>143: </pre><pre>      # $2 must be a non-greedy regex for this to work</pre></div>
+<div class='line' id='144'><pre>144: </pre><pre>      left, middle, right = /\A(_*)(.*?)(_*)\Z/.match(key.strip)[1,3]</pre></div>
+<div class='line' id='145'><pre>145: </pre><pre>      "#{left}#{middle.tr('_ ', '--')}#{right}"</pre></div>
+<div class='line' id='146'><pre>146: </pre><pre>    end</pre></div>
+<div class='line' id='147'><pre>147: </pre><pre></pre></div>
+<div class='line' id='148'><pre>148: </pre><pre>	  # TODO: Add support for other encodings</pre></div>
+<div class='line' id='149'><pre>149: </pre><pre>    def _parse_binary(bin, entity) #:nodoc:</pre></div>
+<div class='line' id='150'><pre>150: </pre><pre>      case entity['encoding']</pre></div>
+<div class='line' id='151'><pre>151: </pre><pre>      when 'base64'</pre></div>
+<div class='line' id='152'><pre>152: </pre><pre>        ::Base64.decode64(bin)</pre></div>
+<div class='line' id='153'><pre>153: </pre><pre>      else</pre></div>
+<div class='line' id='154'><pre>154: </pre><pre>        bin</pre></div>
+<div class='line' id='155'><pre>155: </pre><pre>      end</pre></div>
+<div class='line' id='156'><pre>156: </pre><pre>    end</pre></div>
+<div class='line' id='157'><pre>157: </pre><pre></pre></div>
+<div class='line' id='158'><pre>158: </pre><pre>    def _parse_file(file, entity)</pre></div>
+<div class='line' id='159'><pre>159: </pre><pre>      f = StringIO.new(::Base64.decode64(file))</pre></div>
+<div class='line' id='160'><pre>160: </pre><pre>      f.extend(FileLike)</pre></div>
+<div class='line' id='161'><pre>161: </pre><pre>      f.original_filename = entity['name']</pre></div>
+<div class='line' id='162'><pre>162: </pre><pre>      f.content_type = entity['content_type']</pre></div>
+<div class='line' id='163'><pre>163: </pre><pre>      f</pre></div>
+<div class='line' id='164'><pre>164: </pre><pre>    end</pre></div>
+<div class='line' id='165'><pre>165: </pre><pre>  end</pre></div>
+<div class='line' id='166'><pre>166: </pre><pre></pre></div>
+<div class='line' id='167'><pre>167: </pre><div class='calls'><span class='method_call'><pre>  XmlMini.backend = 'REXML'</pre></span> <span style='display:none;'><a href='xml_mini.rb.html#82'>ActiveSupport::XmlMini#backend=</a></span></div></div>
+<div class='line' id='168'><pre>168: </pre><pre>end</pre></div>
+<script src='../../../../../../../../../../../../../zepto.js'></script>
+<script>
+  var update_highlight = function() {
+    console.log('hash change');
+    $('div.highlight').removeClass('highlight');
+    var hash = window.location.hash;
+    if (hash.length > 0) $(hash).addClass('highlight');
+  };
+  $(window).on('hashchange', update_highlight);
+  update_highlight();
+
+  $(window).on('mouseenter', 'div.calls', function() {
+    $(this).children().last().show();
+  });
+  $(window).on('mouseleave', 'div.calls', function() {
+    $(this).children().last().hide();
+  });
+</script>
+</body>
+</html>
