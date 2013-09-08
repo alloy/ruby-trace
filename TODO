@@ -16,4 +16,3 @@
 ### HTML
 
 * Fix div.line getting taller when calls are being shown (on hover).
-* Make call history work relative, i.e. without full expanded hardcoded paths.

@@ -173,8 +173,8 @@ module RubyTrace
       history = @calls.map do |call|
         # Collect from and to lines.
         [
-          { :filename => call.from_line.file.path, :href => File.join(root, call.from_line.file.path) << ".html##{call.from_line.lineno}" },
-          { :filename => call.method.line.file.path, :href => File.join(root, call.method.line.file.path) << ".html##{call.method.line.lineno}" },
+          { :filename => call.from_line.file.path, :href => call.from_line.file.path[1..-1] << ".html##{call.from_line.lineno}" },
+          { :filename => call.method.line.file.path, :href => call.method.line.file.path[1..-1] << ".html##{call.method.line.lineno}" },
         ]
       end.flatten
       File.open(root + 'index.html', 'w') do |out|
