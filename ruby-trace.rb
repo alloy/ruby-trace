@@ -192,26 +192,42 @@ var history = #{history.to_json};
 </head>
 <body>
 <div class="transport_bar">
-<a id="back" href="#">◀</a> <span id="history_index">1</span> <a id="next" href="#">▶</a> <span id="filename">#{history.first[:filename]}</span>
+<a id="back" href="#">◀</a> <span id="history_index">1</span> <a id="next" href="#">▶</a> <span id="filename"></span>
 </div>
-<iframe id="code" src="#{history.first[:href]}">
+<iframe id="code" src="">
 </iframe>
 <script src='zepto.js'></script>
 <script>
   var history_index = 0;
-  var change_history_index = function(delta) {
-    history_index = history_index + delta;
+  var set_history_index = function(index) {
+    history_index = index;
     if (history_index < 0) {
       history_index = 0;
     } else if (history_index >= history.length) {
       history_index = history.length-1;
     }
+    window.location.hash = '#'+(history_index+1);
     $('#history_index').text(history_index+1);
     $('#filename').text(history[history_index]['filename']);
     $('#code').attr('src', history[history_index]['href']);
   };
-  $('#back').on('click', function() { change_history_index(-1); return false; });
-  $('#next').on('click', function() { change_history_index(+1); return false; });
+  var paginate_history = function(delta) {
+    set_history_index(history_index + delta);
+  };
+  var set_history_index_from_location_hash = function() {
+    var number = 1;
+    var hash = window.location.hash;
+    if (hash.length > 1) {
+      number = parseInt(hash.substr(1, hash.length-1));
+      if (isNaN(number)) number = 1;
+    };
+    set_history_index(number-1);
+  };
+
+  set_history_index_from_location_hash();
+  $(window).on('hashchange', set_history_index_from_location_hash);
+  $('#back').on('click', function() { paginate_history(-1); return false; });
+  $('#next').on('click', function() { paginate_history(+1); return false; });
 </script>
 </body>
 </html>
@@ -276,7 +292,6 @@ div.line a { font-size: 12px; }
 <script src='#{zepto.relative_path_from(destination_path.dirname)}'></script>
 <script>
   var update_highlight = function() {
-    console.log('hash change');
     $('div.highlight').removeClass('highlight');
     var hash = window.location.hash;
     if (hash.length > 0) $(hash).addClass('highlight');
