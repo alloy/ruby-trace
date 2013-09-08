@@ -1,5 +1,7 @@
 # TODO
 #
+# * Rewrite prototype for real, including tests.
+#
 # ### Trace code
 #
 # * Rewrite (at least) hot paths in a C extension.
