@@ -1,9 +1,9 @@
 # ruby-trace
 
 The purpose of this tool is to generate HTML that guides you through the calls being made in a
-codebase.
+codebase, making it easier to find your way around a project you’re not familiar with.
 
-As of yet this is only a very rough prototype, not feature complete, and definitely not pretty.
+**As of yet this is only a very rough prototype, not feature complete, and definitely not pretty.**
 
 Nonetheless, patches, especially those that make it prettier, will be accepted. As do any of the
 items in the TODO, including the full rewrite. If you do start work on one of those TODO items,
