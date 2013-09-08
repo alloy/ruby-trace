@@ -17,7 +17,7 @@ div.line a { font-size: 12px; }
 <div class='line' id='3'><pre> 3: </pre><pre>module Mocha</pre></div>
 <div class='line' id='4'><pre> 4: </pre><pre></pre></div>
 <div class='line' id='5'><pre> 5: </pre><pre>  module ObjectMethods</pre></div>
-<div class='line' id='6'><pre> 6: </pre><div class='calls'><span class='method_definition'><pre>    def mocha_inspect</pre></span> <span style='display:none;'><a href='names.rb.html#10'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/mocha-0.14.0/lib/mocha/names.rb:10</a> <a href='names.rb.html#10'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/mocha-0.14.0/lib/mocha/names.rb:10</a> <a href='names.rb.html#10'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/mocha-0.14.0/lib/mocha/names.rb:10</a></span></div></div>
+<div class='line' id='6'><pre> 6: </pre><div class='calls'><span class='method_definition'><pre>    def mocha_inspect</pre></span> <span style='display:none;'><a href='names.rb.html#10'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/mocha-0.14.0/lib/mocha/names.rb:10</a></span></div></div>
 <div class='line' id='7'><pre> 7: </pre><pre>      address = self.__id__ * 2</pre></div>
 <div class='line' id='8'><pre> 8: </pre><pre>      address += 0x100000000 if address < 0</pre></div>
 <div class='line' id='9'><pre> 9: </pre><pre>      inspect =~ /#</ ? "#<#{self.class}:0x#{'%x' % address}>" : inspect</pre></div>
@@ -82,7 +82,6 @@ div.line a { font-size: 12px; }
 <script src='../../../../../../../../../../../../../zepto.js'></script>
 <script>
   var update_highlight = function() {
-    console.log('hash change');
     $('div.highlight').removeClass('highlight');
     var hash = window.location.hash;
     if (hash.length > 0) $(hash).addClass('highlight');

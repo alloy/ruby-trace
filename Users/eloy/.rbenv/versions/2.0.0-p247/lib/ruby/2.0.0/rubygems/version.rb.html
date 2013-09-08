@@ -173,7 +173,7 @@ div.line a { font-size: 12px; }
 <div class='line' id='159'><pre>159: </pre><pre>  ##</pre></div>
 <div class='line' id='160'><pre>160: </pre><pre>  # True if the +version+ string matches RubyGems' requirements.</pre></div>
 <div class='line' id='161'><pre>161: </pre><pre></pre></div>
-<div class='line' id='162'><pre>162: </pre><div class='calls'><span class='method_definition'><pre>  def self.correct? version</pre></span> <span style='display:none;'><a href='version.rb.html#192'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/rubygems/version.rb:192</a> <a href='version.rb.html#192'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/rubygems/version.rb:192</a></span></div></div>
+<div class='line' id='162'><pre>162: </pre><div class='calls'><span class='method_definition'><pre>  def self.correct? version</pre></span> <span style='display:none;'><a href='version.rb.html#192'>/Users/eloy/.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/rubygems/version.rb:192</a></span></div></div>
 <div class='line' id='163'><pre>163: </pre><pre>    version.to_s =~ ANCHORED_VERSION_PATTERN</pre></div>
 <div class='line' id='164'><pre>164: </pre><pre>  end</pre></div>
 <div class='line' id='165'><pre>165: </pre><pre></pre></div>
@@ -201,9 +201,9 @@ div.line a { font-size: 12px; }
 <div class='line' id='187'><pre>187: </pre><pre>  # Constructs a Version from the +version+ string.  A version string is a</pre></div>
 <div class='line' id='188'><pre>188: </pre><pre>  # series of digits or ASCII letters separated by dots.</pre></div>
 <div class='line' id='189'><pre>189: </pre><pre></pre></div>
-<div class='line' id='190'><pre>190: </pre><div class='calls'><span class='method_definition'><pre>  def initialize version</pre></span> <span style='display:none;'><a href='../../../../../../../Code/CocoaPods/CocoaPods/spec/spec_helper.rb.html#5'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/spec_helper.rb:5</a> <a href='../../../../../../../Code/CocoaPods/CocoaPods/spec/spec_helper.rb.html#5'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/spec_helper.rb:5</a></span></div></div>
+<div class='line' id='190'><pre>190: </pre><div class='calls'><span class='method_definition'><pre>  def initialize version</pre></span> <span style='display:none;'><a href='../../../../../../../Code/CocoaPods/CocoaPods/spec/spec_helper.rb.html#5'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/spec_helper.rb:5</a></span></div></div>
 <div class='line' id='191'><pre>191: </pre><pre>    raise ArgumentError, "Malformed version number string #{version}" unless</pre></div>
-<div class='line' id='192'><pre>192: </pre><div class='calls'><span class='method_call'><pre>      self.class.correct?(version)</pre></span> <span style='display:none;'><a href='version.rb.html#162'>#<Class:Gem::Version>#correct?</a> <a href='version.rb.html#162'>#<Class:Gem::Version>#correct?</a></span></div></div>
+<div class='line' id='192'><pre>192: </pre><div class='calls'><span class='method_call'><pre>      self.class.correct?(version)</pre></span> <span style='display:none;'><a href='version.rb.html#162'>#<Class:Gem::Version>#correct?</a></span></div></div>
 <div class='line' id='193'><pre>193: </pre><pre></pre></div>
 <div class='line' id='194'><pre>194: </pre><pre>    @version = version.to_s.dup.strip</pre></div>
 <div class='line' id='195'><pre>195: </pre><pre>  end</pre></div>
@@ -355,7 +355,6 @@ div.line a { font-size: 12px; }
 <script src='../../../../../../../../../zepto.js'></script>
 <script>
   var update_highlight = function() {
-    console.log('hash change');
     $('div.highlight').removeClass('highlight');
     var hash = window.location.hash;
     if (hash.length > 0) $(hash).addClass('highlight');

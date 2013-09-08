@@ -52,13 +52,13 @@ div.line a { font-size: 12px; }
 <div class='line' id='38'><pre> 38: </pre><pre>      # @note   This value is not yet set in the pre install callbacks.</pre></div>
 <div class='line' id='39'><pre> 39: </pre><pre>      #</pre></div>
 <div class='line' id='40'><pre> 40: </pre><div class='calls'><span class='method_definition'><pre>      def project</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#35'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:35</a></span></div></div>
-<div class='line' id='41'><pre> 41: </pre><div class='calls'><span class='method_call'><pre>        installer.pods_project</pre></span> <span style='display:none;'><a href='../../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/mocha-0.14.0/lib/mocha/class_method.rb.html#62'>#<Class:#<Pod::Installer:0x007fd91d044838>>#pods_project</a></span></div></div>
+<div class='line' id='41'><pre> 41: </pre><div class='calls'><span class='method_call'><pre>        installer.pods_project</pre></span> <span style='display:none;'><a href='../../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/mocha-0.14.0/lib/mocha/class_method.rb.html#62'>#<Class:#<Pod::Installer:0x007f8c9b9e4ce0>>#pods_project</a></span></div></div>
 <div class='line' id='42'><pre> 42: </pre><pre>      end</pre></div>
 <div class='line' id='43'><pre> 43: </pre><pre></pre></div>
 <div class='line' id='44'><pre> 44: </pre><pre>      # @return [Array<PodRepresentation>] The representation of the Pods.</pre></div>
 <div class='line' id='45'><pre> 45: </pre><pre>      #</pre></div>
 <div class='line' id='46'><pre> 46: </pre><div class='calls'><span class='method_definition'><pre>      def pods</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#39'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:39</a> <a href='installer_representation.rb.html#75'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/hooks/installer_representation.rb:75</a></span></div></div>
-<div class='line' id='47'><pre> 47: </pre><div class='calls'><span class='method_call'><pre>        installer.pod_reps</pre></span> <span style='display:none;'><a href='../installer.rb.html#606'>Pod::Installer#pod_reps</a> <a href='../installer.rb.html#606'>Pod::Installer#pod_reps</a></span></div></div>
+<div class='line' id='47'><pre> 47: </pre><div class='calls'><span class='method_call'><pre>        installer.pod_reps</pre></span> <span style='display:none;'><a href='../installer.rb.html#606'>Pod::Installer#pod_reps</a></span></div></div>
 <div class='line' id='48'><pre> 48: </pre><pre>      end</pre></div>
 <div class='line' id='49'><pre> 49: </pre><pre></pre></div>
 <div class='line' id='50'><pre> 50: </pre><pre>      # @return [Array<LibraryRepresentation>] The representation of the</pre></div>
@@ -85,7 +85,7 @@ div.line a { font-size: 12px; }
 <div class='line' id='71'><pre> 71: </pre><div class='calls'><span class='method_definition'><pre>      def pods_by_lib</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#54'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:54</a></span></div></div>
 <div class='line' id='72'><pre> 72: </pre><pre>        result = {}</pre></div>
 <div class='line' id='73'><pre> 73: </pre><pre>        installer.aggregate_targets.map(&:pod_targets).flatten.each do |lib|</pre></div>
-<div class='line' id='74'><pre> 74: </pre><div class='calls'><span class='method_call'><pre>          pod_names = [lib.root_spec.name]</pre></span> <span style='display:none;'><a href='../target/pod_target.rb.html#48'>Pod::PodTarget#root_spec</a> <a href='../../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/root_attribute_accessors.rb.html#20'>Pod::Specification::DSL::RootAttributesAccessors#name</a></span></div></div>
+<div class='line' id='74'><pre> 74: </pre><div class='calls'><span class='method_call'><pre>          pod_names = [lib.root_spec.name]</pre></span> <span style='display:none;'><a href='../../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/specification/root_attribute_accessors.rb.html#20'>Pod::Specification::DSL::RootAttributesAccessors#name</a> <a href='../target/pod_target.rb.html#48'>Pod::PodTarget#root_spec</a></span></div></div>
 <div class='line' id='75'><pre> 75: </pre><div class='calls'><span class='method_call'><pre>          pod_reps = pods.select { |rep| pod_names.include?(rep.name) }</pre></span> <span style='display:none;'><a href='installer_representation.rb.html#46'>Pod::Hooks::InstallerRepresentation#pods</a></span></div></div>
 <div class='line' id='76'><pre> 76: </pre><pre>          result[lib.target_definition] = pod_reps</pre></div>
 <div class='line' id='77'><pre> 77: </pre><pre>        end</pre></div>
@@ -135,7 +135,7 @@ div.line a { font-size: 12px; }
 <div class='line' id='121'><pre>121: </pre><pre></pre></div>
 <div class='line' id='122'><pre>122: </pre><pre>      # @param [Installer] installer @see installer</pre></div>
 <div class='line' id='123'><pre>123: </pre><pre>      #</pre></div>
-<div class='line' id='124'><pre>124: </pre><div class='calls'><span class='method_definition'><pre>      def initialize(installer)</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#21'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:21</a> <a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#21'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:21</a> <a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#21'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:21</a> <a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#21'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:21</a> <a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#21'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:21</a> <a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#21'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:21</a> <a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#21'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:21</a> <a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#21'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:21</a> <a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#21'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:21</a></span></div></div>
+<div class='line' id='124'><pre>124: </pre><div class='calls'><span class='method_definition'><pre>      def initialize(installer)</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#21'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:21</a></span></div></div>
 <div class='line' id='125'><pre>125: </pre><pre>        @installer = installer</pre></div>
 <div class='line' id='126'><pre>126: </pre><pre>      end</pre></div>
 <div class='line' id='127'><pre>127: </pre><pre></pre></div>
@@ -147,7 +147,6 @@ div.line a { font-size: 12px; }
 <script src='../../../../../../../../zepto.js'></script>
 <script>
   var update_highlight = function() {
-    console.log('hash change');
     $('div.highlight').removeClass('highlight');
     var hash = window.location.hash;
     if (hash.length > 0) $(hash).addClass('highlight');

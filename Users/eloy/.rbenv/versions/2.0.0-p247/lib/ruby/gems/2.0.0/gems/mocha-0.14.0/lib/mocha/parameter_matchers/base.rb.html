@@ -86,7 +86,6 @@ div.line a { font-size: 12px; }
 <script src='../../../../../../../../../../../../../../zepto.js'></script>
 <script>
   var update_highlight = function() {
-    console.log('hash change');
     $('div.highlight').removeClass('highlight');
     var hash = window.location.hash;
     if (hash.length > 0) $(hash).addClass('highlight');

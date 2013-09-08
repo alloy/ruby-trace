@@ -33,7 +33,7 @@ div.line a { font-size: 12px; }
 <div class='line' id='19'><pre> 19: </pre><pre></pre></div>
 <div class='line' id='20'><pre> 20: </pre><pre>      # @param  [Pathname] root The root of the PathList.</pre></div>
 <div class='line' id='21'><pre> 21: </pre><pre>      #</pre></div>
-<div class='line' id='22'><pre> 22: </pre><div class='calls'><span class='method_definition'><pre>      def initialize(root)</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/pod_representation_spec.rb.html#9'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb:9</a> <a href='../../../spec/unit/hooks/pod_representation_spec.rb.html#9'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb:9</a> <a href='../../../spec/unit/hooks/pod_representation_spec.rb.html#9'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb:9</a> <a href='../../../spec/unit/hooks/pod_representation_spec.rb.html#9'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb:9</a> <a href='../../../spec/unit/hooks/pod_representation_spec.rb.html#9'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb:9</a> <a href='../../../spec/unit/hooks/pod_representation_spec.rb.html#9'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb:9</a></span></div></div>
+<div class='line' id='22'><pre> 22: </pre><div class='calls'><span class='method_definition'><pre>      def initialize(root)</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/pod_representation_spec.rb.html#9'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/pod_representation_spec.rb:9</a></span></div></div>
 <div class='line' id='23'><pre> 23: </pre><pre>        @root = root</pre></div>
 <div class='line' id='24'><pre> 24: </pre><pre>      end</pre></div>
 <div class='line' id='25'><pre> 25: </pre><pre></pre></div>
@@ -48,7 +48,7 @@ div.line a { font-size: 12px; }
 <div class='line' id='34'><pre> 34: </pre><pre>      # @return [Array<String>] The list of absolute the path of all the</pre></div>
 <div class='line' id='35'><pre> 35: </pre><pre>      #         directories contained in {root}.</pre></div>
 <div class='line' id='36'><pre> 36: </pre><pre>      #</pre></div>
-<div class='line' id='37'><pre> 37: </pre><div class='calls'><span class='method_definition'><pre>      def dirs</pre></span> <span style='display:none;'><a href='path_list.rb.html#136'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/sandbox/path_list.rb:136</a> <a href='path_list.rb.html#136'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/sandbox/path_list.rb:136</a></span></div></div>
+<div class='line' id='37'><pre> 37: </pre><div class='calls'><span class='method_definition'><pre>      def dirs</pre></span> <span style='display:none;'><a href='path_list.rb.html#136'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/sandbox/path_list.rb:136</a></span></div></div>
 <div class='line' id='38'><pre> 38: </pre><pre>        read_file_system unless @dirs</pre></div>
 <div class='line' id='39'><pre> 39: </pre><pre>        @dirs</pre></div>
 <div class='line' id='40'><pre> 40: </pre><pre>      end</pre></div>
@@ -81,7 +81,7 @@ div.line a { font-size: 12px; }
 <div class='line' id='67'><pre> 67: </pre><pre>      #         paths.</pre></div>
 <div class='line' id='68'><pre> 68: </pre><pre>      #</pre></div>
 <div class='line' id='69'><pre> 69: </pre><div class='calls'><span class='method_definition'><pre>      def glob(patterns, options = {})</pre></span> <span style='display:none;'><a href='file_accessor.rb.html#227'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/sandbox/file_accessor.rb:227</a></span></div></div>
-<div class='line' id='70'><pre> 70: </pre><div class='calls'><span class='method_call'><pre>        relative_glob(patterns, options).map {|p| root + p }</pre></span> <span style='display:none;'><a href='path_list.rb.html#84'>Pod::Sandbox::PathList#relative_glob</a> <a href='path_list.rb.html#117'>Array#-</a> <a href='../../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/pathname.rb.html#329'>Pathname#+</a> <a href='../../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/pathname.rb.html#329'>Pathname#+</a> <a href='../../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/pathname.rb.html#329'>Pathname#+</a></span></div></div>
+<div class='line' id='70'><pre> 70: </pre><div class='calls'><span class='method_call'><pre>        relative_glob(patterns, options).map {|p| root + p }</pre></span> <span style='display:none;'><a href='../../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/pathname.rb.html#329'>Pathname#+</a> <a href='path_list.rb.html#117'>Array#-</a> <a href='path_list.rb.html#84'>Pod::Sandbox::PathList#relative_glob</a></span></div></div>
 <div class='line' id='71'><pre> 71: </pre><pre>      end</pre></div>
 <div class='line' id='72'><pre> 72: </pre><pre></pre></div>
 <div class='line' id='73'><pre> 73: </pre><pre>      # @return [Array<Pathname>] The list of relative paths that are case</pre></div>
@@ -95,7 +95,7 @@ div.line a { font-size: 12px; }
 <div class='line' id='81'><pre> 81: </pre><pre>      #         An optional pattern to append to a pattern, if it is the path</pre></div>
 <div class='line' id='82'><pre> 82: </pre><pre>      #         to a directory.</pre></div>
 <div class='line' id='83'><pre> 83: </pre><pre>      #</pre></div>
-<div class='line' id='84'><pre> 84: </pre><div class='calls'><span class='method_definition'><pre>      def relative_glob(patterns, options = {})</pre></span> <span style='display:none;'><a href='path_list.rb.html#70'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/sandbox/path_list.rb:70</a> <a href='path_list.rb.html#117'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/sandbox/path_list.rb:117</a></span></div></div>
+<div class='line' id='84'><pre> 84: </pre><div class='calls'><span class='method_definition'><pre>      def relative_glob(patterns, options = {})</pre></span> <span style='display:none;'><a href='path_list.rb.html#117'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/sandbox/path_list.rb:117</a> <a href='path_list.rb.html#70'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/sandbox/path_list.rb:70</a></span></div></div>
 <div class='line' id='85'><pre> 85: </pre><pre>        return [] if patterns.empty?</pre></div>
 <div class='line' id='86'><pre> 86: </pre><pre></pre></div>
 <div class='line' id='87'><pre> 87: </pre><pre>        dir_pattern = options[:dir_pattern]</pre></div>
@@ -110,11 +110,11 @@ div.line a { font-size: 12px; }
 <div class='line' id='96'><pre> 96: </pre><pre></pre></div>
 <div class='line' id='97'><pre> 97: </pre><pre>        list = Array(patterns).map do |pattern|</pre></div>
 <div class='line' id='98'><pre> 98: </pre><pre>          if pattern.is_a?(String)</pre></div>
-<div class='line' id='99'><pre> 99: </pre><div class='calls'><span class='method_call'><pre>            if directory?(pattern) && dir_pattern</pre></span> <span style='display:none;'><a href='path_list.rb.html#134'>Pod::Sandbox::PathList#directory?</a> <a href='path_list.rb.html#134'>Pod::Sandbox::PathList#directory?</a></span></div></div>
+<div class='line' id='99'><pre> 99: </pre><div class='calls'><span class='method_call'><pre>            if directory?(pattern) && dir_pattern</pre></span> <span style='display:none;'><a href='path_list.rb.html#134'>Pod::Sandbox::PathList#directory?</a></span></div></div>
 <div class='line' id='100'><pre>100: </pre><pre>              pattern += '/' unless pattern.end_with?('/')</pre></div>
 <div class='line' id='101'><pre>101: </pre><pre>              pattern +=  dir_pattern</pre></div>
 <div class='line' id='102'><pre>102: </pre><pre>            end</pre></div>
-<div class='line' id='103'><pre>103: </pre><div class='calls'><span class='method_call'><pre>            expanded_patterns = dir_glob_equivalent_patterns(pattern)</pre></span> <span style='display:none;'><a href='path_list.rb.html#158'>Pod::Sandbox::PathList#dir_glob_equivalent_patterns</a> <a href='path_list.rb.html#158'>Pod::Sandbox::PathList#dir_glob_equivalent_patterns</a></span></div></div>
+<div class='line' id='103'><pre>103: </pre><div class='calls'><span class='method_call'><pre>            expanded_patterns = dir_glob_equivalent_patterns(pattern)</pre></span> <span style='display:none;'><a href='path_list.rb.html#158'>Pod::Sandbox::PathList#dir_glob_equivalent_patterns</a></span></div></div>
 <div class='line' id='104'><pre>104: </pre><pre>            full_list.select do |path|</pre></div>
 <div class='line' id='105'><pre>105: </pre><pre>              expanded_patterns.any? do |p|</pre></div>
 <div class='line' id='106'><pre>106: </pre><pre>                File.fnmatch(p, path, File::FNM_CASEFOLD | File::FNM_PATHNAME)</pre></div>
@@ -145,9 +145,9 @@ div.line a { font-size: 12px; }
 <div class='line' id='131'><pre>131: </pre><pre>      #</pre></div>
 <div class='line' id='132'><pre>132: </pre><pre>      # @param  [String, Pathname] sub_path The path that could be a directory.</pre></div>
 <div class='line' id='133'><pre>133: </pre><pre>      #</pre></div>
-<div class='line' id='134'><pre>134: </pre><div class='calls'><span class='method_definition'><pre>      def directory?(sub_path)</pre></span> <span style='display:none;'><a href='path_list.rb.html#99'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/sandbox/path_list.rb:99</a> <a href='path_list.rb.html#99'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/sandbox/path_list.rb:99</a></span></div></div>
+<div class='line' id='134'><pre>134: </pre><div class='calls'><span class='method_definition'><pre>      def directory?(sub_path)</pre></span> <span style='display:none;'><a href='path_list.rb.html#99'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/sandbox/path_list.rb:99</a></span></div></div>
 <div class='line' id='135'><pre>135: </pre><pre>        sub_path = sub_path.to_s.downcase.sub(/\/$/, '')</pre></div>
-<div class='line' id='136'><pre>136: </pre><div class='calls'><span class='method_call'><pre>        dirs.any? { |dir| dir.downcase == sub_path }</pre></span> <span style='display:none;'><a href='path_list.rb.html#37'>Pod::Sandbox::PathList#dirs</a> <a href='path_list.rb.html#37'>Pod::Sandbox::PathList#dirs</a></span></div></div>
+<div class='line' id='136'><pre>136: </pre><div class='calls'><span class='method_call'><pre>        dirs.any? { |dir| dir.downcase == sub_path }</pre></span> <span style='display:none;'><a href='path_list.rb.html#37'>Pod::Sandbox::PathList#dirs</a></span></div></div>
 <div class='line' id='137'><pre>137: </pre><pre>      end</pre></div>
 <div class='line' id='138'><pre>138: </pre><pre></pre></div>
 <div class='line' id='139'><pre>139: </pre><pre>      # @return [Array<String>] An array of patterns converted from a</pre></div>
@@ -169,7 +169,7 @@ div.line a { font-size: 12px; }
 <div class='line' id='155'><pre>155: </pre><pre>      #</pre></div>
 <div class='line' id='156'><pre>156: </pre><pre>      # @param [String] pattern   A {Dir#glob} like pattern.</pre></div>
 <div class='line' id='157'><pre>157: </pre><pre>      #</pre></div>
-<div class='line' id='158'><pre>158: </pre><div class='calls'><span class='method_definition'><pre>      def dir_glob_equivalent_patterns(pattern)</pre></span> <span style='display:none;'><a href='path_list.rb.html#103'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/sandbox/path_list.rb:103</a> <a href='path_list.rb.html#103'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/sandbox/path_list.rb:103</a></span></div></div>
+<div class='line' id='158'><pre>158: </pre><div class='calls'><span class='method_definition'><pre>      def dir_glob_equivalent_patterns(pattern)</pre></span> <span style='display:none;'><a href='path_list.rb.html#103'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/sandbox/path_list.rb:103</a></span></div></div>
 <div class='line' id='159'><pre>159: </pre><pre>        pattern = pattern.gsub('/**/', '{/**/,/}')</pre></div>
 <div class='line' id='160'><pre>160: </pre><pre>        values_by_set = {}</pre></div>
 <div class='line' id='161'><pre>161: </pre><pre>        pattern.scan(/\{[^}]*\}/) do |set|</pre></div>
@@ -219,7 +219,6 @@ div.line a { font-size: 12px; }
 <script src='../../../../../../../../zepto.js'></script>
 <script>
   var update_highlight = function() {
-    console.log('hash change');
     $('div.highlight').removeClass('highlight');
     var hash = window.location.hash;
     if (hash.length > 0) $(hash).addClass('highlight');

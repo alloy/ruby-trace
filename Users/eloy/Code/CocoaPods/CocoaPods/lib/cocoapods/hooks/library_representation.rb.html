@@ -23,13 +23,13 @@ div.line a { font-size: 12px; }
 <div class='line' id='9'><pre> 9: </pre><pre>      # @return [String] The name of the Pods library.</pre></div>
 <div class='line' id='10'><pre>10: </pre><pre>      #</pre></div>
 <div class='line' id='11'><pre>11: </pre><div class='calls'><span class='method_definition'><pre>      def name</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#43'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:43</a> <a href='../../../spec/unit/hooks/installer_representation_spec.rb.html#49'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/installer_representation_spec.rb:49</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#19'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:19</a></span></div></div>
-<div class='line' id='12'><pre>12: </pre><div class='calls'><span class='method_call'><pre>        library.name</pre></span> <span style='display:none;'><a href='../target.rb.html#22'>Pod::Target#name</a> <a href='../target.rb.html#22'>Pod::Target#name</a> <a href='../target.rb.html#22'>Pod::Target#name</a></span></div></div>
+<div class='line' id='12'><pre>12: </pre><div class='calls'><span class='method_call'><pre>        library.name</pre></span> <span style='display:none;'><a href='../target.rb.html#22'>Pod::Target#name</a></span></div></div>
 <div class='line' id='13'><pre>13: </pre><pre>      end</pre></div>
 <div class='line' id='14'><pre>14: </pre><pre></pre></div>
 <div class='line' id='15'><pre>15: </pre><pre>      # @return [Array<Dependency>] The dependencies of this library.</pre></div>
 <div class='line' id='16'><pre>16: </pre><pre>      #</pre></div>
 <div class='line' id='17'><pre>17: </pre><div class='calls'><span class='method_definition'><pre>      def dependencies</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/library_representation_spec.rb.html#24'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:24</a></span></div></div>
-<div class='line' id='18'><pre>18: </pre><div class='calls'><span class='method_call'><pre>        target_definition.dependencies</pre></span> <span style='display:none;'><a href='library_representation.rb.html#50'>Pod::Hooks::LibraryRepresentation#target_definition</a> <a href='../../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/podfile/target_definition.rb.html#77'>Pod::Podfile::TargetDefinition#dependencies</a></span></div></div>
+<div class='line' id='18'><pre>18: </pre><div class='calls'><span class='method_call'><pre>        target_definition.dependencies</pre></span> <span style='display:none;'><a href='../../../../../../.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/bundler/gems/Core-9e592ef49853/lib/cocoapods-core/podfile/target_definition.rb.html#77'>Pod::Podfile::TargetDefinition#dependencies</a> <a href='library_representation.rb.html#50'>Pod::Hooks::LibraryRepresentation#target_definition</a></span></div></div>
 <div class='line' id='19'><pre>19: </pre><pre>      end</pre></div>
 <div class='line' id='20'><pre>20: </pre><pre></pre></div>
 <div class='line' id='21'><pre>21: </pre><pre>      # @return [Pathname] The path of the Pods dir.</pre></div>
@@ -61,7 +61,7 @@ div.line a { font-size: 12px; }
 <div class='line' id='47'><pre>47: </pre><pre></pre></div>
 <div class='line' id='48'><pre>48: </pre><pre>      # @return [TargetDefinition] The target definition of the library.</pre></div>
 <div class='line' id='49'><pre>49: </pre><pre>      #</pre></div>
-<div class='line' id='50'><pre>50: </pre><div class='calls'><span class='method_definition'><pre>      def target_definition</pre></span> <span style='display:none;'><a href='library_representation.rb.html#18'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/hooks/library_representation.rb:18</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#46'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:46</a></span></div></div>
+<div class='line' id='50'><pre>50: </pre><div class='calls'><span class='method_definition'><pre>      def target_definition</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/library_representation_spec.rb.html#46'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:46</a> <a href='library_representation.rb.html#18'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/hooks/library_representation.rb:18</a></span></div></div>
 <div class='line' id='51'><pre>51: </pre><pre>        library.target_definition</pre></div>
 <div class='line' id='52'><pre>52: </pre><pre>      end</pre></div>
 <div class='line' id='53'><pre>53: </pre><pre></pre></div>
@@ -94,7 +94,7 @@ div.line a { font-size: 12px; }
 <div class='line' id='80'><pre>80: </pre><pre>      # @param [Sandbox] sandbox @see sandbox</pre></div>
 <div class='line' id='81'><pre>81: </pre><pre>      # @param [Library] library @see library</pre></div>
 <div class='line' id='82'><pre>82: </pre><pre>      #</pre></div>
-<div class='line' id='83'><pre>83: </pre><div class='calls'><span class='method_definition'><pre>      def initialize(sandbox, library)</pre></span> <span style='display:none;'><a href='../installer.rb.html#595'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer.rb:595</a> <a href='../installer.rb.html#595'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer.rb:595</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a></span></div></div>
+<div class='line' id='83'><pre>83: </pre><div class='calls'><span class='method_definition'><pre>      def initialize(sandbox, library)</pre></span> <span style='display:none;'><a href='../../../spec/unit/hooks/library_representation_spec.rb.html#11'>/Users/eloy/Code/CocoaPods/CocoaPods/spec/unit/hooks/library_representation_spec.rb:11</a> <a href='../installer.rb.html#595'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer.rb:595</a></span></div></div>
 <div class='line' id='84'><pre>84: </pre><pre>        @sandbox = sandbox</pre></div>
 <div class='line' id='85'><pre>85: </pre><pre>        @library = library</pre></div>
 <div class='line' id='86'><pre>86: </pre><pre>        raise "[BUG]" unless library.is_a?(AggregateTarget)</pre></div>
@@ -108,7 +108,6 @@ div.line a { font-size: 12px; }
 <script src='../../../../../../../../zepto.js'></script>
 <script>
   var update_highlight = function() {
-    console.log('hash change');
     $('div.highlight').removeClass('highlight');
     var hash = window.location.hash;
     if (hash.length > 0) $(hash).addClass('highlight');

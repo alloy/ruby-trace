@@ -31,11 +31,11 @@ div.line a { font-size: 12px; }
 <div class='line' id='17'><pre>17: </pre><pre>    # @param [TargetDefinition] target_definition @see target_definition</pre></div>
 <div class='line' id='18'><pre>18: </pre><pre>    # @param [Sandbox] sandbox @see sandbox</pre></div>
 <div class='line' id='19'><pre>19: </pre><pre>    #</pre></div>
-<div class='line' id='20'><pre>20: </pre><div class='calls'><span class='method_definition'><pre>    def initialize(specs, target_definition, sandbox)</pre></span> <span style='display:none;'><a href='../installer/analyzer.rb.html#190'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer/analyzer.rb:190</a> <a href='../installer/analyzer.rb.html#190'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer/analyzer.rb:190</a> <a href='../installer/analyzer.rb.html#190'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer/analyzer.rb:190</a> <a href='../installer/analyzer.rb.html#190'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer/analyzer.rb:190</a> <a href='../installer/analyzer.rb.html#190'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer/analyzer.rb:190</a> <a href='../installer/analyzer.rb.html#190'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer/analyzer.rb:190</a> <a href='../installer/analyzer.rb.html#190'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer/analyzer.rb:190</a> <a href='../installer/analyzer.rb.html#190'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer/analyzer.rb:190</a> <a href='../installer/analyzer.rb.html#190'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer/analyzer.rb:190</a></span></div></div>
+<div class='line' id='20'><pre>20: </pre><div class='calls'><span class='method_definition'><pre>    def initialize(specs, target_definition, sandbox)</pre></span> <span style='display:none;'><a href='../installer/analyzer.rb.html#190'>/Users/eloy/Code/CocoaPods/CocoaPods/lib/cocoapods/installer/analyzer.rb:190</a></span></div></div>
 <div class='line' id='21'><pre>21: </pre><pre>      @specs = specs</pre></div>
 <div class='line' id='22'><pre>22: </pre><pre>      @target_definition = target_definition</pre></div>
 <div class='line' id='23'><pre>23: </pre><pre>      @sandbox = sandbox</pre></div>
-<div class='line' id='24'><pre>24: </pre><div class='calls'><span class='method_call'><pre>      @build_headers  = Sandbox::HeadersStore.new(sandbox, "BuildHeaders")</pre></span> <span style='display:none;'><a href='../sandbox/headers_store.rb.html#25'>Pod::Sandbox::HeadersStore#initialize</a> <a href='../sandbox/headers_store.rb.html#25'>Pod::Sandbox::HeadersStore#initialize</a> <a href='../sandbox/headers_store.rb.html#25'>Pod::Sandbox::HeadersStore#initialize</a> <a href='../sandbox/headers_store.rb.html#25'>Pod::Sandbox::HeadersStore#initialize</a> <a href='../sandbox/headers_store.rb.html#25'>Pod::Sandbox::HeadersStore#initialize</a> <a href='../sandbox/headers_store.rb.html#25'>Pod::Sandbox::HeadersStore#initialize</a> <a href='../sandbox/headers_store.rb.html#25'>Pod::Sandbox::HeadersStore#initialize</a> <a href='../sandbox/headers_store.rb.html#25'>Pod::Sandbox::HeadersStore#initialize</a> <a href='../sandbox/headers_store.rb.html#25'>Pod::Sandbox::HeadersStore#initialize</a></span></div></div>
+<div class='line' id='24'><pre>24: </pre><div class='calls'><span class='method_call'><pre>      @build_headers  = Sandbox::HeadersStore.new(sandbox, "BuildHeaders")</pre></span> <span style='display:none;'><a href='../sandbox/headers_store.rb.html#25'>Pod::Sandbox::HeadersStore#initialize</a></span></div></div>
 <div class='line' id='25'><pre>25: </pre><pre>      @file_accessors = []</pre></div>
 <div class='line' id='26'><pre>26: </pre><pre>    end</pre></div>
 <div class='line' id='27'><pre>27: </pre><pre></pre></div>
@@ -83,7 +83,6 @@ div.line a { font-size: 12px; }
 <script src='../../../../../../../../zepto.js'></script>
 <script>
   var update_highlight = function() {
-    console.log('hash change');
     $('div.highlight').removeClass('highlight');
     var hash = window.location.hash;
     if (hash.length > 0) $(hash).addClass('highlight');
