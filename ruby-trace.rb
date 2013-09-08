@@ -177,9 +177,21 @@ module RubyTrace
         lineno_indent = content_lines.size.to_s.length
 
         File.open(destination_path, 'w') do |out|
-          out.puts "<html><body><pre>"
+          out.puts <<-EOS
+<html>
+<head>
+<style type="text/css">
+.highlight
+{
+  background-color: rgb(255, 255, 204);
+}
+</style>
+</head>
+<body>
+          EOS
           content_lines.each.with_index do |content_line, index|
-            out.write "<div id='#{index+1}' style='display:inline;'>#{(index+1).to_s.rjust(lineno_indent)}: "
+            out.write "<div id='#{index+1}'>#{(index+1).to_s.rjust(lineno_indent)}: "
+            content_line = "<pre style='display:inline;'>#{content_line}</pre>"
             if line = file.lines[index+1]
               if line.method_definition
                 links = line.method_definition.callers.map do |call|
@@ -205,13 +217,20 @@ module RubyTrace
             print '.'
           end
           out.puts <<-EOS
-</pre>
 <script src='#{zepto.relative_path_from(destination_path.dirname)}'></script>
 <script>
-  $(document).on('mouseenter', 'div.calls', function (event) {
+  var update_highlight = function() {
+    $('div.highlight').removeClass('highlight');
+    var hash = window.location.hash;
+    if (hash.length > 0) $(hash).addClass('highlight');
+  };
+  $(window).on('hashchange', update_highlight);
+  update_highlight();
+
+  $(document).on('mouseenter', 'div.calls', function() {
     $(this).children().last().show();
   });
-  $(document).on('mouseleave', 'div.calls', function (event) {
+  $(document).on('mouseleave', 'div.calls', function() {
     $(this).children().last().hide();
   });
 </script>
