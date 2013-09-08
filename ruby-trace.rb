@@ -1,11 +1,17 @@
 # TODO
 #
+# ### Trace code
+#
 # * Rewrite (at least) hot paths in a C extension.
 # * Get sender mod+name of call and use that to link to callers instead of path. This can only be done in C.
 #
 # * Collecting call return values is not working right yet.
 # * Collecting call arguments works fine, but isn't needed yet and needs memory usage optimization.
 # * Show call arguments and returns values in report.
+#
+# ### HTML
+#
+# * Fix div.line getting taller when calls are being shown (on hover).
 #
 
 module RubyTrace
@@ -186,26 +192,28 @@ module RubyTrace
 <html>
 <head>
 <style type="text/css">
-.highlight
-{
-  background-color: rgb(255, 255, 204);
-}
+.highlight { background-color: rgb(255, 255, 204); }
+pre { display: inline; }
+div.calls { display: inline; }
+span.method_definition { font-weight: bold; }
+span.method_call { font-weight: bold; }
+div.line a { font-size: 12px; }
 </style>
 </head>
 <body>
           EOS
           content_lines.each.with_index do |content_line, index|
-            out.write "<div id='#{index+1}'>#{(index+1).to_s.rjust(lineno_indent)}: "
-            content_line = "<pre style='display:inline;'>#{content_line}</pre>"
+            out.write "<div class='line' id='#{index+1}'><pre>#{(index+1).to_s.rjust(lineno_indent)}: </pre>"
+            content_line = "<pre>#{content_line}</pre>"
             if line = file.lines[index+1]
               if line.method_definition
                 links = line.method_definition.callers.map do |call|
                   method_line = call.from_line
                   method_html_file = Pathname.new(File.join(root, method_line.file.path) << '.html')
                   href = "#{method_html_file.relative_path_from(destination_path.dirname)}##{method_line.lineno}"
-                  "<a href='#{href}'>#{method_line.file.path}##{method_line.lineno}</a>"
+                  "<a href='#{href}'>#{method_line.file.path}:#{method_line.lineno}</a>"
                 end
-                out.write "<div class='calls' style='display:inline;'><span style='font-weight:bold;font-style:italic;'>#{content_line}</span> <span style='display:none;'>#{links.join(' ')}</span></div>"
+                out.write "<div class='calls'><span class='method_definition'>#{content_line}</span> <span style='display:none;'>#{links.join(' ')}</span></div>"
               else
                 links = line.calls.map do |call|
                   method_line = call.method.line
@@ -213,7 +221,7 @@ module RubyTrace
                   href = "#{method_html_file.relative_path_from(destination_path.dirname)}##{method_line.lineno}"
                   "<a href='#{href}'>#{call.method.mod}##{call.method.name}</a>"
                 end
-                out.write "<div class='calls' style='display:inline;'><span style='font-weight:bold;'>#{content_line}</span> <span style='display:none;'>#{links.join(' ')}</span></div>"
+                out.write "<div class='calls'><span class='method_call'>#{content_line}</span> <span style='display:none;'>#{links.join(' ')}</span></div>"
               end
             else
               out.write content_line
@@ -226,10 +234,10 @@ module RubyTrace
 <script>
   var update_highlight = function() {
     $('div.highlight').removeClass('highlight');
-    var hash = window.location.hash;
+    var hash = document.location.hash;
     if (hash.length > 0) $(hash).addClass('highlight');
   };
-  $(window).on('hashchange', update_highlight);
+  $(document).on('hashchange', update_highlight);
   update_highlight();
 
   $(document).on('mouseenter', 'div.calls', function() {
