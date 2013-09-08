@@ -1,3 +1,13 @@
+# TODO
+#
+# * Rewrite (at least) hot paths in a C extension.
+# * Get sender mod+name of call and use that to link to callers instead of path. This can only be done in C.
+#
+# * Collecting call return values is not working right yet.
+# * Collecting call arguments works fine, but isn't needed yet and needs memory usage optimization.
+# * Show call arguments and returns values in report.
+#
+
 module RubyTrace
   class FileNode
     attr_reader :path, :lines
@@ -28,8 +38,7 @@ module RubyTrace
     def method_definition_with_mod_and_name(mod, name)
       if @method_definition
         if @method_definition.line != self || @method_definition.mod != mod || @method_definition.name != name
-          #raise 'inconsistency!'
-          puts 'inconsistency!'
+          raise "[method definition on line] Mod/name inconsistency"
         end
       else
         @method_definition = Method.new(self, mod, name)
@@ -53,7 +62,8 @@ module RubyTrace
     end
 
     class Call
-      attr_accessor :method, :from_line, :index, :arguments, :return_value
+      #attr_accessor :method, :from_line, :index, :arguments, :return_value
+      attr_accessor :method, :from_line, :index, :arguments
       def initialize(method, from_line, index, arguments)
         @method, @from_line, @index, @arguments = method, from_line, index, arguments
       end
@@ -99,40 +109,34 @@ module RubyTrace
     end
 
     def trace
-      # TODO stack is not thread local and thus safe!
-      stack = []
-      trace = TracePoint.new(:call, :return) do |tp|
+      #stack = []
+      #trace = TracePoint.new(:call, :return) do |tp|
+      trace = TracePoint.new(:call) do |tp|
         next if tp.path == __FILE__
         case tp.event
         when :call
           if from_line = line_from_call_trace_point(tp)
             to_line = line_for_path_and_lineno(tp.path, tp.lineno)
             method = to_line.method_definition_with_mod_and_name(tp.defined_class, tp.method_id)
-            call = method.add_caller(from_line, @call_index, arguments_from_call_trace_point(tp))
+            #call = method.add_caller(from_line, @call_index, arguments_from_call_trace_point(tp))
+            call = method.add_caller(from_line, @call_index, nil)
             from_line.add_call(call)
             @call_index += 1
-            stack << call
+            #stack << call
           end
-        when :return
-          #call = stack.pop
-          #raise "inconsistency!" if call.nil?
-          #raise "inconsistency!" if call.method.name != tp.method_id
-          #raise "inconsistency!" if call.method.mod != tp.defined_class
-          call = stack.last
-          if call && call.method.name == tp.method_id && call.method.mod == tp.defined_class
-            call.return_value = tp.return_value
-            stack.pop
-          else
-            puts "INCONSISTENCY???????!!!!!!"
-          end
+        #when :return
+          #call = stack.last
+          #if call && call.method.name == tp.method_id && call.method.mod == tp.defined_class
+            #call.return_value = tp.return_value
+            #stack.pop
+          #else
+            #raise "[return] Stack inconsistency."
+          #end
         end
       end
       trace.enable
       yield
-      unless stack.empty?
-        #raise 'inconsistency!'
-        puts 'inconsistency!'
-      end
+      #raise "[finished] Stack inconsistency." unless stack.empty?
     ensure
       trace.disable
     end
@@ -146,7 +150,8 @@ module RubyTrace
           else
             puts "  #{line.lineno}:"
             line.calls.each do |call|
-              puts "  - [#{call.index}] #{call.method.mod}##{call.method.name}(#{call.arguments}) => #{call.return_value.inspect} (#{call.method.line.file.path}:#{call.method.line.lineno})"
+              #puts "  - [#{call.index}] #{call.method.mod}##{call.method.name}(#{call.arguments}) => #{call.return_value.inspect} (#{call.method.line.file.path}:#{call.method.line.lineno})"
+              puts "  - [#{call.index}] #{call.method.mod}##{call.method.name} (#{call.method.line.file.path}:#{call.method.line.lineno})"
             end
           end
         end
